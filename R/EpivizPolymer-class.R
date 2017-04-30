@@ -114,7 +114,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       "Show environment of this object"
-      return(.self$epiviz_envir)
+      .self$epiviz_envir
     }
   )
 )
