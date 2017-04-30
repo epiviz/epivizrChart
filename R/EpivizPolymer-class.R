@@ -6,7 +6,8 @@
 #' @field data_mgr An object of class \code{\link[epivizrData]{EpivizDataMgr}} used to serve data to epiviz app.
 #' @field epiviz_envir An object of class \code{shiny.tag} used to nest chart tags in epiviz-environment tag
 #' 
-#' @importClassesFrom epivizrData EpivizDataMgr EpivizMeasurement EpivizData epivizrServer EpivizServer
+#' @importClassesFrom epivizrData EpivizDataMgr EpivizMeasurement
+#' @importClassesFrom epivizrServer EpivizServer
 #' @import GenomicRanges 
 #' @import S4Vectors
 #' @import methods
@@ -20,7 +21,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     start="numeric",
     end="numeric",
     data_mgr="EpivizDataMgr",
-    epiviz_envir="shiny.tag"
+    epiviz_envir="ANY"
   ),
   methods=list(
     plot = function(data_object, datasource_name = NULL,
@@ -36,12 +37,12 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
       chart <- .self$to_HTML(ms_obj)
       
-      htmltools::tagAppendChild(.self$epiviz_envir, chart)
+      .self$epiviz_envir <- htmltools::tagAppendChild(.self$epiviz_envir, chart)
       
       invisible()
     }, 
     to_HTML = function(ms_obj) {
-      "Return a shiny.tag representing a polymer chart
+      "Return a shiny.tag representing an epiviz chart
       \\describe{
       \\item{ms_obj}{EpivizData object}
       \\item{...}{EpivizData object}
@@ -49,7 +50,13 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       chart_tag <- ms_obj$tag_HTML() # ADD THIS TO EPIVIZDATA CLASSES
       
       ms <- ms_obj$get_measurements()
-      ms_list <- lapply(ms, as.list)
+      #ms_list <- lapply(ms, as.list)
+      ms_list <- lapply(ms, function(x) {
+        nms <- slotNames("EpivizMeasurement")
+        out <- lapply(nms, function(slot_name) slot(x, slot_name))
+        names(out) <- nms
+        out
+      })  
       ms_json <- epivizrServer::json_writer(ms_list)
       
       row_data <- .row_data(ms_obj)
@@ -63,6 +70,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       
       data_json <- paste0(row_data, col_data, collapse=",")
       polymer_chart <- .polymer_chart(chart_tag, ms_obj$get_id(), ms_json, data_json)
+      
       return(polymer_chart)
     },
     .row_data = function(ms_obj) {
@@ -87,15 +95,17 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       }
       
       col_data <- paste0(col_data, collapse='')
+      
       return(col_data)
     },
     .polymer_chart = function(chart_type, chart_id, ms, data) {
       chart <- htmltools::tag(chart_type, list(id=chart_id, measurement=ms, data=data))
+      
       return(chart)
     },
     show = function() {
       "Print environment of this object"
-      return(htmltools::knit_print.html(.self$epivizEnvir))
+      return(htmltools::knit_print.html(.self$epiviz_envir))
     }
   )
 )

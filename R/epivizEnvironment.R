@@ -12,9 +12,9 @@
 epivizEnvironment <- function(chr="chr11", start=99800000, end=103383180) {
   server <- epivizrServer::createServer(non_interactive=TRUE)
   data_mgr <- epivizrData::createMgr(server)
-  epivizEnvir <- htmltools::tag("epiviz-environment" , list(chr=chr, start=start, end=end))
+  epiviz_envir <- htmltools::tag("epiviz-environment" , list(chr=chr, start=start, end=end))
   epiviz <- EpivizPolymer$new(chr=chr, start=start, end=end,
-    data_mgr=data_mgr, epivizEnvir=epivizEnvir)
+    data_mgr=data_mgr, epiviz_envir=epiviz_envir)
   
   return(epiviz)
 }
