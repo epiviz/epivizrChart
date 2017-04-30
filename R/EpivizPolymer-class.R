@@ -39,7 +39,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       
       .self$epiviz_envir <- htmltools::tagAppendChild(.self$epiviz_envir, chart)
       
-      invisible()
+      invisible(chart)
     }, 
     to_HTML = function(ms_obj) {
       "Return a shiny.tag representing an epiviz chart

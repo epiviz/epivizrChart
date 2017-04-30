@@ -22,4 +22,6 @@ Blocks Track Demo
 epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
 
+epiviz
+
 ```
