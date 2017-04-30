@@ -65,7 +65,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       chart_tag <- ms_obj$tag_HTML(...) # ADD SUPPORT FOR OTHER TYPES
       
       polymer_chart <- htmltools::tag(chart_tag, 
-        list(id=ms_obj$get_id(), measurement=ms_json, data=data_json))
+        list(id=ms_obj$get_id(), measurement=ms_json, data=data_json, settings=settings, colors=colors))
       
       return(polymer_chart)
     },
