@@ -3,8 +3,8 @@
 #' @field chr (character) chromosome to to display in environment plot.
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
-#' @field data_mgr An object of class \code{\link[epivizrData]{EpivizDataMgr}} used to serve data to epiviz app.
-#' @field epiviz_envir An object of class \code{shiny.tag} used to nest chart tags in epiviz-environment tag
+#' @field data_mgr An object of class \code{\link[epivizrData]{EpivizDataMgr}} used to serve data to epiviz charts.
+#' @field epiviz_envir An object of class \code{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' 
 #' @importClassesFrom epivizrData EpivizDataMgr EpivizMeasurement
 #' @importClassesFrom epivizrServer EpivizServer
@@ -21,12 +21,19 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     start="numeric",
     end="numeric",
     data_mgr="EpivizDataMgr",
-    epiviz_envir="ANY"
+    epiviz_envir="ANY" # TODO:  change to "shiny.tag" ?
   ),
   methods=list(
     plot = function(data_object, datasource_name=deparse(substitute(data_object)),
       settings=NULL, colors=NULL, ...) { 
-      "..."
+      "Return a shiny.tag representing an epiviz chart and appends to the epiviz environment
+      \\describe{
+      \\item{data_object}{GenomicRanges object to attach as chart's data}
+      \\item{datasource_name}{Name for datasource}
+      \\item{settings}{List of settings for chart}
+      \\item{colors}{List of colors for chart}
+      \\item{...}{Type and columns}
+      }"
       ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name, 
         datasource_origin_name=datasource_origin_name, ...)
 
@@ -37,7 +44,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       invisible(chart)
     }, 
     .create_chart_HTML = function(ms_obj, settings, colors, ...) {
-      "Return a shiny.tag representing an epiviz chart
+      "Creates a shiny.tag representing an epiviz chart
       \\describe{
       \\item{ms_obj}{EpivizData object}
       \\item{...}{EpivizData object}
