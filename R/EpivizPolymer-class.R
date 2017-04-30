@@ -24,31 +24,24 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     epiviz_envir="ANY"
   ),
   methods=list(
-    plot = function(data_object, datasource_name = NULL,
-      #settings=NULL, colors=NULL,
-      ...) { 
+    plot = function(data_object, datasource_name=deparse(substitute(data_object)),
+      settings=NULL, colors=NULL, ...) { 
       "..."
-      datasource_origin_name <- deparse(substitute(data_object))
-      if (missing(datasource_name)) {
-        datasource_name <- datasource_origin_name
-      }
       ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name, 
         datasource_origin_name=datasource_origin_name, ...)
 
-      chart <- .self$to_HTML(ms_obj)
+      chart <- .self$.create_chart_HTML(ms_obj, settings, colors, ...)
       
       .self$epiviz_envir <- htmltools::tagAppendChild(.self$epiviz_envir, chart)
       
       invisible(chart)
     }, 
-    to_HTML = function(ms_obj) {
+    .create_chart_HTML = function(ms_obj, settings, colors, ...) {
       "Return a shiny.tag representing an epiviz chart
       \\describe{
       \\item{ms_obj}{EpivizData object}
       \\item{...}{EpivizData object}
       }"
-      chart_tag <- ms_obj$tag_HTML() # ADD THIS TO EPIVIZDATA CLASSES
-      
       ms <- ms_obj$get_measurements()
       #ms_list <- lapply(ms, as.list)
       ms_list <- lapply(ms, function(x) {
@@ -59,28 +52,37 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       })  
       ms_json <- epivizrServer::json_writer(ms_list)
       
-      row_data <- .row_data(ms_obj)
+      row_data <- .row_data_toJSON(ms_obj)
       col_data <- NULL
       
       # Blocks Tracks and Genes Tracks do not use values
       if (ms_obj$get_default_chart_type() != "BlocksTrack" && 
           ms_obj$get_default_chart_type() != "GenesTrack") {
-        col_data <- .col_data(ms_obj)                  
+        col_data <- .col_data_toJSON(ms_obj)                  
       }
       
       data_json <- paste0(row_data, col_data, collapse=",")
-      polymer_chart <- .polymer_chart(chart_tag, ms_obj$get_id(), ms_json, data_json)
+      chart_tag <- ms_obj$tag_HTML(...) # ADD SUPPORT FOR OTHER TYPES
+      
+      polymer_chart <- htmltools::tag(chart_tag, 
+        list(id=ms_obj$get_id(), measurement=ms_json, data=data_json))
       
       return(polymer_chart)
     },
-    .row_data = function(ms_obj) {
+    update = function(chart, data_obj){
+      # TO DO
+    },
+    remove = function(chart) {
+      # TO DO
+    },
+    .row_data_toJSON = function(ms_obj) {
         query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
         result <- ms_obj$get_rows(query = query)
         json_row_data <- epivizrServer::json_writer(result)
         
         return(json_row_data)
     },
-    .col_data = function(ms_obj) {
+    .col_data_toJSON = function(ms_obj) {
       query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
       
       ms_list <- ms_obj$get_measurements()
@@ -94,18 +96,13 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         col_data[[i]] <- values_json
       }
       
-      col_data <- paste0(col_data, collapse='')
+      col_data <- paste0(col_data, collapse=',')
       
       return(col_data)
     },
-    .polymer_chart = function(chart_type, chart_id, ms, data) {
-      chart <- htmltools::tag(chart_type, list(id=chart_id, measurement=ms, data=data))
-      
-      return(chart)
-    },
     show = function() {
-      "Print environment of this object"
-      return(htmltools::knit_print.html(.self$epiviz_envir))
+      "Show environment of this object"
+      return(.self$epiviz_envir)
     }
   )
 )
