@@ -1,0 +1,25 @@
+---
+title: "Knitting Epiviz Charts"
+author: "Brian Gottfried"
+date: "4/30/2017"
+output:
+  BiocStyle::html_document
+---
+
+```{r setup, eval=TRUE, include=FALSE}
+library(epivizrData)
+library(epivizr)
+library(epivizrPolymer)
+```
+
+
+```{r}
+data(tcga_colon_blocks)
+```
+
+Blocks Track Demo
+```{r}
+epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
+
+```
