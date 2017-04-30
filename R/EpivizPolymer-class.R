@@ -114,7 +114,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       "Show environment of this object"
-      return(htmltools::knit_print.shiny.tag(.self$epiviz_envir))
+      return(.self$epiviz_envir)
     }
   )
 )
