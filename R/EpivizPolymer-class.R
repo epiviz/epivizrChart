@@ -1,24 +1,26 @@
-epivizEnvironment <- function(chr="chr11", start=99800000, end=103383180) {
-  server <- epivizrServer::createServer(non_interactive=TRUE)
-  data_mgr <- epivizrData::createMgr(server)
-  epivizEnvir <- htmltools::tag("epiviz-environment" , list(chr=chr, start=start, end=end))
-  epiviz <- EpivizPolymer$new(chr=chr, start=start, end=end,
-    data_mgr=data_mgr, epivizEnvir=epivizEnvir)
-  
-  return(epiviz)
-}
 
 #' Class encapsulating a epiviz data for polymer
+#' @field chr (character) chromosome to to display in environment plot.
+#' @field start (integer) start location to display in environment plot.
+#' @field end (integer) end location to to display in environment plot.
+#' @field data_mgr An object of class \code{\link[epivizrData]{EpivizDataMgr}} used to serve data to epiviz app.
+#' @field epiviz_envir An object of class \code{shiny.tag} used to nest chart tags in epiviz-environment tag
 #' 
+#' @importClassesFrom epivizrData EpivizDataMgr EpivizMeasurement EpivizData epivizrServer EpivizServer
+#' @import GenomicRanges 
+#' @import S4Vectors
 #' @import methods
+#' @import IRanges
+#' @import htmltools
 #' 
+#' @exportClass EpivizPolymer
 EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(
     chr="character",
     start="numeric",
     end="numeric",
     data_mgr="EpivizDataMgr",
-    epivizEnvir="shiny.tag"
+    epiviz_envir="shiny.tag"
   ),
   methods=list(
     plot = function(data_object, datasource_name = NULL,
@@ -34,7 +36,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
       chart <- .self$to_HTML(ms_obj, ...)
       
-      htmltools::tagAppendChild(.self$epivizEnvir, chart)
+      htmltools::tagAppendChild(.self$epiviz_envir, chart)
       
       invisible()
     }, 
