@@ -24,8 +24,8 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     epiviz_envir="ANY" # TODO:  change to "shiny.tag" ?
   ),
   methods=list(
-    plot = function(data_object, datasource_name=deparse(substitute(data_object)),
-      settings=NULL, colors=NULL, ...) { 
+    plot = function(data_object, datasource_name, 
+      datasource_origin_name=deparse(substitute(data_object)),  settings=NULL, colors=NULL, ...) { 
       "Return a shiny.tag representing an epiviz chart and appends to the epiviz environment
       \\describe{
       \\item{data_object}{GenomicRanges object to attach as chart's data}
@@ -34,6 +34,10 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       \\item{colors}{List of colors for chart}
       \\item{...}{Type and columns}
       }"
+      if (missing(datasource_name)) {
+        datasource_name <- datasource_origin_name
+      }
+      
       ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name, 
         datasource_origin_name=datasource_origin_name, ...)
 
