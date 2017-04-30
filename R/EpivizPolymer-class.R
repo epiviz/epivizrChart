@@ -1,5 +1,5 @@
 
-#' Class encapsulating a epiviz data for polymer
+#' Class for knitting epiviz charts
 #' @field chr (character) chromosome to to display in environment plot.
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
@@ -34,49 +34,46 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name, 
         datasource_origin_name=datasource_origin_name, ...)
 
-      chart <- .self$to_HTML(ms_obj, ...)
+      chart <- .self$to_HTML(ms_obj)
       
       htmltools::tagAppendChild(.self$epiviz_envir, chart)
       
       invisible()
     }, 
-    to_HTML = function(ms_obj = NULL,...) {
-      "Return a string representing a polymer object.
+    to_HTML = function(ms_obj) {
+      "Return a shiny.tag representing a polymer chart
       \\describe{
-      \\item{data}{List of row and column data in JSON format}
+      \\item{ms_obj}{EpivizData object}
+      \\item{...}{EpivizData object}
       }"
-      if (is.null(ms_obj)){
-	      stop("data missing")
-      }
-      
-      chart_tag <- ms_obj$tag_HTML() #TODO MORE DATA
+      chart_tag <- ms_obj$tag_HTML() # ADD THIS TO EPIVIZDATA CLASSES
       
       ms <- ms_obj$get_measurements()
       ms_list <- lapply(ms, as.list)
       ms_json <- epivizrServer::json_writer(ms_list)
       
-      row_data <- .row_data(ms_obj=ms_obj, chr=.self$chr, start=.self$start, end=.self$end)
+      row_data <- .row_data(ms_obj)
       col_data <- NULL
       
       # Blocks Tracks and Genes Tracks do not use values
       if (ms_obj$get_default_chart_type() != "BlocksTrack" && 
           ms_obj$get_default_chart_type() != "GenesTrack") {
-        col_data <- .col_data(ms_obj, .self$chr, .self$start, .self$end)                  
+        col_data <- .col_data(ms_obj)                  
       }
       
       data_json <- paste0(row_data, col_data, collapse=",")
       polymer_chart <- .polymer_chart(chart_tag, ms_obj$get_id(), ms_json, data_json)
       return(polymer_chart)
     },
-    .row_data = function(ms_obj, chr, start, end) {
-        query <- GenomicRanges::GRanges(chr, ranges = IRanges::IRanges(start, end))
+    .row_data = function(ms_obj) {
+        query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
         result <- ms_obj$get_rows(query = query)
         json_row_data <- epivizrServer::json_writer(result)
         
         return(json_row_data)
     },
-    .col_data = function(ms_obj, chr, start, end) {
-      query <- GenomicRanges::GRanges(chr, ranges = IRanges::IRanges(start, end))
+    .col_data = function(ms_obj) {
+      query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
       
       ms_list <- ms_obj$get_measurements()
       col_data <- vector("list", length(ms_list)) 
@@ -95,25 +92,6 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     .polymer_chart = function(chart_type, chart_id, ms, data) {
       chart <- htmltools::tag(chart_type, list(id=chart_id, measurement=ms, data=data))
       return(chart)
-    },
-    .polymer_tag = function(datasourceJSON=TRUE) {
-      tag <- NULL
-      if (.self$.type == "epiviz.plugins.charts.BlocksTrack") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-blocks-track", "epiviz-blocks-track")
-      } else if (.self$.type == "epiviz.plugins.charts.HeatmapPlot") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-heatmap-plot", "epiviz-heatmap-plot")
-      } else if (.self$.type == "epiviz.plugins.charts.LinePlot") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-line-plot", "epiviz-line-plot")
-      } else if (.self$.type == "epiviz.plugins.charts.LineTrack") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-line-track", "epiviz-line-track")
-      } else if (.self$.type == "epiviz.plugins.charts.ScatterPlot") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-scatter-plot", "epiviz-scatter-plot")
-      } else if (.self$.type == "epiviz.plugins.charts.StackedLinePlot") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-stacked-line-plot", "epiviz-stacked-line-plot")
-      } else if (.self$.type == "epiviz.plugins.charts.StackedLineTrack") {
-        tag <- ifelse(datasourceJSON == TRUE, "epiviz-json-stacked-line-track", "epiviz-stacked-line-track")
-      } # else if (.self$.type == "epiviz.plugins.charts.GenesTrack")
-      return(tag)
     },
     show = function() {
       "Print environment of this object"
