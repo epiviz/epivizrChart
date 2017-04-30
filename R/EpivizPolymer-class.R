@@ -34,6 +34,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       \\item{colors}{List of colors for chart}
       \\item{...}{Type and columns}
       }"
+      
       if (missing(datasource_name)) {
         datasource_name <- datasource_origin_name
       }
@@ -113,7 +114,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       "Show environment of this object"
-      return(.self$epiviz_envir)
+      return(htmltools::knit_print.shiny.tag(.self$epiviz_envir))
     }
   )
 )
