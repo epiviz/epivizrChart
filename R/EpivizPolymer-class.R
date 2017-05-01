@@ -7,10 +7,10 @@
 #' @field epiviz_envir An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' 
 #' @importFrom epivizrServer json_writer
-#' @import GenomicRanges 
+#' @importFrom GenomicRanges GRanges
+#' @importFrom IRanges IRanges
 #' @import epivizr
 #' @import epivizrData
-#' @import IRanges
 #' @import htmltools
 #' 
 #' @exportClass EpivizPolymer
@@ -100,7 +100,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       return(list(measurements=ms_json, data=data_json))
     },
     .get_row_data = function(ms_obj) {
-        query <- GenomicRanges::GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
+        query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
         result <- ms_obj$get_rows(query = query, metadata=c()) 
         # TODO: change metadata value
         

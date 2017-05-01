@@ -9,7 +9,6 @@ output:
 ```{r setup, eval=TRUE, include=FALSE}
 library(epivizrPolymer)
 library(antiProfilesData)
-library(SummarizedExperiment)
 ```
 
 
@@ -39,7 +38,7 @@ means_track
 ```
 
 Scatter Plot Demo
-```{r eval=FALSE}
+```{r}
 keep <- pData(apColonData)$SubType!="adenoma"
 apColonData <- apColonData[,keep]
 status <- pData(apColonData)$Status
