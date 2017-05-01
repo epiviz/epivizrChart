@@ -12,6 +12,8 @@ epivizEnvironment(chr = "chr11", start = 99800000, end = 103383180)
 \item{start}{(integer) start location to browse to on app startup.}
 
 \item{end}{(integer) end location to browse to on app startup.}
+
+\item{data_mgr}{(EpivzPolyDataMgr)}
 }
 \value{
 An object of class \code{\link{EpivizPolymer}}

@@ -7,20 +7,65 @@ output:
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
-library(epivizrData)
-library(epivizr)
 library(epivizrPolymer)
+library(antiProfilesData)
+library(SummarizedExperiment)
 ```
 
 
 ```{r}
 data(tcga_colon_blocks)
+data(tcga_colon_curves)
+data(apColonData)
+```
+Create an epiviz enivornment
+```{r}
+epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
 Blocks Track Demo
 ```{r}
-epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
-epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
+blocks_track <- epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
 
+blocks_track
+```
+
+
+Means Track Demo
+```{r}
+means_track <- epiviz$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp",columns=c("cancerMean","normalMean"))
+
+means_track
+```
+
+Scatter Plot Demo
+```{r eval=FALSE}
+keep <- pData(apColonData)$SubType!="adenoma"
+apColonData <- apColonData[,keep]
+status <- pData(apColonData)$Status
+Indexes <- split(seq(along=status),status)
+
+exprMat <- exprs(apColonData)
+mns <- sapply(Indexes, function(ind) rowMeans(exprMat[,ind]))
+mat <- cbind(colonM=mns[,"1"]-mns[,"0"], colonA=0.5*(mns[,"1"]+mns[,"0"]))
+
+pd <- data.frame(stat=c("M","A"))
+rownames(pd) <- colnames(mat)
+
+maEset <- ExpressionSet(
+  assayData=mat,
+  phenoData=AnnotatedDataFrame(pd),
+  featureData=featureData(apColonData),
+  annotation=annotation(apColonData)
+)
+
+eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
+
+eset_chart
+```
+
+Show the epiviz environment
+```{r}
 epiviz
 ```
+
