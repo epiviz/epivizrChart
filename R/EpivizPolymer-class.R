@@ -6,7 +6,7 @@
 #' @field data_mgr An object of class \code{\link[epivizrPolymer]{EpivizPolyDataMgr}} used to serve data to epiviz environment.
 #' @field epiviz_envir An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' 
-#' @importMethodsFrom epivizrServer json_writer
+#' @importFrom epivizrServer json_writer
 #' @import GenomicRanges 
 #' @import epivizr
 #' @import epivizrData
@@ -49,7 +49,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       
       chart <- .self$.create_chart_html(ms_obj, settings, colors, chart_type)
       
-      .self$epiviz_envir <- htmltools::tagAppendChild(.self$epiviz_envir, chart)
+      .self$epiviz_envir <- tagAppendChild(.self$epiviz_envir, chart)
       
       invisible(chart)
     }, 
@@ -69,15 +69,21 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         chart_tag <- .chart_type_to_html_tag(chart_type)
       }
     
-      polymer_chart <- htmltools::tag(chart_tag, list(id=ms_obj$get_id(), 
-        measurement=data_json$measurements, data=data_json$data, settings=settings, colors=colors))
+      polymer_chart <- tag(
+        chart_tag, 
+        list(
+          id=ms_obj$get_id(), 
+          measurement=data_json$measurements, 
+          data=data_json$data,
+          settings=settings, 
+          colors=colors))
       
       return(polymer_chart)
     },
     .data_toJSON = function(ms_obj) {
       ms <- ms_obj$get_measurements()
       ms_list <- lapply(ms, as.list)
-      ms_json <- epivizrServer::json_writer(ms_list)
+      ms_json <- json_writer(ms_list)
       
       row_data <- .get_row_data(ms_obj)
       col_data <- NULL
@@ -89,19 +95,19 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       }
       
       result <- list(rows=row_data, cols=col_data)
-      data_json <- epivizrServer::json_writer(result)
+      data_json <- json_writer(result)
       
       return(list(measurements=ms_json, data=data_json))
     },
     .get_row_data = function(ms_obj) {
-        query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
+        query <- GenomicRanges::GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
         result <- ms_obj$get_rows(query = query, metadata=c()) 
         # TODO: change metadata value
         
         return(result)
     },
     .get_col_data = function(ms_obj) {
-      query <- GenomicRanges::GRanges(.self$chr, ranges = IRanges::IRanges(.self$start, .self$end))
+      query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
       
       ms_list <- ms_obj$get_measurements()
       col_data <- vector("list", length(ms_list)) 
@@ -128,7 +134,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       "Show environment of this object"
-      htmltools::knit_print.shiny.tag(.self$epiviz_envir)
+      knit_print.shiny.tag(.self$epiviz_envir)
     }
   )
 )
