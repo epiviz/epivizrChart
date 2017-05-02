@@ -110,12 +110,12 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
       
       ms_list <- ms_obj$get_measurements()
-      col_data <- vector("list", length(ms_list)) 
+      col_data <- list()
       
       for (i in 1:length(ms_list)) {
         ms <- ms_list[[i]]
         values <- ms_obj$get_values(query=query, measurement=ms@id)
-        col_data[[i]] <- values
+        col_data[[ms@id]] <- values
       }
       
       return(col_data)
