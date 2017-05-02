@@ -23,7 +23,7 @@ epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
 Blocks Track Demo
-```{r}
+```{r eval=FALSE}
 blocks_track <- epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
 
 blocks_track
@@ -38,7 +38,7 @@ means_track
 ```
 
 Scatter Plot Demo
-```{r}
+```{r warnings=FALSE, messages=FALSE}
 keep <- pData(apColonData)$SubType!="adenoma"
 apColonData <- apColonData[,keep]
 status <- pData(apColonData)$Status
@@ -57,11 +57,18 @@ maEset <- ExpressionSet(
   featureData=featureData(apColonData),
   annotation=annotation(apColonData)
 )
-
+```
+```{r include=FALSE}
 eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
+```
 
+```{r eval=FALSE}
+eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
+```
+```{r}
 eset_chart
 ```
+
 
 Show the epiviz environment
 ```{r}
