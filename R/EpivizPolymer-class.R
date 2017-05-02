@@ -83,7 +83,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     .data_toJSON = function(ms_obj) {
       ms <- ms_obj$get_measurements()
       ms_list <- lapply(ms, as.list)
-      ms_json <- json_writer(ms_list)
+      ms_json <- gsub('\"', "'",  json_writer(ms_list))
       
       row_data <- .get_row_data(ms_obj)
       col_data <- NULL
@@ -95,7 +95,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       }
       
       result <- list(rows=row_data, cols=col_data)
-      data_json <- json_writer(result)
+      data_json <- gsub('\"', "'",  json_writer(result))
       
       return(list(measurements=ms_json, data=data_json))
     },

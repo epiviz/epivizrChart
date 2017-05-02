@@ -34,7 +34,7 @@ Means Track Demo
 ```{r}
 means_track <- epiviz$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp",columns=c("cancerMean","normalMean"))
 
-means_track
+htmltools::knit_print.shiny.tag(means_track)
 ```
 
 Scatter Plot Demo
@@ -66,7 +66,7 @@ eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","
 eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
 ```
 ```{r}
-eset_chart
+htmltools::knit_print.shiny.tag(eset_chart)
 ```
 
 
