@@ -1,7 +1,6 @@
 ---
 title: "Knitting Epiviz Charts"
 author: "Brian Gottfried"
-date: "4/30/2017"
 output:
   BiocStyle::html_document
 ---
@@ -17,6 +16,7 @@ data(tcga_colon_blocks)
 data(tcga_colon_curves)
 data(apColonData)
 ```
+
 Create an epiviz enivornment
 ```{r}
 epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
@@ -74,4 +74,5 @@ Show the epiviz environment
 ```{r}
 epiviz
 ```
+
 

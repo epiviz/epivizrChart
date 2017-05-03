@@ -72,6 +72,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       polymer_chart <- tag(
         chart_tag, 
         list(
+          class="charts",
           id=ms_obj$get_id(), 
           measurements=data_json$measurements,
           data=data_json$data,
@@ -101,24 +102,24 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     .get_row_data = function(ms_obj) {
         query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
-        result <- ms_obj$get_rows(query = query, metadata=c()) 
+        rows <- ms_obj$get_rows(query = query, metadata=c()) 
         # TODO: change metadata value
         
-        return(result)
+        return(rows)
     },
     .get_col_data = function(ms_obj) {
       query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
       
       ms_list <- ms_obj$get_measurements()
-      col_data <- list()
+      cols <- list()
       
       for (i in 1:length(ms_list)) {
         ms <- ms_list[[i]]
         values <- ms_obj$get_values(query=query, measurement=ms@id)
-        col_data[[ms@id]] <- values
+        cols[[ms@id]] <- values
       }
       
-      return(col_data)
+      return(cols)
     },
     .chart_type_to_html_tag = function(chart_type) {
       chart_tag <- switch(chart_type,
