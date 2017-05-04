@@ -1,9 +1,9 @@
-#' Create \code{\link{EpivizPolymer}} object to knit epiviz charts.
+#' Create \code{\link{EpivizChart}} object to knit epiviz charts.
 #' @param chr (character) chromosome to browse to on app startup.
 #' @param start (integer) start location to browse to on app startup.
 #' @param end (integer) end location to browse to on app startup.
-#' @param data_mgr (EpivzPolyDataMgr)
-#' @return An object of class \code{\link{EpivizPolymer}}
+#' @param data_mgr (EpivzChartDataMgr)
+#' @return An object of class \code{\link{EpivizChart}}
 #' 
 #' @examples
 #' # see package vignete for example usage
@@ -12,8 +12,9 @@
 #' @export
 epivizEnvironment <- function(chr="chr11", start=99800000, end=103383180) {
   epiviz_envir <- htmltools::tag("epiviz-environment", list(chr=chr, start=start, end=end))
-  epiviz <- EpivizPolymer$new(chr=chr, start=start, end=end,
-    data_mgr=EpivizPolyDataMgr$new(), epiviz_envir=epiviz_envir)
+  
+  epiviz <- EpivizChart$new(chr=chr, start=start, end=end,
+    data_mgr=EpivizChartDataMgr$new(), epiviz_envir=epiviz_envir)
   
   return(epiviz)
 }

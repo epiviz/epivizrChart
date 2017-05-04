@@ -5,8 +5,8 @@
 #' 
 #' @importMethodsFrom epivizrData register
 #' @import epivizrData
-#' @exportClass EpivizPolyDataMgr
-EpivizPolyDataMgr <- setRefClass("EpivizPolyDataMgr",
+#' @exportClass EpivizChartDataMgr
+EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields = list(
     .ms_list = "environment",
     .ms_idCounter = "integer"
@@ -42,7 +42,7 @@ EpivizPolyDataMgr <- setRefClass("EpivizPolyDataMgr",
         obj=ms_object)
       assign(ms_id, ms_record, envir=.self$.ms_list)
       
-      ms_object
+     return(ms_object)
     }
   )
 )

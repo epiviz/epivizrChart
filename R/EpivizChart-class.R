@@ -3,7 +3,7 @@
 #' @field chr (character) chromosome to to display in environment plot.
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
-#' @field data_mgr An object of class \code{\link[epivizrPolymer]{EpivizPolyDataMgr}} used to serve data to epiviz environment.
+#' @field data_mgr An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz environment.
 #' @field epiviz_envir An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' 
 #' @importFrom epivizrServer json_writer
@@ -13,13 +13,13 @@
 #' @import epivizrData
 #' @import htmltools
 #' 
-#' @exportClass EpivizPolymer
-EpivizPolymer <- setRefClass("EpivizPolymer",
+#' @exportClass EpivizChart
+EpivizChart <- setRefClass("EpivizChart",
   fields=list(
     chr="character",
     start="numeric",
     end="numeric",
-    data_mgr="EpivizPolyDataMgr",
+    data_mgr="EpivizChartDataMgr",
     epiviz_envir="ANY" 
   ),
   methods=list(
@@ -69,7 +69,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         chart_tag <- .chart_type_to_html_tag(chart_type)
       }
     
-      polymer_chart <- tag(
+      epiviz_chart <- tag(
         chart_tag, 
         list(
           class="charts",
@@ -79,7 +79,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
           settings=settings, 
           colors=colors))
       
-      return(polymer_chart)
+      return(epiviz_chart)
     },
     .data_toJSON = function(ms_obj) {
       row_data <- .get_row_data(ms_obj)

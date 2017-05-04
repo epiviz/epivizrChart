@@ -6,7 +6,7 @@ output:
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
-library(epivizrPolymer)
+library(epivizrChart)
 library(antiProfilesData)
 ```
 
