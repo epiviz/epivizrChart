@@ -82,10 +82,6 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       return(polymer_chart)
     },
     .data_toJSON = function(ms_obj) {
-      ms <- ms_obj$get_measurements()
-      ms_list <- lapply(ms, as.list)
-      ms_json <- json_writer(ms_list)
-
       row_data <- .get_row_data(ms_obj)
       col_data <- NULL
       
@@ -98,6 +94,10 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       result <- list(rows=row_data, cols=col_data)
       data_json <- json_writer(result)
 
+      ms <- ms_obj$get_measurements()
+      ms_list <- lapply(ms, as.list)
+      ms_json <- json_writer(ms_list)
+      
       return(list(measurements=ms_json, data=data_json))
     },
     .get_row_data = function(ms_obj) {
