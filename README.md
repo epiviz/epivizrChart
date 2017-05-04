@@ -1,1 +1,1 @@
-# epivizrPolymer
+# epivizrChart
