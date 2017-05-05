@@ -11,7 +11,7 @@
 #'
 #' @export
 epivizEnvironment <- function(chr="chr11", start=99800000, end=103383180) {
-  epiviz_env <- htmltools::tag("epiviz-environment", list(chr=chr, start=start, end=end))
+  epiviz_env <- tag("epiviz-environment", list(chr=chr, start=start, end=end))
 
   epiviz <- EpivizChart$new(chr=chr, start=start, end=end,
     data_mgr=EpivizChartDataMgr$new(), epiviz_env=epiviz_env)
