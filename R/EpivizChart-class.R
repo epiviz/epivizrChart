@@ -4,28 +4,25 @@
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
 #' @field data_mgr An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz environment.
-#' @field epiviz_envir An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
-#' 
+#' @field epiviz_env An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' @importFrom epivizrServer json_writer
 #' @importFrom GenomicRanges GRanges
 #' @importFrom IRanges IRanges
-#' @import epivizr
 #' @import epivizrData
 #' @import htmltools
-#' 
 #' @exportClass EpivizChart
 EpivizChart <- setRefClass("EpivizChart",
   fields=list(
     chr="character",
     start="numeric",
     end="numeric",
-    data_mgr="EpivizChartDataMgr",
-    epiviz_envir="ANY" 
+    data_mgr="ANY", # TODO: EpivizChartDataMgr
+    epiviz_env="ANY" 
   ),
   methods=list(
     get_environment = function() {
       "Return the epiviz-environment"
-      return(.self$epiviz_envir)
+      return(.self$epiviz_env)
     },
     plot = function(data_object, datasource_name, 
       datasource_origin_name=deparse(substitute(data_object)), 
@@ -49,7 +46,7 @@ EpivizChart <- setRefClass("EpivizChart",
       
       chart <- .self$.create_chart_html(ms_obj, settings, colors, chart_type)
       
-      .self$epiviz_envir <- tagAppendChild(.self$epiviz_envir, chart)
+      .self$epiviz_env <- tagAppendChild(.self$epiviz_env, chart)
       
       invisible(chart)
     }, 
@@ -135,7 +132,7 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     show = function() {
       "Show environment of this object"
-      knit_print.shiny.tag(.self$epiviz_envir)
+      knit_print.shiny.tag(.self$epiviz_env)
     }
   )
 )

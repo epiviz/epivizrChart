@@ -2,7 +2,7 @@
 % Please edit documentation in R/epivizEnvironment.R
 \name{epivizEnvironment}
 \alias{epivizEnvironment}
-\title{Create \code{\link{EpivizPolymer}} object to knit epiviz charts.}
+\title{Create \code{\link{EpivizChart}} object to knit epiviz charts.}
 \usage{
 epivizEnvironment(chr = "chr11", start = 99800000, end = 103383180)
 }
@@ -13,13 +13,13 @@ epivizEnvironment(chr = "chr11", start = 99800000, end = 103383180)
 
 \item{end}{(integer) end location to browse to on app startup.}
 
-\item{data_mgr}{(EpivzPolyDataMgr)}
+\item{data_mgr}{(EpivizChartDataMgr)}
 }
 \value{
-An object of class \code{\link{EpivizPolymer}}
+An object of class \code{\link{EpivizChart}}
 }
 \description{
-Create \code{\link{EpivizPolymer}} object to knit epiviz charts.
+Create \code{\link{EpivizChart}} object to knit epiviz charts.
 }
 \examples{
 # see package vignete for example usage
