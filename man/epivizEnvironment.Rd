@@ -22,7 +22,7 @@ An object of class \code{\link{EpivizChart}}
 Create \code{\link{EpivizChart}} object to knit epiviz charts.
 }
 \examples{
-# see package vignete for example usage
+# see package vignette for example usage
 epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 
 }

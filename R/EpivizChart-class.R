@@ -1,10 +1,8 @@
 #' Class for knitting epiviz charts
 #' 
-#' @field chr (character) chromosome to to display in environment plot.
-#' @field start (integer) start location to display in environment plot.
-#' @field end (integer) end location to to display in environment plot.
-#' @field data_mgr An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz environment.
-#' @field epiviz_env An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
+#' @field mgr  An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz chart.
+#' @field obj An object of class \code{\link[epivizrData]{EpivizData}}. 
+#' @field chart An object of class \code{htmltools}{shiny.tag} representing an epiviz chart in html.
 #' @importFrom epivizrServer json_writer
 #' @importFrom GenomicRanges GRanges
 #' @importFrom IRanges IRanges
@@ -13,19 +11,13 @@
 #' @exportClass EpivizChart
 EpivizChart <- setRefClass("EpivizChart",
   fields=list(
-    chr="character",
-    start="numeric",
-    end="numeric",
-    data_mgr="ANY", # TODO: EpivizChartDataMgr
-    epiviz_env="ANY" 
+    mgr="ANY", 
+    obj="ANY", 
+    chart="ANY"
   ),
   methods=list(
-    get_environment = function() {
-      "Return the epiviz-environment"
-      return(.self$epiviz_env)
-    },
     plot = function(data_object, datasource_name, 
-      datasource_origin_name=deparse(substitute(data_object)), 
+      datasource_origin_name=deparse(substitute(data_object)),
       chart_type=NULL, settings=NULL, colors=NULL, ...) { 
       "Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
       \\describe{
@@ -36,21 +28,20 @@ EpivizChart <- setRefClass("EpivizChart",
       \\item{colors}{List of colors for chart}
       \\item{...}{Type and columns}
       }"
-      
       if (missing(datasource_name)) {
         datasource_name <- datasource_origin_name
       }
       
-      ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name, 
+      ms_obj <- .self$mgr$add_measurements(data_object, datasource_name=datasource_name, 
         datasource_origin_name=datasource_origin_name, ...)
+      .self$obj <- ms_obj
       
-      chart <- .self$.create_chart_html(ms_obj, settings, colors, chart_type)
-      
-      .self$epiviz_env <- tagAppendChild(.self$epiviz_env, chart)
-      
-      invisible(chart)
+      chart <- .self$.create_chart_html(ms_obj, settings, colors, chart_type,...)
+      .self$chart <- chart
+
+      invisible(.self)
     }, 
-    .create_chart_html = function(ms_obj, settings, colors, chart_type) {
+    .create_chart_html = function(ms_obj, settings, colors, chart_type, ...) {
       "Creates a shiny.tag representing an epiviz chart
       \\describe{
       \\item{ms_obj}{EpivizData object}
@@ -58,14 +49,10 @@ EpivizChart <- setRefClass("EpivizChart",
       \\item{colors}{Chart colors}
       \\item{chart_type}{Chart type for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}}
       }"
-      data_json <- .data_toJSON(ms_obj)
+      data_json <- ms_obj$toJSON(...)
       
-      if (is.null(chart_type)) {
-        chart_tag <- ms_obj$get_default_chart_type_html()
-      } else {
-        chart_tag <- .chart_type_to_html_tag(chart_type)
-      }
-    
+      chart_tag <- .chart_type_to_html_tag(ms_obj, chart_type)
+      
       epiviz_chart <- tag(
         chart_tag, 
         list(
@@ -78,61 +65,30 @@ EpivizChart <- setRefClass("EpivizChart",
       
       return(epiviz_chart)
     },
-    .data_toJSON = function(ms_obj) {
-      row_data <- .get_row_data(ms_obj)
-      col_data <- NULL
-      
-      # Blocks Tracks and Genes Tracks do not use values
-      if (ms_obj$get_default_chart_type() != "BlocksTrack" && 
-          ms_obj$get_default_chart_type() != "GenesTrack") {
-        col_data <- .get_col_data(ms_obj)                  
+    .chart_type_to_html_tag = function(ms_obj, chart_type) {
+      "Return an html tag representing an epiviz chart
+      \\describe{
+      \\item{ms_obj}{EpivizData object}
+      \\item{chart_type}{Chart type for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}}
+      }"
+      if (is.null(chart_type)) {
+        chart_tag <- ms_obj$get_default_chart_type_html()
+      } else {
+        chart_tag <- switch(chart_type,
+          BlocksTrack = "epiviz-json-blocks-track",
+          HeatmapPlot = "epiviz-json-heatmap-plot",
+          LinePlot = "epiviz-json-line-plot",
+          LineTrack = "epiviz-json-line-track",
+          ScatterPlot = "epiviz-json-scatter-plot",
+          StackedLinePlot = "epiviz-json-stacked-line-plot",
+          StackedLineTrack = "epiviz-json-stacked-line-track"
+        )
       }
-      
-      result <- list(rows=row_data, cols=col_data)
-      data_json <- json_writer(result)
-
-      ms <- ms_obj$get_measurements()
-      ms_list <- lapply(ms, as.list)
-      ms_json <- json_writer(ms_list)
-      
-      return(list(measurements=ms_json, data=data_json))
-    },
-    .get_row_data = function(ms_obj) {
-        query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
-        rows <- ms_obj$get_rows(query = query, metadata=c()) 
-        # TODO: change metadata value
-        
-        return(rows)
-    },
-    .get_col_data = function(ms_obj) {
-      query <- GRanges(.self$chr, ranges=IRanges(.self$start, .self$end))
-      
-      ms_list <- ms_obj$get_measurements()
-      cols <- list()
-      
-      for (i in 1:length(ms_list)) {
-        ms <- ms_list[[i]]
-        values <- ms_obj$get_values(query=query, measurement=ms@id)
-        cols[[ms@id]] <- values
-      }
-      
-      return(cols)
-    },
-    .chart_type_to_html_tag = function(chart_type) {
-      chart_tag <- switch(chart_type,
-        BlocksTrack = "epiviz-json-blocks-track",
-        HeatmapPlot = "epiviz-json-heatmap-plot",
-        LinePlot = "epiviz-json-line-plot",
-        LineTrack = "epiviz-json-line-track",
-        ScatterPlot = "epiviz-json-scatter-plot",
-        StackedLinePlot = "epiviz-json-stacked-line-plot",
-        StackedLineTrack = "epiviz-json-stacked-line-track"
-      )
       return(chart_tag)
     },
     show = function() {
-      "Show environment of this object"
-      knit_print.shiny.tag(.self$epiviz_env)
+      "Show chart of this object"
+      knit_print.shiny.tag(.self$chart)
     }
   )
 )
