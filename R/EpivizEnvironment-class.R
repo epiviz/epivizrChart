@@ -3,6 +3,8 @@
 #' @field chr (character) chromosome to to display in environment plot.
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
+#' @field range
+#' @field initializeRegions
 #' @import htmltools
 #' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
@@ -10,7 +12,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
   fields=list(
     chr="character",
     start="numeric",
-    end="numeric"
+    end="numeric",
+    range="character",
+    initializeRegions="character"
   ),
   methods=list(
     add = function(polymer_obj) {

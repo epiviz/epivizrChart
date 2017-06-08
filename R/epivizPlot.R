@@ -1,4 +1,5 @@
-#' Create EpivizChart object.
+#' Create EpivizChart plot.
+#'
 #' @param data_object (EpivzData)
 #' @param datasource_name (character)
 #' @param datasource_origin_name (character)

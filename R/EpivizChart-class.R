@@ -1,4 +1,4 @@
-#' Class for knitting epiviz charts
+#' Data container for an epiviz chart.
 #'
 #' @field mgr  An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz chart.
 #' @field obj An object of class \code{\link[epivizrData]{EpivizData}}.
@@ -33,9 +33,30 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$obj <- ms_obj
 
       epiviz_tag <- .self$.create_chart_html(ms_obj, settings, colors, chart_type,...)
-      .self$set_tag(epiviz_tag)
+      .self$.init_fields(epiviz_tag)
 
       return(.self)
+    },
+    .init_fields = function(epiviz_tag) {
+      "Initalize inherited fields (html tag attributes) of epiviz chart"
+      .self$set_tag(epiviz_tag)
+
+      name_attr <- epiviz_tag$name
+      .self$set_name(name_attr)
+
+      class_attr <- tagGetAttribute(epiviz_tag, "class")
+      .self$set_class(class)
+
+      id_attr <- tagGetAttribute(epiviz_tag, "id")
+      .self$set_id(id)
+
+      measurements_attr <- tagGetAttribute(epiviz_tag, "measurements")
+       .self$set_measurements(measurements)
+
+      data_attr <- tagGetAttribute(epiviz_tag, "data")
+      .self$set_data(data)
+
+      invisible()
     },
     .create_chart_html = function(ms_obj, settings, colors, chart_type, ...) {
       "Creates a shiny.tag representing an epiviz chart
