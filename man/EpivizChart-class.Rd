@@ -11,15 +11,9 @@ Class for knitting epiviz charts
 \section{Fields}{
 
 \describe{
-\item{\code{chr}}{(character) chromosome to to display in environment plot.}
+\item{\code{mgr}}{An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz chart.}
 
-\item{\code{start}}{(integer) start location to display in environment plot.}
-
-\item{\code{end}}{(integer) end location to to display in environment plot.}
-
-\item{\code{data_mgr}}{An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz environment.}
-
-\item{\code{epiviz_env}}{An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.}
+\item{\code{obj}}{An object of class \code{\link[epivizrData]{EpivizData}}.}
 }}
 
 \section{Methods}{

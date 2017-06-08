@@ -2,7 +2,7 @@
 % Please edit documentation in R/epivizPlot.R
 \name{epivizPlot}
 \alias{epivizPlot}
-\title{Create \code{\link{EpivizChart}} object.}
+\title{Create EpivizChart object.}
 \usage{
 epivizPlot(data_object, datasource_name,
   datasource_origin_name = deparse(substitute(data_object)),
@@ -27,10 +27,10 @@ epivizPlot(data_object, datasource_name,
 \item{...}{(type, columns, chr, start, end)}
 }
 \value{
-An object of class \code{\link{EpivizChart}}
+An object of class \code{\link[epivizrChart]{EpivizChart}}
 }
 \description{
-Create \code{\link{EpivizChart}} object.
+Create EpivizChart object.
 }
 \examples{
 # see package vignette for example usage

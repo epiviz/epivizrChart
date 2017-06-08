@@ -3,6 +3,32 @@ Title: Knit Epiviz Charts
 Version: 0.0.0.9000
 Authors@R: person("Brian", "Gottfried", email = "briangottfried@me.com", role = c("aut", "cre"))
 Description: TODO
+Imports:
+    epivizrServer (>= 1.1.1),
+    epivizrData (>= 1.3.4),
+    GenomicRanges,
+    S4Vectors,
+    IRanges,
+    htmltools
+Suggests:
+    testthat,
+    roxygen2,
+    knitr,
+    Biobase,
+    SummarizedExperiment,
+    antiProfilesData,
+    hgu133plus2.db,
+    Mus.musculus,
+    BiocStyle
+Collate:
+  'EpivizPolymer-class.R'
+  'EpivizChart-class.R'
+  'EpivizChartDataMgr-class.R'
+  'EpivizEnvironment-class.R'
+  'EpivizNavigation-class.R'
+  'epivizPlot.R'
+  'epivizEnvironment.R'
+  'epivizNavigation.R'
 Depends: R (>= 3.4.0)
 License: TODO
 Encoding: UTF-8

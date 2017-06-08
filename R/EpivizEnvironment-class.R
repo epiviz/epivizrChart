@@ -1,33 +1,26 @@
 #' Epiviz Environment Class
-#' 
+#'
 #' @field chr (character) chromosome to to display in environment plot.
 #' @field start (integer) start location to display in environment plot.
 #' @field end (integer) end location to to display in environment plot.
-#' @field env An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.
 #' @import htmltools
-#' @exportClass EpivizChart
+#' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
+  contains="EpivizPolymer",
   fields=list(
     chr="character",
     start="numeric",
-    end="numeric",
-    env="ANY" 
+    end="numeric"
   ),
   methods=list(
-    add = function(...) {
-      "Add chart to environment"
-      for (chart in ...) {
-        if (!is(chart, "EpivizChart")) {
-          stop("All arguments must be an 'EpivizChart' object")
-        }
-        .self$.env <- tagAppendChild(.self$env, chart_object)
+    add = function(polymer_obj) {
+      "Add chart or navigation to environment"
+      if (!is(polymer_obj, "EpivizPolymer")) {
+        stop(polymer_obj, " must be an 'EpivizPolymer' object")
+      } else {
+        .self$tag <- tagAppendChild(.self$tag, polymer_obj$get_tag())
       }
-
       return(.self)
-    },
-    show = function() {
-      "Show environment of this object"
-      knit_print.shiny.tag(.self$env)
     }
   )
 )

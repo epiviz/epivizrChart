@@ -11,32 +11,7 @@ Class for knitting epiviz charts
 \section{Fields}{
 
 \describe{
-\item{\code{chr}}{(character) chromosome to to display in environment plot.}
-
-\item{\code{start}}{(integer) start location to display in environment plot.}
-
-\item{\code{end}}{(integer) end location to to display in environment plot.}
-
-\item{\code{data_mgr}}{An object of class \code{\link[epivizrPolymer]{EpivizPolyDataMgr}} used to serve data to epiviz environment.}
-
-\item{\code{epiviz_envir}}{An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.}
+\item{\code{tag}}{An object of class \code{\link[htmltools]{shiny.tag}} representing an epiviz chart in html.}
 }}
 
-\section{Methods}{
-
-\describe{
-\item{\code{get_environment()}}{Return the epiviz-environment}
-
-\item{\code{plot(data_object, datasource_name,
-  datasource_origin_name = deparse(substitute(data_object)),
-  chart_type = NULL, settings = NULL, colors = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
-\describe{
-\item{data_object}{GenomicRanges object to attach as chart's data}
-\item{datasource_name}{Name for datasource}
-\item{chart_type}{Type of chart for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}
-\item{settings}{List of settings for chart}
-\item{colors}{List of colors for chart}
-\item{...}{Type and columns}
-}}
-}}
 
