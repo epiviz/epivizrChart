@@ -4,9 +4,9 @@
 \name{EpivizChart-class}
 \alias{EpivizChart-class}
 \alias{EpivizChart}
-\title{Class for knitting epiviz charts}
+\title{Data container for an epiviz chart.}
 \description{
-Class for knitting epiviz charts
+Data container for an epiviz chart.
 }
 \section{Fields}{
 

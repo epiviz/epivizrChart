@@ -4,7 +4,8 @@
 \alias{epivizNavigation}
 \title{Create an \code{\link[epivizrChart]{EpivizNavigation}} object.}
 \usage{
-epivizNavigation(chr = "chr11", start = 99800000, end = 103383180)
+epivizNavigation(chr = "chr11", start = 99800000, end = 103383180,
+  data_mgr = NULL)
 }
 \arguments{
 \item{chr}{(character) chromosome to browse to on app startup.}
@@ -23,6 +24,6 @@ Create an \code{\link[epivizrChart]{EpivizNavigation}} object.
 }
 \examples{
 # see package vignette for example usage
-epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epiviz <- epivizNavigation(chr="chr11", start=99800000, end=103383180)
 
 }

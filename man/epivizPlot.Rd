@@ -2,12 +2,12 @@
 % Please edit documentation in R/epivizPlot.R
 \name{epivizPlot}
 \alias{epivizPlot}
-\title{Create EpivizChart object.}
+\title{Create EpivizChart plot.}
 \usage{
 epivizPlot(data_object, datasource_name,
   datasource_origin_name = deparse(substitute(data_object)),
-  data_mgr = EpivizChartDataMgr$new(), chart_type = NULL, settings = NULL,
-  colors = NULL, ...)
+  epiviz_env = NULL, chart_type = NULL, settings = NULL, colors = NULL,
+  ...)
 }
 \arguments{
 \item{data_object}{(EpivzData)}
@@ -16,8 +16,6 @@ epivizPlot(data_object, datasource_name,
 
 \item{datasource_origin_name}{(character)}
 
-\item{data_mgr}{(EpivizChartDataMgr)}
-
 \item{chart_type}{(character) BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack}
 
 \item{settings}{(list) list of settings}
@@ -25,12 +23,14 @@ epivizPlot(data_object, datasource_name,
 \item{colors}{(list) list of colors}
 
 \item{...}{(type, columns, chr, start, end)}
+
+\item{data_mgr}{(EpivizChartDataMgr)}
 }
 \value{
 An object of class \code{\link[epivizrChart]{EpivizChart}}
 }
 \description{
-Create EpivizChart object.
+Create EpivizChart plot.
 }
 \examples{
 # see package vignette for example usage

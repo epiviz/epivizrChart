@@ -3,6 +3,7 @@
 export(epivizEnvironment)
 export(epivizNavigation)
 export(epivizPlot)
+export(json_writer)
 exportClasses(EpivizChart)
 exportClasses(EpivizChartDataMgr)
 exportClasses(EpivizEnvironment)

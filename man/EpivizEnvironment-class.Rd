@@ -13,14 +13,38 @@ Epiviz Environment Class
 \describe{
 \item{\code{chr}}{(character) chromosome to to display in environment plot.}
 
-\item{\code{start}}{(integer) start location to display in environment plot.}
+\item{\code{start}}{(numeric) start location to display in environment plot.}
 
-\item{\code{end}}{(integer) end location to to display in environment plot.}
+\item{\code{end}}{(numeric) end location to to display in environment plot.}
+
+\item{\code{range}}{(numeric)}
+
+\item{\code{initializeRegions}}{(character)}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{\code{add(polymer_obj)}}{Add chart or navigation to environment}
+\item{\code{append_child(polymer_obj)}}{Append chart or navigation to environment}
+
+\item{\code{get_chr()}}{Get chromosome}
+
+\item{\code{get_end()}}{Get end}
+
+\item{\code{get_initializeRegions()}}{Get initializeRegions}
+
+\item{\code{get_range()}}{Get range}
+
+\item{\code{get_start()}}{Get start}
+
+\item{\code{set_chr(chr)}}{Set the chromosome}
+
+\item{\code{set_end(end)}}{Set end}
+
+\item{\code{set_initializeRegions(initReg)}}{Set initializeRegions}
+
+\item{\code{set_range(range)}}{Set range}
+
+\item{\code{set_start(start)}}{Set start}
 }}
 

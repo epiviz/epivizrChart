@@ -4,14 +4,55 @@
 \name{EpivizPolymer-class}
 \alias{EpivizPolymer-class}
 \alias{EpivizPolymer}
-\title{Class for knitting epiviz charts}
+\title{Parent data container for an epiviz chart.}
 \description{
-Class for knitting epiviz charts
+Parent data container for an epiviz chart.
 }
 \section{Fields}{
 
 \describe{
+\item{\code{data_mgr}}{EpivizChartDataMgr.}
+
+\item{\code{name}}{Character string of an epiviz chart type.}
+
+\item{\code{class}}{Character string of an epiviz chart's class attribute.}
+
+\item{\code{id}}{Character string of an epiviz chart's id attribute.}
+
+\item{\code{measurement}}{Character string of an epiviz chart's measurement attribute.}
+
+\item{\code{data}}{Character string of an epiviz chart's data attribute.}
+
 \item{\code{tag}}{An object of class \code{\link[htmltools]{shiny.tag}} representing an epiviz chart in html.}
 }}
 
+\section{Methods}{
+
+\describe{
+\item{\code{get_class()}}{Get class}
+
+\item{\code{get_data()}}{Get data}
+
+\item{\code{get_data_mgr()}}{Return EpivizChart Data Manager}
+
+\item{\code{get_id()}}{Get id}
+
+\item{\code{get_measurements()}}{Get measurements}
+
+\item{\code{get_name()}}{Get name}
+
+\item{\code{get_tag()}}{Get tag}
+
+\item{\code{set_class(class)}}{Set chart class}
+
+\item{\code{set_data(data)}}{Set data}
+
+\item{\code{set_id(id)}}{Set chart id}
+
+\item{\code{set_measurements(ms)}}{Set measurements}
+
+\item{\code{set_name(name)}}{Set name}
+
+\item{\code{set_tag(epiviz_tag)}}{Set tag}
+}}
 
