@@ -8,14 +8,16 @@
 #'
 #' @examples
 #' # see package vignette for example usage
-#' epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+#' epiviz <- epivizNavigation(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
-epivizNavigation <- function(chr="chr11", start=99800000, end=103383180) {
+epivizNavigation <- function(chr="chr11", start=99800000, end=103383180, data_mgr=NULL) {
   epiviz_nav <- tag("epiviz-navigation", list(chr=chr, start=start, end=end))
 
+  dataMgr <- ifelse(is.null(data_mgr), EpivizChartDataMgr$new(), data_mgr)
+  
   nav_obj <- EpivizNavigation$new(chr=chr, start=start,
-    end=end, tag=epiviz_nav, data_mgr=EpivizChartDataMgr$new())
+    end=end, tag=epiviz_nav, data_mgr=dataMgr)
 
   return(nav_obj)
 }
