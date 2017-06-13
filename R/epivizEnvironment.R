@@ -13,11 +13,13 @@
 #' @export
 epivizEnvironment <- function(chr=NULL, start=NULL, end=NULL, data_mgr=NULL) {
   epiviz_env <- tag("epiviz-environment", list(chr=chr, start=start, end=end))
-  
-  dataMgr <- ifelse(is.null(data_mgr), EpivizChartDataMgr$new(), data_mgr)
-  
-  env_obj <- EpivizEnvironment$new(chr=chr, start=start, end=end, 
-    tag=epiviz_env, data_mgr=dataMgr)
+
+  if (is.null(data_mgr)){
+    data_mgr <- EpivizChartDataMgr$new()
+  }
+
+  env_obj <- EpivizEnvironment$new(chr=chr, start=start, end=end,
+    tag=epiviz_env, data_mgr=data_mgr)
 
   return(env_obj)
 }

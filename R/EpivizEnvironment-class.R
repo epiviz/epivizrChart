@@ -1,10 +1,10 @@
 #' Epiviz Environment Class
 #'
 #' @field chr (character) chromosome to to display in environment plot.
-#' @field start (integer) start location to display in environment plot.
-#' @field end (integer) end location to to display in environment plot.
-#' @field range
-#' @field initializeRegions
+#' @field start (numeric) start location to display in environment plot.
+#' @field end (numeric) end location to to display in environment plot.
+#' @field range (numeric)
+#' @field initializeRegions (character)
 #' @import htmltools
 #' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
@@ -71,7 +71,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Get initializeRegions"
       return(.self$initializeRegions)
     }
-    
-    
+
+
   )
 )

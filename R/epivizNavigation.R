@@ -14,10 +14,12 @@
 epivizNavigation <- function(chr="chr11", start=99800000, end=103383180, data_mgr=NULL) {
   epiviz_nav <- tag("epiviz-navigation", list(chr=chr, start=start, end=end))
 
-  dataMgr <- ifelse(is.null(data_mgr), EpivizChartDataMgr$new(), data_mgr)
-  
+  if (is.null(data_mgr)){
+    data_mgr <- EpivizChartDataMgr$new()
+  }
+
   nav_obj <- EpivizNavigation$new(chr=chr, start=start,
-    end=end, tag=epiviz_nav, data_mgr=dataMgr)
+    end=end, tag=epiviz_nav, data_mgr=data_mgr)
 
   return(nav_obj)
 }

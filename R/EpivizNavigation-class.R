@@ -1,12 +1,12 @@
 #' Epiviz Navigation Class
 #'
-#' @field gene
-#' @field strRange
-#' @field stepRatio
-#' @field zoomRatio
-#' @field collapsed
-#' @field geneInRange
-#' @field configSrc
+#' @field gene (character)
+#' @field strRange (numeric)
+#' @field stepRatio (numeric)
+#' @field zoomRatio (numeric)
+#' @field collapsed (logical)
+#' @field geneInRange (character)
+#' @field configSrc (character)
 #' @import htmltools
 #' @exportClass EpivizNavigation
 EpivizNavigation <- setRefClass("EpivizNavigation",
