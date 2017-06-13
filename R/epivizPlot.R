@@ -9,7 +9,7 @@
 #' @param colors (list) list of colors
 #' @param ... (type, columns, chr, start, end)
 #'
-#' @return An object of class \code{\link[epivizrChart]{EpivizPolymer}}
+#' @return An object of class \code{\link[epivizrChart]{EpivizChart}}
 #'
 #' @examples
 #' # see package vignette for example usage

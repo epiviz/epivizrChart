@@ -52,7 +52,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     get_data_mgr = function() {
       "Return EpivizChart Data Manager"
-      return(.self$mgr)
+      return(.self$data_mgr)
     },
     get_name = function() {
       "Get name"
