@@ -1,8 +1,11 @@
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
+setClassUnion("NumericOrNULL", c("numeric", "NULL"))
+
 #' Epiviz Environment Class
 #'
-#' @field chr (character) chromosome to to display in environment plot.
-#' @field start (numeric) start location to display in environment plot.
-#' @field end (numeric) end location to to display in environment plot.
+#' @field chr (character or NULL) chromosome to to display in environment plot.
+#' @field start (numeric or NULL) start location to display in environment plot.
+#' @field end (numeric or NULL) end location to to display in environment plot.
 #' @field range (numeric)
 #' @field initializeRegions (character)
 #' @import htmltools
@@ -10,9 +13,9 @@
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
   fields=list(
-    chr="character",
-    start="numeric",
-    end="numeric",
+    chr="CharacterOrNULL",
+    start="NumericOrNULL",
+    end="NumericOrNULL",
     range="character",
     initializeRegions="character"
   ),

@@ -11,12 +11,9 @@
 #' epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
-epivizEnvironment <- function(chr=NULL, start=NULL, end=NULL, data_mgr=NULL) {
-  epiviz_env <- tag("epiviz-environment", list(chr=chr, start=start, end=end))
+epivizEnvironment <- function(chr=NULL, start=NULL, end=NULL, data_mgr=EpivizChartDataMgr$new()) {
 
-  if (is.null(data_mgr)){
-    data_mgr <- EpivizChartDataMgr$new()
-  }
+  epiviz_env <- tag("epiviz-environment", list(chr=chr, start=start, end=end))
 
   env_obj <- EpivizEnvironment$new(chr=chr, start=start, end=end,
     tag=epiviz_env, data_mgr=data_mgr)

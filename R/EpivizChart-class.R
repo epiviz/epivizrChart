@@ -11,9 +11,17 @@ EpivizChart <- setRefClass("EpivizChart",
     obj="ANY"
   ),
   methods=list(
-    plot = function(data_object, datasource_name,
+    plot = function(
+      data_object,
+      datasource_name,
       datasource_origin_name=deparse(substitute(data_object)),
-      chart_type=NULL, settings=NULL, colors=NULL, ...) {
+      chart_type=NULL,
+      settings=NULL,
+      colors=NULL,
+      chr=NULL,
+      start=NULL,
+      end=NULL,
+      ...) {
       "Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
       \\describe{
       \\item{data_object}{GenomicRanges object to attach as chart's data}
@@ -31,8 +39,9 @@ EpivizChart <- setRefClass("EpivizChart",
         datasource_origin_name=datasource_origin_name, ...)
       .self$obj <- ms_obj
 
-      epiviz_tag <- .self$.create_chart_html(ms_obj, settings, colors, chart_type,...)
-      .self$.init_fields(epiviz_tag)
+      epiviz_tag <- .self$.create_chart_html(ms_obj, settings, colors, chart_type, chr, start, end)
+
+      .self <- .self$.init_fields(epiviz_tag)
 
       return(.self)
     },
@@ -44,20 +53,20 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_name(name_attr)
 
       class_attr <- tagGetAttribute(epiviz_tag, "class")
-      .self$set_class(class)
+      .self$set_class(class_attr)
 
       id_attr <- tagGetAttribute(epiviz_tag, "id")
-      .self$set_id(id)
+      .self$set_id(id_attr)
 
       measurements_attr <- tagGetAttribute(epiviz_tag, "measurements")
-       .self$set_measurements(measurements)
+       .self$set_measurements(measurements_attr)
 
       data_attr <- tagGetAttribute(epiviz_tag, "data")
-      .self$set_data(data)
+      .self$set_data(data_attr)
 
-      invisible()
+      return(.self)
     },
-    .create_chart_html = function(ms_obj, settings, colors, chart_type, ...) {
+    .create_chart_html = function(ms_obj, settings, colors, chart_type, chr, start, end) {
       "Creates a shiny.tag representing an epiviz chart
       \\describe{
       \\item{ms_obj}{EpivizData object}
@@ -65,7 +74,7 @@ EpivizChart <- setRefClass("EpivizChart",
       \\item{colors}{Chart colors}
       \\item{chart_type}{Chart type for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}}
       }"
-      data_json <- ms_obj$toJSON(...)
+      data_json <- ms_obj$toJSON(chr, start, end)
 
       tag_name <- .chart_type_to_html_tag(ms_obj, chart_type)
 
