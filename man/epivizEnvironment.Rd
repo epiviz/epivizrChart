@@ -2,9 +2,10 @@
 % Please edit documentation in R/epivizEnvironment.R
 \name{epivizEnvironment}
 \alias{epivizEnvironment}
-\title{Create \code{\link{EpivizChart}} object to knit epiviz charts.}
+\title{Create an \code{\link[epivizrChart]{EpivizEnvironment}} object.}
 \usage{
-epivizEnvironment(chr = "chr11", start = 99800000, end = 103383180)
+epivizEnvironment(chr = NULL, start = NULL, end = NULL,
+  data_mgr = EpivizChartDataMgr$new())
 }
 \arguments{
 \item{chr}{(character) chromosome to browse to on app startup.}
@@ -16,13 +17,13 @@ epivizEnvironment(chr = "chr11", start = 99800000, end = 103383180)
 \item{data_mgr}{(EpivizChartDataMgr)}
 }
 \value{
-An object of class \code{\link{EpivizChart}}
+An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 }
 \description{
-Create \code{\link{EpivizChart}} object to knit epiviz charts.
+Create an \code{\link[epivizrChart]{EpivizEnvironment}} object.
 }
 \examples{
-# see package vignete for example usage
+# see package vignette for example usage
 epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 
 }

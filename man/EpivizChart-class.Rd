@@ -4,32 +4,25 @@
 \name{EpivizChart-class}
 \alias{EpivizChart-class}
 \alias{EpivizChart}
-\title{Class for knitting epiviz charts}
+\title{Data container for an epiviz chart.}
 \description{
-Class for knitting epiviz charts
+Data container for an epiviz chart.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{chr}}{(character) chromosome to to display in environment plot.}
+\item{\code{mgr}}{An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz chart.}
 
-\item{\code{start}}{(integer) start location to display in environment plot.}
-
-\item{\code{end}}{(integer) end location to to display in environment plot.}
-
-\item{\code{data_mgr}}{An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz environment.}
-
-\item{\code{epiviz_env}}{An object of class \code{htmltools}{shiny.tag} used to nest chart tags in epiviz-environment tag.}
+\item{\code{obj}}{An object of class \code{\link[epivizrData]{EpivizData}}.}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{\code{get_environment()}}{Return the epiviz-environment}
-
 \item{\code{plot(data_object, datasource_name,
   datasource_origin_name = deparse(substitute(data_object)),
-  chart_type = NULL, settings = NULL, colors = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
+  chart_type = NULL, settings = NULL, colors = NULL, chr = NULL,
+  start = NULL, end = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
 \describe{
 \item{data_object}{GenomicRanges object to attach as chart's data}
 \item{datasource_name}{Name for datasource}

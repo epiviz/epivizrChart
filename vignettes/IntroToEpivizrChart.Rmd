@@ -1,8 +1,11 @@
 ---
-title: "Knitting Epiviz Charts"
+title: "Knitting Epiviz Charts with epivizrChart"
 author: "Brian Gottfried"
 output:
-  BiocStyle::html_document
+   BiocStyle::html_document:
+    includes:
+      in_header: epiviz-imports.html
+runtime: shiny
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
@@ -17,14 +20,16 @@ data(tcga_colon_curves)
 data(apColonData)
 ```
 
+
 Create an epiviz enivornment
 ```{r}
-epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epivizEnv <- epivizEnvironment(chr="chr11")
 ```
+
 
 Blocks Track Demo
 ```{r}
-blocks_track <- epiviz$plot(tcga_colon_blocks, datasource_name="450kMeth")
+blocks_track <- epivizPlot(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
 
 blocks_track
 ```
@@ -32,7 +37,7 @@ blocks_track
 
 Means Track Demo
 ```{r}
-means_track <- epiviz$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp",columns=c("cancerMean","normalMean"))
+means_track <- epivizPlot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
 
 means_track
 ```
@@ -58,21 +63,20 @@ maEset <- ExpressionSet(
   annotation=annotation(apColonData)
 )
 ```
+
 ```{r include=FALSE}
-eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
+eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
 ```
 
 ```{r eval=FALSE}
-eset_chart <- epiviz$plot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"))
+eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
 ```
+
 ```{r}
 eset_chart
 ```
 
-
 Show the epiviz environment
 ```{r}
-epiviz
+epivizEnv
 ```
-
-
