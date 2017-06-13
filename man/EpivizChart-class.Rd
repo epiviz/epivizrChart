@@ -21,7 +21,8 @@ Data container for an epiviz chart.
 \describe{
 \item{\code{plot(data_object, datasource_name,
   datasource_origin_name = deparse(substitute(data_object)),
-  chart_type = NULL, settings = NULL, colors = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
+  chart_type = NULL, settings = NULL, colors = NULL, chr = NULL,
+  start = NULL, end = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
 \describe{
 \item{data_object}{GenomicRanges object to attach as chart's data}
 \item{datasource_name}{Name for datasource}

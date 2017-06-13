@@ -11,11 +11,11 @@ Epiviz Environment Class
 \section{Fields}{
 
 \describe{
-\item{\code{chr}}{(character) chromosome to to display in environment plot.}
+\item{\code{chr}}{(character or NULL) chromosome to to display in environment plot.}
 
-\item{\code{start}}{(numeric) start location to display in environment plot.}
+\item{\code{start}}{(numeric or NULL) start location to display in environment plot.}
 
-\item{\code{end}}{(numeric) end location to to display in environment plot.}
+\item{\code{end}}{(numeric or NULL) end location to to display in environment plot.}
 
 \item{\code{range}}{(numeric)}
 

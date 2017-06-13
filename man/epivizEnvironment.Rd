@@ -4,7 +4,8 @@
 \alias{epivizEnvironment}
 \title{Create an \code{\link[epivizrChart]{EpivizEnvironment}} object.}
 \usage{
-epivizEnvironment(chr = NULL, start = NULL, end = NULL, data_mgr = NULL)
+epivizEnvironment(chr = NULL, start = NULL, end = NULL,
+  data_mgr = EpivizChartDataMgr$new())
 }
 \arguments{
 \item{chr}{(character) chromosome to browse to on app startup.}

@@ -7,7 +7,7 @@
 epivizPlot(data_object, datasource_name,
   datasource_origin_name = deparse(substitute(data_object)),
   epiviz_env = NULL, chart_type = NULL, settings = NULL, colors = NULL,
-  ...)
+  chr = NULL, start = NULL, end = NULL, ...)
 }
 \arguments{
 \item{data_object}{(EpivzData)}
@@ -21,6 +21,12 @@ epivizPlot(data_object, datasource_name,
 \item{settings}{(list) list of settings}
 
 \item{colors}{(list) list of colors}
+
+\item{chr}{(character)}
+
+\item{start}{(numeric)}
+
+\item{end}{(numeric)}
 
 \item{...}{(type, columns, chr, start, end)}
 
