@@ -22,11 +22,12 @@ epivizPlot <- function(
   epiviz_env=NULL,
   chart_type=NULL, 
   settings=NULL, 
-  colors=NULL, ...
+  colors=NULL, 
+  ...
   ) {
 
   data_mgr <- ifelse(is.null(epiviz_env), 
-    epiviz_env$get_data_mgr(), EpivizChartDataMgr$new())
+    EpivizChartDataMgr$new(), epiviz_env$get_data_mgr())
 
   chart_obj <- EpivizChart$new(data_mgr=data_mgr, obj=NULL, tag=NULL)
 
@@ -34,7 +35,7 @@ epivizPlot <- function(
        chart_type=chart_type, settings=settings, colors=colors, ...)
 
   if (!is.null(epiviz_env)){
-    epiviz_env$add(chart_obj)
+    epiviz_env$append_child(chart_obj)
   }
   
   return(chart_obj) 
