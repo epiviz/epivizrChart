@@ -14,7 +14,8 @@
 epivizNavigation <- function(chr="chr11", start=99800000, end=103383180) {
   epiviz_nav <- tag("epiviz-navigation", list(chr=chr, start=start, end=end))
 
-  nav_obj <- EpivizNavigation$new(chr=chr, start=start, end=end, tag=epiviz_nav)
+  nav_obj <- EpivizNavigation$new(chr=chr, start=start,
+    end=end, tag=epiviz_nav, data_mgr=EpivizChartDataMgr$new())
 
   return(nav_obj)
 }

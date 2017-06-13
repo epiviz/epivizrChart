@@ -8,7 +8,6 @@
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
-    mgr="ANY",
     obj="ANY"
   ),
   methods=list(
@@ -28,7 +27,7 @@ EpivizChart <- setRefClass("EpivizChart",
         datasource_name <- datasource_origin_name
       }
 
-      ms_obj <- .self$mgr$add_measurements(data_object, datasource_name=datasource_name,
+      ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name,
         datasource_origin_name=datasource_origin_name, ...)
       .self$obj <- ms_obj
 

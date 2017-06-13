@@ -1,5 +1,6 @@
 #' Parent data container for an epiviz chart.
 #'
+#' @field data_mgr EpivizChartDataMgr.
 #' @field name Character string of an epiviz chart type.
 #' @field class Character string of an epiviz chart's class attribute.
 #' @field id Character string of an epiviz chart's id attribute.
@@ -10,6 +11,7 @@
 #' @exportClass EpivizPolymer
 EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(
+    data_mgr="ANY",
     name="character",
     class="character",
     id="character",
@@ -48,6 +50,10 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       .self$tag <- epiviz_tag
       invisible()
     },
+    get_data_mgr = function() {
+      "Return EpivizChart Data Manager"
+      return(.self$mgr)
+    },
     get_name = function() {
       "Get name"
       return(.self$name)
@@ -74,7 +80,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       "Show tag of this object"
-      return(.self$tag)
+      knit_print.shiny.tag(.self$tag)
     }
   )
 )
