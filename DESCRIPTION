@@ -29,6 +29,7 @@ Collate:
   'epivizPlot.R'
   'epivizEnvironment.R'
   'epivizNavigation.R'
+  'utils.R'
 Depends: R (>= 3.4.0)
 License: TODO
 Encoding: UTF-8
