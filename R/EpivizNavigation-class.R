@@ -21,10 +21,6 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     configSrc = "character"
   ),
   methods=list(
-    add = function(chart_object) {
-      "Add chart to navigation"
-      #TODO
-    },
     set_gene = function(gene) {
       "Set gene"
       .self$gene <- gene
