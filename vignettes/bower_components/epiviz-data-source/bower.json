@@ -1,0 +1,28 @@
+{
+  "name": "epiviz-data-source",
+  "authors": [
+    "Jayaram Kancherla <jayaram.kancherla@gmail.com>"
+  ],
+  "description": "Datasource provider element for epiviz",
+  "main": "",
+  "keywords": [
+    "epiviz",
+    "datasource"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer#^1.6.1",
+    "epiviz-imports": "epiviz/epiviz-imports"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.8"
+  }
+}

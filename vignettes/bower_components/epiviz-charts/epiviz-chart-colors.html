@@ -1,0 +1,247 @@
+<!-- Polymer dependency -->
+<link rel="import" href="../polymer/polymer.html">
+
+<!-- External Polymer Styles/elements dependency -->
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dropdown-input/paper-dropdown-input.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../paper-swatch-picker/paper-swatch-picker.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-label/iron-label.html">
+
+<!--
+`<epiviz-chart-colors>` is a view element that manages chart colors. 
+All charts automatically create an instance of `<epiviz-chart-colors>` element.
+-->
+
+<dom-module id="epiviz-chart-colors">
+
+    <template>
+        <style>
+            .flex {
+                @apply(--layout-horizontal);
+            }
+
+            .flexchild {
+                @apply(--layout-flex);
+                padding: 20px;
+                flex: 1 1 auto;
+            }
+
+            .flex-end-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-end-justified);
+            }
+
+            #formSettings {
+                min-width: 500px;
+            }
+
+            #scrollContent {
+                margin-bottom: 10px;
+            }
+
+            .color-item {
+                display: block;
+            }
+        </style>
+
+        <!-- local DOM goes here -->
+        <div id="settings">
+            <!--no-overlap horizontal-align="left" vertical-align="top"-->
+            <paper-dialog id="modal" modal>
+                <h2>Chart Color Settings</h2>
+                <form is="iron-form" id="formSettings">
+                    <paper-dialog-scrollable id="scrollContent">
+
+                        <div class="container flex">
+                            <div class="flexchild">
+                                <template is="dom-repeat" items="{{labels}}">
+                                    <template restamp="true" is="dom-if" if="[[_isIndexGroup(index, 0)]]">
+                                        <div class="color-item">
+                                            <paper-swatch-picker id="[[_getId(item)]]" name="{{item}}" color="[[_getColor(item)]]"></paper-swatch-picker>
+                                            <iron-label for="{{_getId(item)}}">{{item}}</iron-label>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                            <div class="flexchild">
+                                <template is="dom-repeat" items="{{labels}}">
+                                    <template restamp="true" is="dom-if" if="[[_isIndexGroup(index, 1)]]">
+                                        <div class="color-item">                                        
+                                            <paper-swatch-picker id="[[_getId(item)]]" name="{{item}}" color="[[_getColor(item)]]"></paper-swatch-picker>
+                                            <iron-label for="{{_getId(item)}}">{{item}}</iron-label>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                            <div class="flexchild">
+                                <template is="dom-repeat" items="{{labels}}">
+                                    <template restamp="true" is="dom-if" if="[[_isIndexGroup(index, 2)]]">
+                                        <div class="color-item">
+                                            <paper-swatch-picker id="[[_getId(item)]]" name="{{item}}" color="[[_getColor(item)]]"></paper-swatch-picker>
+                                            <iron-label for="{{_getId(item)}}">{{item}}</iron-label>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+
+                    </paper-dialog-scrollable>
+                    <div class="container flex-end-justified">
+                        <paper-button id="submit" raised>Apply</paper-button>
+                        <paper-button id="cancel" raised>Cancel</paper-button>
+                    </div>
+                </form>
+            </paper-dialog>
+        </div>
+    
+    </template>
+
+    <script>
+        Polymer({
+            /* Custom element html tag */
+            is: 'epiviz-chart-colors',
+
+            /* Properties that can be defined on the element */
+            properties: {
+
+                /**
+                * Default chart color labels.
+                *
+                * @type {Object<string, string>}
+                */
+                labels: {
+                    type: Object,
+                    notify: true
+                },
+
+                /**
+                * Default chart color palettes.
+                *
+                * @type {Array<epiviz.ui.charts.ColorPalette>}
+                */
+                palettes: {
+                    type: Array,
+                    notify: true
+                },
+
+                /**
+                * currently selected chart colors.
+                *
+                * @type {Object<string, string>}
+                */
+                selected: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            listeners: {
+                'submit.click': '_submit',
+                'cancel.click': '_cancel'
+            },
+
+            /**
+             * Get Color for a given label/Key.
+             *
+             * @param {string} label label/key to search for.
+             *
+             * @return {Object} color set for the given label
+             */
+            _getColor: function(label) {
+                return this.selected.getByKey(label);
+            },
+
+            /**
+             * UI Helper function to find group
+             *
+             * @param {string} value index number
+             * @param {number} expeced expected group
+             * @return {boolean} returns True if value in expected
+             */
+            _isIndexGroup(value, expected) {
+                if( value % 3 == expected ) {
+                    return true;
+                }
+
+                return false;
+            },
+
+            /**
+             * UI Helper function to create Id for a given label (ignore spaces)
+             *
+             * @param {string} label string
+             * 
+             * @return {string} return label ignoring white spaces
+             */
+            _getId: function(label) {
+                return label.split(' ').join('');
+            },
+
+            /**
+             * handles form submit action
+             */
+            _submit: function(event) {
+                this.$.formSettings.submit();
+            },
+
+            /**
+             * handles form submit action
+             */
+            _form_submit: function(event) {
+                var self = this;
+
+                //collect all colors set
+                colors = [];
+                for (var i=0; i < this.labels.length; i++) {
+                    var swatch = self.$$('#' + this._getId(this.labels[i]));
+                    colors.push(swatch.color);
+                }
+
+                self.selected = new epiviz.ui.charts.ColorPalette(colors, undefined, undefined, self.selected.keyIndices());
+
+                // this.vals = event.detail;
+                this.callback(colors);
+                this.closeColors();
+            },
+
+            /**
+             * handles form cancel action
+             */
+            _cancel: function(event) {
+                this.closeColors();
+            },
+
+            /**
+             * handles element modal show action
+             */
+            showColors: function(target, callback) {
+                this.callback = callback;
+                this.$.modal.positionTarget = target;
+                this.$.modal.open();
+            },
+
+            /**
+             * handles element modal close action
+             */
+            closeColors: function() {
+                this.$.modal.close();
+            },
+
+            // Initialization that should happen or use FactoryImpl 
+            // created: function() {},
+
+            /* callback function after the element is initialized */
+            ready: function() {
+                var self = this;
+                self.$.scrollContent.dialogElement = self.$.modal;
+                self.$.formSettings.addEventListener('iron-form-submit', this._form_submit.bind(self));
+            }
+        });
+    </script>
+</dom-module>

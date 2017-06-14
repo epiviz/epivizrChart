@@ -1,0 +1,14 @@
+{
+  "name": "ideogram",
+  "homepage": "https://github.com/eweitz/ideogram",
+  "version": "0.5.0",
+  "_release": "0.5.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.0",
+    "commit": "cfddf081894dd2a35933f8585e3ec0c6fcaea41a"
+  },
+  "_source": "https://github.com/eweitz/ideogram.git",
+  "_target": "^0.5.0",
+  "_originalSource": "eweitz/ideogram"
+}
