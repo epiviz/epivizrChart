@@ -11,24 +11,25 @@ runtime: shiny
 ```{r setup, eval=TRUE, include=FALSE}
 library(epivizrChart)
 library(antiProfilesData)
+library(SummarizedExperiment)
 ```
 
 
 ```{r}
 data(tcga_colon_blocks)
 data(tcga_colon_curves)
+data(tcga_colon_expression)
 data(apColonData)
 ```
 
 
 Create an epiviz enivornment
 ```{r}
-epivizEnv <- epivizEnvironment(chr="chr11")
+epivizEnv <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
-
 Blocks Track Demo
-```{r}
+```{r eval=FALSE}
 blocks_track <- epivizPlot(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
 
 blocks_track
@@ -38,7 +39,6 @@ blocks_track
 Means Track Demo
 ```{r}
 means_track <- epivizPlot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
-
 means_track
 ```
 
@@ -64,19 +64,36 @@ maEset <- ExpressionSet(
 )
 ```
 
-```{r include=FALSE}
-eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
-```
-
-```{r eval=FALSE}
-eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
-```
-
 ```{r}
+eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
+
 eset_chart
 ```
 
-Show the epiviz environment
+SummarizedExperiment
+
+```{r eval=TRUE}
+ref_sample <- 2 ^ rowMeans(log2(assay(tcga_colon_expression) + 1))
+scaled <- (assay(tcga_colon_expression) + 1) / ref_sample
+scaleFactor <- Biobase::rowMedians(t(scaled))
+assay_normalized <- sweep(assay(tcga_colon_expression), 2, scaleFactor, "/")
+assay(tcga_colon_expression) <- assay_normalized
+
+status <- colData(tcga_colon_expression)$sample_type
+index <- split(seq(along = status), status)
+logCounts <- log2(assay(tcga_colon_expression) + 1)
+means <- sapply(index, function(ind) rowMeans(logCounts[, ind]))
+mat <- cbind(cancer = means[, "Primary Tumor"], normal = means[, "Solid Tissue Normal"])
+
+sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
+
+se_chart <- epivizPlot(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
+
+se_chart
+```
+
+Show epiviz enivornment
 ```{r}
 epivizEnv
 ```
+
