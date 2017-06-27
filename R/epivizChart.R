@@ -1,4 +1,4 @@
-#' Create EpivizChart plot.
+#' Create EpivizChart object.
 #'
 #' @param data_object (EpivzData)
 #' @param datasource_name (character)
@@ -18,7 +18,7 @@
 #' # see package vignette for example usage
 #'
 #' @export
-epivizPlot <- function(
+epivizChart <- function(
   data_object,
   datasource_name,
   datasource_origin_name=deparse(substitute(data_object)),
