@@ -26,7 +26,7 @@ Collate:
   'EpivizChartDataMgr-class.R'
   'EpivizEnvironment-class.R'
   'EpivizNavigation-class.R'
-  'epivizPlot.R'
+  'epivizChart.R'
   'epivizEnvironment.R'
   'epivizNavigation.R'
   'utils.R'
@@ -34,4 +34,4 @@ Depends: R (>= 3.4.0)
 License: TODO
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1

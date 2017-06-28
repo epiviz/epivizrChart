@@ -1,5 +1,5 @@
-setClassUnion("CharacterOrNULL", c("character", "NULL"))
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
 
 #' Epiviz Environment Class
 #'
