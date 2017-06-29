@@ -1,15 +1,12 @@
-
-setClassUnion("NumericOrNULL", c("numeric", "NULL"))
-setClassUnion("CharacterOrNULL", c("character", "NULL"))
-
 #' Epiviz Environment Class
 #'
-#' @field chr (character or NULL) chromosome to to display in environment plot.
-#' @field start (numeric or NULL) start location to display in environment plot.
-#' @field end (numeric or NULL) end location to to display in environment plot.
-#' @field range (numeric)
-#' @field initializeRegions (character)
+#' @field chr (CharacterOrNULL) chromosome to to display in environment plot.
+#' @field start (NumericOrNULL) start location to display in environment plot.
+#' @field end (NumericOrNULL) end location to to display in environment plot.
+#' @field range (CharacterOrNULL)
+#' @field initializeRegions (CharacterOrNULL)
 #' @import htmltools
+#' @export EpivizEnvironment
 #' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
@@ -21,12 +18,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     initializeRegions="CharacterOrNULL"
   ),
   methods=list(
-    initialize = function(chr=NULL, start=NULL, end=NULL, 
-      range=NULL, initializeRegions=NULL, data_mgr=NULL, tag=NULL) {
+    initialize = function(chr=NULL, start=NULL, end=NULL, range=NULL, 
+      initializeRegions=NULL, ...) {
       
-      if (missing(data_mgr)) {
-        .self$data_mgr <- EpivizChartDataMgr()
-      }
       .self$chr <- chr
       .self$start <- start
       .self$end <- end
@@ -37,7 +31,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         list(chr=chr, start=start, end=end, 
           range=range, initializeRegions=initializeRegions))
       
-      callSuper(name=epiviz_env$name, tag=epiviz_env)
+      callSuper(name=epiviz_env$name, tag=epiviz_env, ...)
     },
     append_child = function(polymer_obj) {
       "Append chart or navigation to environment"
@@ -46,54 +40,52 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       } else {
         .self$tag <- tagAppendChild(.self$tag, polymer_obj$get_tag())
       }
-      return(.self)
+      invisible(.self)
     },
-    set_chr = function(chr){
+    set_chr = function(chr) {
       "Set the chromosome"
       .self$chr <- chr
       invisible()
     },
-    set_start = function(start){
+    set_start = function(start) {
       "Set start"
       .self$start <- start
       invisible()
     },
-    set_end = function(end){
+    set_end = function(end) {
       "Set end"
       .self$end <- end
       invisible()
     },
-    set_range = function(range){
+    set_range = function(range) {
       "Set range"
       .self$range <- range
       invisible()
     },
-    set_initializeRegions = function(initReg){
+    set_initializeRegions = function(initReg) {
       "Set initializeRegions"
       .self$initializeRegions <- initRegs
       invisible()
     },
-    get_chr = function(){
+    get_chr = function() {
       "Get chromosome"
-      return(.self$chr)
+      .self$chr
     },
-    get_start = function(){
+    get_start = function() {
       "Get start"
-      return(.self$start)
+      .self$start
     },
-    get_end = function(){
+    get_end = function() {
       "Get end"
-      return(.self$end)
+      .self$end
     },
-    get_range = function(){
+    get_range = function() {
       "Get range"
-      return(.self$range)
+      .self$range
     },
-    get_initializeRegions = function(){
+    get_initializeRegions = function() {
       "Get initializeRegions"
-      return(.self$initializeRegions)
+      .self$initializeRegions
     }
-
-
   )
 )

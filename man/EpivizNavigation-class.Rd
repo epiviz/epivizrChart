@@ -11,19 +11,25 @@ Epiviz Navigation Class
 \section{Fields}{
 
 \describe{
-\item{\code{gene}}{(character)}
+\item{\code{chr}}{(character) chromosome to to display in environment plot.}
 
-\item{\code{strRange}}{(numeric)}
+\item{\code{start}}{(numeric) start location to display in environment plot}
 
-\item{\code{stepRatio}}{(numeric)}
+\item{\code{end}}{(numeric) end location to to display in environment plot.}
 
-\item{\code{zoomRatio}}{(numeric)}
+\item{\code{gene}}{(CharacterOrNULL)}
 
-\item{\code{collapsed}}{(logical)}
+\item{\code{strRange}}{(NumericOrNULL)}
 
-\item{\code{geneInRange}}{(character)}
+\item{\code{stepRatio}}{(NumericOrNULL)}
 
-\item{\code{configSrc}}{(character)}
+\item{\code{zoomRatio}}{(NumericOrNULL)}
+
+\item{\code{collapsed}}{(LogicalOrNULL)}
+
+\item{\code{geneInRange}}{(CharacterOrNULL)}
+
+\item{\code{configSrc}}{(CharacterOrNULL)}
 }}
 
 \section{Methods}{

@@ -1,11 +1,8 @@
 ---
-title: "Knitting Epiviz Charts with epivizrChart"
+title: "Visualizing Epiviz Charts with epivizrChart"
 author: "Brian Gottfried"
 output:
-   BiocStyle::html_document:
-    includes:
-      in_header: epiviz-imports.html
-runtime: shiny
+   BiocStyle::html_document
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
@@ -25,21 +22,22 @@ data(apColonData)
 
 Create an epiviz enivornment
 ```{r}
-epivizEnv <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
 Blocks Track Demo
 ```{r eval=FALSE}
-blocks_track <- epivizPlot(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
+blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
 
-blocks_track
+plot(blocks_track)
 ```
 
 
 Means Track Demo
 ```{r}
-means_track <- epivizPlot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
-means_track
+means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
+
+plot(means_track)
 ```
 
 Scatter Plot Demo
@@ -65,9 +63,9 @@ maEset <- ExpressionSet(
 ```
 
 ```{r}
-eset_chart <- epivizPlot(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
+eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
 
-eset_chart
+plot(eset_chart)
 ```
 
 SummarizedExperiment
@@ -89,11 +87,11 @@ sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
 se_chart <- epivizPlot(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
 
-se_chart
+plot(se_chart)
 ```
 
 Show epiviz enivornment
 ```{r}
-epivizEnv
+plot(epivizEnv)
 ```
 

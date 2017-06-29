@@ -16,20 +16,4 @@ Data container for an epiviz chart.
 \item{\code{obj}}{An object of class \code{\link[epivizrData]{EpivizData}}.}
 }}
 
-\section{Methods}{
-
-\describe{
-\item{\code{plot(data_object, datasource_name,
-  datasource_origin_name = deparse(substitute(data_object)),
-  chart_type = NULL, settings = NULL, colors = NULL, chr = NULL,
-  start = NULL, end = NULL, ...)}}{Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
-\describe{
-\item{data_object}{GenomicRanges object to attach as chart's data}
-\item{datasource_name}{Name for datasource}
-\item{chart_type}{Type of chart for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}
-\item{settings}{List of settings for chart}
-\item{colors}{List of colors for chart}
-\item{...}{Type and columns}
-}}
-}}
 

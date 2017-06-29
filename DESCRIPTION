@@ -26,9 +26,6 @@ Collate:
   'EpivizChartDataMgr-class.R'
   'EpivizEnvironment-class.R'
   'EpivizNavigation-class.R'
-  'epivizPlot.R'
-  'epivizEnvironment.R'
-  'epivizNavigation.R'
   'utils.R'
 Depends: R (>= 3.4.0)
 License: TODO
