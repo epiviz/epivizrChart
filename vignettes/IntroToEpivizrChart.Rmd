@@ -29,9 +29,9 @@ Genes Track Demo
 ```{r}
 library(Homo.sapiens)
 
-genes_track <- epivizChart(Homo.sapiens, epiviz_env=epivizEnv)
+genes_track <- EpivizChart(Homo.sapiens, epiviz_env=epivizEnv)
 
-genes_track
+plot(genes_track)
 ```
 
 
@@ -95,7 +95,7 @@ mat <- cbind(cancer = means[, "Primary Tumor"], normal = means[, "Solid Tissue N
 
 sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
-se_chart <- epivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
+se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
 
 plot(se_chart)
 ```
