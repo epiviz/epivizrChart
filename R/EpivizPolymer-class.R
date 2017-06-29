@@ -38,7 +38,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       webcomponents <- htmlDependency(
         name="webcomponents",
         version="1",
-        src=c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs/"),
+        src=c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
         script="webcomponents-lite.js"
       )
       
