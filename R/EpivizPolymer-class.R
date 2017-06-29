@@ -32,6 +32,35 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       .self$id <- id
       .self$measurements <- measurements
       .self$data <- data
+      
+      # attach dependencies to tag
+      # TODO: fix version numbers
+      webcomponents <- htmlDependency(
+        name="webcomponents",
+        version="1",
+        src=c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs/"),
+        script="webcomponents-lite.js"
+      )
+      
+      epiviz_charts <- htmlDependency(
+        name="epiviz-charts",
+        version="1",
+        src=c(href="https://epiviz.github.io/polymer"),
+        import="epiviz-charts.html"
+      )
+      
+      epiviz_data_source <- htmlDependency(
+        name="epiviz-data-source",
+        version="1",
+        src=c(href="https://epiviz.github.io/polymer/charts/components/epiviz-data-source"),
+        import="epiviz-data-source.html"
+      )
+      
+      dependencies <- list(webcomponents, epiviz_charts, epiviz_data_source)
+      for (dep in dependencies) {
+        tag <- htmltools::attachDependencies(tag, dep, TRUE)
+      }
+      
       .self$tag <- tag
       
       invisible(.self)
