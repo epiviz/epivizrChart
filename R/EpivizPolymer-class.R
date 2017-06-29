@@ -1,3 +1,7 @@
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
+setClassUnion("NumericOrNULL", c("numeric", "NULL"))
+setClassUnion("LogicalOrNULL", c("logical", "NULL"))
+
 #' Parent data container for an epiviz chart.
 #'
 #' @field data_mgr EpivizChartDataMgr.
@@ -13,13 +17,25 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(
     data_mgr="ANY",
     name="character",
-    class="character",
-    id="character",
-    measurements="character",
-    data="character",
+    class="CharacterOrNULL",
+    id="CharacterOrNULL",
+    measurements="CharacterOrNULL",
+    data="CharacterOrNULL",
     tag="ANY"
   ),
   methods=list(
+    initialize = function(data_mgr=EpivizChartDataMgr(), name=NULL, class=NULL,
+      id=NULL, measurements=NULL, data=NULL, tag=NULL) {
+      .self$data_mgr <- data_mgr
+      .self$name <- name
+      .self$class <- class
+      .self$id <- id
+      .self$measurements <- measurements
+      .self$data <- data
+      .self$tag <- tag
+      
+      invisible(.self)
+    },
     set_name = function(name) {
       "Set name"
       .self$name <- name
@@ -52,35 +68,37 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     get_data_mgr = function() {
       "Return EpivizChart Data Manager"
-      return(.self$data_mgr)
+      .self$data_mgr
     },
     get_name = function() {
       "Get name"
-      return(.self$name)
+      .self$name
     },
     get_class = function() {
       "Get class"
-      return(.self$class)
+      .self$class
     },
     get_id = function() {
       "Get id"
-      return(.self$id)
+      .self$id
     },
     get_measurements = function() {
       "Get measurements"
-      return(.self$measurements)
+      .self$measurements
     },
     get_data = function() {
       "Get data"
-      return(.self$data)
+      .self$data
     },
     get_tag = function() {
       "Get tag"
-      return(.self$tag)
+      .self$tag
     },
     show = function() {
       "Show tag of this object"
-      knit_print.shiny.tag(.self$tag)
+      # TODO
+      
+      # knit_print.html(.self$tag)
     }
   )
 )

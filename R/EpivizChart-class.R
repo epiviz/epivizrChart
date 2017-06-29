@@ -4,6 +4,7 @@
 #' @field obj An object of class \code{\link[epivizrData]{EpivizData}}.
 #' @import epivizrData
 #' @import htmltools
+#' @export EpivizChart
 #' @exportClass EpivizChart
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
@@ -11,60 +12,63 @@ EpivizChart <- setRefClass("EpivizChart",
     obj="ANY"
   ),
   methods=list(
-    plot = function(
-      data_object,
-      datasource_name,
-      datasource_origin_name=deparse(substitute(data_object)),
-      chart_type=NULL,
-      settings=NULL,
-      colors=NULL,
-      chr=NULL,
-      start=NULL,
-      end=NULL,
-      ...) {
-      "Return a shiny.tag representing an epiviz chart and adds it as a child of the epiviz environment tag
-      \\describe{
-      \\item{data_object}{GenomicRanges object to attach as chart's data}
-      \\item{datasource_name}{Name for datasource}
-      \\item{chart_type}{Type of chart for plot (BlocksTrack, HeatmapPlot, LinePlot,LineTrack, ScatterPlot, StackedLinePlot, StackedLineTrack)}
-      \\item{settings}{List of settings for chart}
-      \\item{colors}{List of colors for chart}
-      \\item{...}{Type and columns}
-      }"
+    initialize = function(data_object, datasource_name, datasource_origin_name,
+      epiviz_env=NULL, chart_type=NULL, chr=NULL, start=NULL, end=NULL,
+      settings=NULL, colors=NULL, ...) {
+      # if an epiviz environment is provided, 
+      # use its data manager, chr, start, and end
+      if (is.null(epiviz_env)) {
+        mgr <- EpivizChartDataMgr()
+        
+      } else {
+        mgr <- epiviz_env$get_data_mgr()
+        
+        env_chr <- epiviz_env$get_chr()
+        if (!is.null(env_chr)) {
+          chr <- env_chr
+        }
+        
+        env_start <- epiviz_env$get_start()
+        if (!is.null(env_start)) {
+          start <- env_start
+        }
+        
+        env_end <- epiviz_env$get_end()
+        if (!is.null(env_end)) {
+          end <- env_end
+        }
+      }
+      
+      # register data
+      if (missing(datasource_origin_name)) {
+        datasource_origin_name <- deparse(substitute(data_object))
+      }
       if (missing(datasource_name)) {
         datasource_name <- datasource_origin_name
       }
-
-      ms_obj <- .self$data_mgr$add_measurements(data_object, datasource_name=datasource_name,
+      ms_obj <- mgr$add_measurements(data_object, datasource_name=datasource_name,
         datasource_origin_name=datasource_origin_name, ...)
       .self$obj <- ms_obj
-
+      
+      # create polymer chart
       epiviz_tag <- .self$.create_chart_html(ms_obj, settings, colors, chart_type, chr, start, end)
-
-      .self <- .self$.init_fields(epiviz_tag)
-
-      return(.self)
-    },
-    .init_fields = function(epiviz_tag) {
-      "Initalize inherited fields (html tag attributes) of epiviz chart"
-      .self$set_tag(epiviz_tag)
-
-      name_attr <- epiviz_tag$name
-      .self$set_name(name_attr)
-
-      class_attr <- tagGetAttribute(epiviz_tag, "class")
-      .self$set_class(class_attr)
-
-      id_attr <- tagGetAttribute(epiviz_tag, "id")
-      .self$set_id(id_attr)
-
-      measurements_attr <- tagGetAttribute(epiviz_tag, "measurements")
-       .self$set_measurements(measurements_attr)
-
-      data_attr <- tagGetAttribute(epiviz_tag, "data")
-      .self$set_data(data_attr)
-
-      return(.self)
+      
+      # initialize inherited fields (html tag attributes) of epiviz chart
+      callSuper(data_mgr=mgr,
+        name=epiviz_tag$name,
+        class=tagGetAttribute(epiviz_tag, "class"),
+        id=tagGetAttribute(epiviz_tag, "id"),
+        measurements=tagGetAttribute(epiviz_tag, "measurements"),
+        data=tagGetAttribute(epiviz_tag, "data"),
+        tag=epiviz_tag)
+      
+      # if epiviz environment is provided,
+      # append this chart to its children 
+      if (!is.null(epiviz_env)) {
+        epiviz_env$append_child(.self)
+      }
+      
+      invisible(.self)
     },
     .create_chart_html = function(ms_obj, settings, colors, chart_type, chr, start, end) {
       "Creates a shiny.tag representing an epiviz chart
@@ -88,7 +92,7 @@ EpivizChart <- setRefClass("EpivizChart",
           settings=settings,
           colors=colors))
 
-      return(epiviz_tag)
+      epiviz_tag
     },
     .chart_type_to_html_tag = function(ms_obj, chart_type) {
       "Return an html tag representing an epiviz chart
@@ -109,7 +113,8 @@ EpivizChart <- setRefClass("EpivizChart",
           StackedLineTrack = "epiviz-json-stacked-line-track"
         )
       }
-      return(chart_tag)
+
+      chart_tag
     }
   )
 )

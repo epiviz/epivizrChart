@@ -1,5 +1,6 @@
-setClassUnion("CharacterOrNULL", c("character", "NULL"))
+
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
 
 #' Epiviz Environment Class
 #'
@@ -16,10 +17,28 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     chr="CharacterOrNULL",
     start="NumericOrNULL",
     end="NumericOrNULL",
-    range="character",
-    initializeRegions="character"
+    range="CharacterOrNULL",
+    initializeRegions="CharacterOrNULL"
   ),
   methods=list(
+    initialize = function(chr=NULL, start=NULL, end=NULL, 
+      range=NULL, initializeRegions=NULL, data_mgr=NULL, tag=NULL) {
+      
+      if (missing(data_mgr)) {
+        .self$data_mgr <- EpivizChartDataMgr()
+      }
+      .self$chr <- chr
+      .self$start <- start
+      .self$end <- end
+      .self$range <- range
+      .self$initializeRegions <- initializeRegions
+      
+      epiviz_env <- tag("epiviz-environment",
+        list(chr=chr, start=start, end=end, 
+          range=range, initializeRegions=initializeRegions))
+      
+      callSuper(name=epiviz_env$name, tag=epiviz_env)
+    },
     append_child = function(polymer_obj) {
       "Append chart or navigation to environment"
       if (!is(polymer_obj, "EpivizPolymer")) {

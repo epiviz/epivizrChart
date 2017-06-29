@@ -1,26 +1,48 @@
 #' Epiviz Navigation Class
-#'
-#' @field gene (character)
-#' @field strRange (numeric)
-#' @field stepRatio (numeric)
-#' @field zoomRatio (numeric)
-#' @field collapsed (logical)
-#' @field geneInRange (character)
-#' @field configSrc (character)
+#' @field chr (character) chromosome to to display in environment plot.
+#' @field start (numeric) start location to display in environment plot
+#' @field end (numeric) end location to to display in environment plot.
+#' @field gene (CharacterOrNULL)
+#' @field strRange (NumericOrNULL)
+#' @field stepRatio (NumericOrNULL)
+#' @field zoomRatio (NumericOrNULL)
+#' @field collapsed (LogicalOrNULL)
+#' @field geneInRange (CharacterOrNULL)
+#' @field configSrc (CharacterOrNULL)
 #' @import htmltools
+#' @export EpivizNavigation
 #' @exportClass EpivizNavigation
 EpivizNavigation <- setRefClass("EpivizNavigation",
   contains="EpivizEnvironment",
   fields=list(
-    gene = "character",
-    strRange = "character",
-    stepRatio = "numeric",
-    zoomRatio = "numeric",
-    collapsed = "logical",
-    geneInRange = "character",
-    configSrc = "character"
+    chr="character",
+    start="numeric",
+    end="numeric",
+    gene = "CharacterOrNULL",
+    strRange = "CharacterOrNULL",
+    stepRatio = "NumericOrNULL",
+    zoomRatio = "NumericOrNULL",
+    collapsed = "LogicalOrNULL",
+    geneInRange = "CharacterOrNULL",
+    configSrc = "CharacterOrNULL"
   ),
   methods=list(
+    initialize = function(chr, start, end, gene=NULL, strRange=NULL,
+      stepRatio=NULL, zoomRatio=NULL, collapsed=NULL, geneInRange=NULL,
+      configSrc=NULL, ...) {
+      .self$chr <- chr
+      .self$start <- start
+      .self$end <- end
+      .self$gene <- gene
+      .self$strRange <- strRange
+      .self$stepRatio <- stepRatio
+      .self$zoomRatio <- zoomRatio
+      .self$collapsed <- collapsed
+      .self$geneInRange <- geneInRange
+      .self$configSrc <- configSrc
+      
+      callSuper(...)
+    },
     set_gene = function(gene) {
       "Set gene"
       .self$gene <- gene
@@ -58,31 +80,31 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     },
     get_gene = function() {
       "Get gene"
-      return(.self$gene)
+      .self$gene
     },
     get_strRange = function() {
       "Get range"
-      return(.self$strRange)
+      .self$strRange
     },
     get_stepRatio = function() {
       "Get step ratio"
-      return(.self$stepRatio)
+      .self$stepRatio
     },
     get_zoomRatio = function() {
       "Get step ratio"
-      return(.self$zoomRatio)
+      .self$zoomRatio
     },
     get_collapsed = function() {
       "Get collapsed"
-      return(.self$collapsed)
+      .self$collapsed
     },
     get_geneInRange = function() {
       "Get gene in range"
-      return(.self$geneInRange)
+      .self$geneInRange
     },
     get_configSrc = function(src) {
       "Get config"
-      return(.self$configSrc)
+      .self$configSrc
     }
   )
 )
