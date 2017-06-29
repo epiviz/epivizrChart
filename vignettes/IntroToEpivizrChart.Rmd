@@ -25,6 +25,16 @@ Create an epiviz enivornment
 epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
+Genes Track Demo
+```{r}
+library(Homo.sapiens)
+
+genes_track <- epivizChart(Homo.sapiens, epiviz_env=epivizEnv)
+
+genes_track
+```
+
+
 Blocks Track Demo
 ```{r eval=FALSE}
 blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
@@ -85,7 +95,7 @@ mat <- cbind(cancer = means[, "Primary Tumor"], normal = means[, "Solid Tissue N
 
 sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
-se_chart <- epivizPlot(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
+se_chart <- epivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
 
 plot(se_chart)
 ```
