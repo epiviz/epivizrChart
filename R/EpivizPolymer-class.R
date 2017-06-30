@@ -25,7 +25,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
   ),
   methods=list(
     initialize = function(data_mgr=EpivizChartDataMgr(), name=NULL, class=NULL,
-      id=NULL, measurements=NULL, data=NULL, tag=NULL) {
+      id=NULL, measurements=NULL, data=NULL, epiviz_tag=NULL) {
       .self$data_mgr <- data_mgr
       .self$name <- name
       .self$class <- class
@@ -34,13 +34,14 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       .self$data <- data
       
       # attach dependencies to tag
-      # TODO: fix version numbers
+      # TODO: fix version numbers, restructure dependencies
       webcomponents <- htmlDependency(
         name="webcomponents",
         version="1",
         src=c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
         script="webcomponents-lite.js"
       )
+      epiviz_tag <- attachDependencies(epiviz_tag, webcomponents, TRUE)
       
       epiviz_charts <- htmlDependency(
         name="epiviz-charts",
@@ -48,20 +49,17 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         src=c(href="https://epiviz.github.io/polymer"),
         import="epiviz-charts.html"
       )
+      epiviz_tag <- attachDependencies(epiviz_tag, epiviz_charts, TRUE)
       
-      epiviz_data_source <- htmlDependency(
-        name="epiviz-data-source",
-        version="1",
-        src=c(href="https://epiviz.github.io/polymer/charts/components/epiviz-data-source"),
-        import="epiviz-data-source.html"
-      )
+      # epiviz_data_source <- htmlDependency(
+      #  name="epiviz-data-source",
+      #  version="1",
+      #  src=c(href="https://epiviz.github.io/polymer/charts/components/epiviz-data-source"),
+      #  import="epiviz-data-source.html"
+      # )
+      # epiviz_tag <- attachDependencies(epiviz_tag, epiviz_data_source, TRUE)
       
-      dependencies <- list(webcomponents, epiviz_charts, epiviz_data_source)
-      for (dep in dependencies) {
-        tag <- htmltools::attachDependencies(tag, dep, TRUE)
-      }
-      
-      .self$tag <- tag
+      .self$tag <- epiviz_tag
       
       invisible(.self)
     },
