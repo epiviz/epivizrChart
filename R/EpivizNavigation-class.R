@@ -30,9 +30,6 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     initialize = function(chr, start, end, gene=NULL, strRange=NULL,
       stepRatio=NULL, zoomRatio=NULL, collapsed=NULL, geneInRange=NULL,
       configSrc=NULL, ...) {
-      .self$chr <- chr
-      .self$start <- start
-      .self$end <- end
       .self$gene <- gene
       .self$strRange <- strRange
       .self$stepRatio <- stepRatio
@@ -41,7 +38,12 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       .self$geneInRange <- geneInRange
       .self$configSrc <- configSrc
       
-      callSuper(...)
+      epiviz_tag <- tag("epiviz-navigation",
+        list(chr=chr, start=start, end=end, 
+          gene=gene, strRange=strRange, stepRatio=stepRatio, zoomRatio=zoomRatio,
+          collapsed=collapsed, geneInRange=geneInRange, configSrc=configSrc))
+      
+      callSuper(chr=chr, start=start, end=end, epiviz_tag=epiviz_tag, ...)
     },
     set_gene = function(gene) {
       "Set gene"

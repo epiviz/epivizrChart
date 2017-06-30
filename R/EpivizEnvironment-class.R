@@ -19,19 +19,20 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
   ),
   methods=list(
     initialize = function(chr=NULL, start=NULL, end=NULL, range=NULL, 
-      initializeRegions=NULL, ...) {
-      
+      initializeRegions=NULL, epiviz_tag=NULL, ...) {
       .self$chr <- chr
       .self$start <- start
       .self$end <- end
       .self$range <- range
       .self$initializeRegions <- initializeRegions
       
-      epiviz_env <- tag("epiviz-environment",
-        list(chr=chr, start=start, end=end, 
-          range=range, initializeRegions=initializeRegions))
-      
-      callSuper(name=epiviz_env$name, tag=epiviz_env, ...)
+      if (is.null(epiviz_tag)) {
+        epiviz_tag <- tag("epiviz-environment",
+          list(chr=chr, start=start, end=end, 
+            range=range, initializeRegions=initializeRegions))
+      }
+
+      callSuper(name=epiviz_tag$name, epiviz_tag=epiviz_tag, ...)
     },
     append_child = function(polymer_obj) {
       "Append chart or navigation to environment"

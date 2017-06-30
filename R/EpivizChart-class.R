@@ -60,7 +60,7 @@ EpivizChart <- setRefClass("EpivizChart",
         id=tagGetAttribute(epiviz_tag, "id"),
         measurements=tagGetAttribute(epiviz_tag, "measurements"),
         data=tagGetAttribute(epiviz_tag, "data"),
-        tag=epiviz_tag)
+        epiviz_tag=epiviz_tag)
       
       # if epiviz environment is provided,
       # append this chart to its children 
