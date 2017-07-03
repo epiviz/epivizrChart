@@ -31,23 +31,22 @@ library(Homo.sapiens)
 
 genes_track <- EpivizChart(Homo.sapiens, epiviz_env=epivizEnv)
 
-plot(genes_track)
+genes_track
 ```
 
 
 Blocks Track Demo
-```{r eval=FALSE}
+```{r}
 blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
 
-plot(blocks_track)
+blocks_track
 ```
-
 
 Means Track Demo
 ```{r}
 means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
 
-plot(means_track)
+means_track
 ```
 
 Scatter Plot Demo
@@ -70,12 +69,10 @@ maEset <- ExpressionSet(
   featureData=featureData(apColonData),
   annotation=annotation(apColonData)
 )
-```
 
-```{r}
 eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
 
-plot(eset_chart)
+eset_chart
 ```
 
 SummarizedExperiment
@@ -97,11 +94,11 @@ sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
 se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
 
-plot(se_chart)
+se_chart
 ```
 
 Show epiviz enivornment
 ```{r}
-plot(epivizEnv)
+epivizEnv
 ```
 

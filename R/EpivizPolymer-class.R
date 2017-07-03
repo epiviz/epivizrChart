@@ -1,16 +1,16 @@
-setClassUnion("CharacterOrNULL", c("character", "NULL"))
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
 setClassUnion("LogicalOrNULL", c("logical", "NULL"))
-
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
 #' Parent data container for an epiviz chart.
 #'
 #' @field data_mgr EpivizChartDataMgr.
 #' @field name Character string of an epiviz chart type.
 #' @field class Character string of an epiviz chart's class attribute.
 #' @field id Character string of an epiviz chart's id attribute.
-#' @field measurement Character string of an epiviz chart's measurement attribute.
 #' @field data Character string of an epiviz chart's data attribute.
+#' @field measurements .
 #' @field tag An object of class \code{\link[htmltools]{shiny.tag}} representing an epiviz chart in html.
+#'
 #' @import htmltools
 #' @exportClass EpivizPolymer
 EpivizPolymer <- setRefClass("EpivizPolymer",
@@ -32,35 +32,8 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       .self$id <- id
       .self$measurements <- measurements
       .self$data <- data
-      
-      # attach dependencies to tag
-      # TODO: fix version numbers, restructure dependencies
-      webcomponents <- htmlDependency(
-        name="webcomponents",
-        version="1",
-        src=c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
-        script="webcomponents-lite.js"
-      )
-      epiviz_tag <- attachDependencies(epiviz_tag, webcomponents, TRUE)
-      
-      epiviz_charts <- htmlDependency(
-        name="epiviz-charts",
-        version="1",
-        src=c(href="https://epiviz.github.io/polymer"),
-        import="epiviz-charts.html"
-      )
-      epiviz_tag <- attachDependencies(epiviz_tag, epiviz_charts, TRUE)
-      
-      # epiviz_data_source <- htmlDependency(
-      #  name="epiviz-data-source",
-      #  version="1",
-      #  src=c(href="https://epiviz.github.io/polymer/charts/components/epiviz-data-source"),
-      #  import="epiviz-data-source.html"
-      # )
-      # epiviz_tag <- attachDependencies(epiviz_tag, epiviz_data_source, TRUE)
-      
-      .self$tag <- epiviz_tag
-      
+      .self$tag <- attachDependencies(epiviz_tag, c(chart_dependencies()))
+
       invisible(.self)
     },
     set_name = function(name) {
@@ -122,10 +95,31 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       .self$tag
     },
     show = function() {
-      "Show tag of this object"
-      # TODO
-      
-      # knit_print.html(.self$tag)
+      if (isTRUE(getOption('knitr.in.progress'))) {
+        return(knit_print(.self))
+
+      } else {
+        # temporary directory for output
+        tmp_dir <- tempfile(pattern=paste0("epivizrChart", "_", .self$get_id()))
+        dir.create(tmp_dir)
+
+        # output file
+        index_html <- file.path(tmp_dir, "index.html")
+
+        # save file
+        save_html(.self$get_tag(), file=index_html)
+        # on.exit(unlink(index_html))
+
+        # server <- epivizrServer::createServer(static_site_path=tmp_dir, try_ports=TRUE)
+        # server$start_server()
+        # TODO: Need to stop server at some point?
+
+        # view
+        viewer <- getOption("viewer", utils::browseURL)
+        viewer(index_html)
+
+        invisible()
+      }
     }
   )
 )
