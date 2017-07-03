@@ -19,9 +19,9 @@ Parent data container for an epiviz chart.
 
 \item{\code{id}}{Character string of an epiviz chart's id attribute.}
 
-\item{\code{measurement}}{Character string of an epiviz chart's measurement attribute.}
-
 \item{\code{data}}{Character string of an epiviz chart's data attribute.}
+
+\item{\code{measurements}}{.}
 
 \item{\code{tag}}{An object of class \code{\link[htmltools]{shiny.tag}} representing an epiviz chart in html.}
 }}
