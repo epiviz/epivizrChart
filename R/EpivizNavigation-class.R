@@ -1,7 +1,4 @@
 #' Epiviz Navigation Class
-#' @field chr (character) chromosome to to display in environment plot.
-#' @field start (numeric) start location to display in environment plot
-#' @field end (numeric) end location to to display in environment plot.
 #' @field gene (CharacterOrNULL)
 #' @field strRange (NumericOrNULL)
 #' @field stepRatio (NumericOrNULL)
@@ -9,27 +6,29 @@
 #' @field collapsed (LogicalOrNULL)
 #' @field geneInRange (CharacterOrNULL)
 #' @field configSrc (CharacterOrNULL)
+#' @field parent An EpivizEnvironment where the chart is nested or NULL
 #' @import htmltools
 #' @export EpivizNavigation
 #' @exportClass EpivizNavigation
 EpivizNavigation <- setRefClass("EpivizNavigation",
   contains="EpivizEnvironment",
   fields=list(
-    chr="character",
-    start="numeric",
-    end="numeric",
     gene = "CharacterOrNULL",
     strRange = "CharacterOrNULL",
     stepRatio = "NumericOrNULL",
     zoomRatio = "NumericOrNULL",
     collapsed = "LogicalOrNULL",
     geneInRange = "CharacterOrNULL",
-    configSrc = "CharacterOrNULL"
+    configSrc = "CharacterOrNULL",
+    parent="ANY"
   ),
   methods=list(
-    initialize = function(chr, start, end, gene=NULL, strRange=NULL,
-      stepRatio=NULL, zoomRatio=NULL, collapsed=NULL, geneInRange=NULL,
-      configSrc=NULL, ...) {
+    initialize = function(chr=NULL, start=NULL, end=NULL, gene=NULL,
+      strRange=NULL, stepRatio=NULL, zoomRatio=NULL, collapsed=NULL,
+      geneInRange=NULL, configSrc=NULL, parent=NULL, ...) {
+      for (arg in list(chr, start, end))
+        if (is.null(arg)) stop(arg, " cannot be NULL for an EpivizNavigation", call.=FALSE)
+
       .self$gene <- gene
       .self$strRange <- strRange
       .self$stepRatio <- stepRatio
@@ -37,13 +36,30 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       .self$collapsed <- collapsed
       .self$geneInRange <- geneInRange
       .self$configSrc <- configSrc
-      
-      epiviz_tag <- tag("epiviz-navigation",
-        list(chr=chr, start=start, end=end, 
-          gene=gene, strRange=strRange, stepRatio=stepRatio, zoomRatio=zoomRatio,
-          collapsed=collapsed, geneInRange=geneInRange, configSrc=configSrc))
-      
-      callSuper(chr=chr, start=start, end=end, epiviz_tag=epiviz_tag, ...)
+      .self$parent <- parent
+      nav_id <- NULL
+
+      # if parent environment is provided, use its data manager
+      if (is.null(parent)) {
+        mgr <- EpivizChartDataMgr()
+
+      } else {
+        if (!is(parent, "EpivizEnvironment"))
+          stop("Parent must be an EpivizEnvironment")
+
+        mgr <- parent$get_data_mgr()
+
+        # Because navigation is being nested inside an environment,
+        # it is useful to have an id (random)
+        nav_id <- paste0("epivizNav_",  sample.int(1e10, 1))
+      }
+
+      callSuper(data_mgr=mgr, name="epiviz-navigation", chr=chr, start=start,
+        end=end, id=nav_id, ...)
+
+      if (!is.null(parent)) parent$append_child(.self)
+
+      invisible(.self)
     },
     set_gene = function(gene) {
       "Set gene"
@@ -107,6 +123,17 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     get_configSrc = function(src) {
       "Get config"
       .self$configSrc
+    },
+    get_attributes = function() {
+      c(list(
+        gene=.self$gene,
+        strRange=.self$strRange,
+        stepRatio=.self$stepRatio,
+        zoomRatio=.self$zoomRatio,
+        collapsed=.self$collapsed,
+        geneInRange=.self$geneInRange,
+        configSrc=.self$configSrc),
+        callSuper())
     }
   )
 )

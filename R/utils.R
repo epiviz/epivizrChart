@@ -14,24 +14,18 @@ json_parser <- rjson::fromJSON
 #' json_writer(1:10)
 json_writer <- rjson::toJSON
 
-#' Knit print method for EpivizPolymer objects
-#' @export
-knit_print.EpivizPolymer <- function(x, ...) {
-  knitr::knit_print(x$get_tag())
-}
-
 # HTML dependencies of an EpivizChart
 chart_dependencies <- function() {
   deps <- list(
     # TODO: fix version numbers, restructure dependencies
-    webcomponents <- htmltools::htmlDependency(
+    webcomponents <- htmlDependency(
       name="webcomponents",
       version="1",
       src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
       #c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
       script="webcomponents-lite.js"
     ),
-    epiviz_charts <- htmltools::htmlDependency(
+    epiviz_charts <- htmlDependency(
       name="epiviz-charts",
       version="1",
       src=system.file(package = "epivizrChart", "www", "lib/polymer"),
@@ -48,3 +42,24 @@ chart_dependencies <- function() {
 
   deps
 }
+
+chart_type_to_tag_name = function(ms_obj, chart) {
+  if (is.null(chart)) {
+    chart_tag <- ms_obj$get_default_chart_type_html()
+  } else {
+    chart_tag <- switch(chart,
+      BlocksTrack = "epiviz-json-blocks-track",
+      HeatmapPlot = "epiviz-json-heatmap-plot",
+      LinePlot = "epiviz-json-line-plot",
+      LineTrack = "epiviz-json-line-track",
+      ScatterPlot = "epiviz-json-scatter-plot",
+      StackedLinePlot = "epiviz-json-stacked-line-plot",
+      StackedLineTrack = "epiviz-json-stacked-line-track",
+      stop(chart, " is not a valid chart type. See documentation for supported chart types", call. = FALSE)
+    )
+  }
+
+  chart_tag
+}
+
+

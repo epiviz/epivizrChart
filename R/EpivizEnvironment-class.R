@@ -1,62 +1,52 @@
 #' Epiviz Environment Class
 #'
-#' @field chr (CharacterOrNULL) chromosome to to display in environment plot.
-#' @field start (NumericOrNULL) start location to display in environment plot.
-#' @field end (NumericOrNULL) end location to to display in environment plot.
 #' @field range (CharacterOrNULL)
 #' @field initializeRegions (CharacterOrNULL)
+#' @field children A list of EpivizChart/EpivizNavigation elements.
 #' @import htmltools
 #' @export EpivizEnvironment
 #' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
   fields=list(
-    chr="CharacterOrNULL",
-    start="NumericOrNULL",
-    end="NumericOrNULL",
     range="CharacterOrNULL",
-    initializeRegions="CharacterOrNULL"
+    initializeRegions="CharacterOrNULL",
+    children="list"
   ),
   methods=list(
-    initialize = function(chr=NULL, start=NULL, end=NULL, range=NULL, 
-      initializeRegions=NULL, epiviz_tag=NULL, ...) {
-      .self$chr <- chr
-      .self$start <- start
-      .self$end <- end
+    initialize = function(name="epiviz-environment", chr=NULL, start=NULL, end=NULL, range=NULL,
+      initializeRegions=NULL, ...) {
       .self$range <- range
       .self$initializeRegions <- initializeRegions
-      
-      if (is.null(epiviz_tag)) {
-        epiviz_tag <- tag("epiviz-environment",
-          list(chr=chr, start=start, end=end, 
-            range=range, initializeRegions=initializeRegions))
-      }
+      .self$children <- list()
 
-      callSuper(name=epiviz_tag$name, epiviz_tag=epiviz_tag, ...)
+      callSuper(name=name, chr=chr, start=start, end=end, ...)
     },
-    append_child = function(polymer_obj) {
+    append_child = function(child) {
       "Append chart or navigation to environment"
-      if (!is(polymer_obj, "EpivizPolymer")) {
-        stop(polymer_obj, " must be an 'EpivizPolymer' object")
-      } else {
-        .self$tag <- tagAppendChild(.self$tag, polymer_obj$get_tag())
-      }
+      if (!is(child, "EpivizPolymer"))
+        stop(child, " must be an EpivizPolymer object")
+
+      .self$children[[child$get_id()]] <- child
+
       invisible(.self)
     },
-    set_chr = function(chr) {
-      "Set the chromosome"
-      .self$chr <- chr
-      invisible()
+    remove_child = function(child) {
+      "Remove chart or navigation from environment"
+      if (!is(child, "EpivizPolymer"))
+        stop(child, " must be an EpivizPolymer object")
+
+      .self$children[[child$get_id()]] <- NULL
+
+      invisible(.self)
     },
-    set_start = function(start) {
-      "Set start"
-      .self$start <- start
-      invisible()
+    get_range = function() {
+      "Get range"
+      .self$range
     },
-    set_end = function(end) {
-      "Set end"
-      .self$end <- end
-      invisible()
+    get_initializeRegions = function() {
+      "Get initializeRegions"
+      .self$initializeRegions
     },
     set_range = function(range) {
       "Set range"
@@ -68,25 +58,16 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       .self$initializeRegions <- initRegs
       invisible()
     },
-    get_chr = function() {
-      "Get chromosome"
-      .self$chr
+    get_attributes = function() {
+      c(list(range=.self$range,
+        initializeRegions=.self$initializeRegions),
+        callSuper()
+        )
     },
-    get_start = function() {
-      "Get start"
-      .self$start
-    },
-    get_end = function() {
-      "Get end"
-      .self$end
-    },
-    get_range = function() {
-      "Get range"
-      .self$range
-    },
-    get_initializeRegions = function() {
-      "Get initializeRegions"
-      .self$initializeRegions
+    renderChart = function() {
+      tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
+        list=lapply(.self$children, function(child) child$renderChart())
+      )
     }
   )
 )
