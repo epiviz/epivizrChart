@@ -13,27 +13,31 @@ Parent data container for an epiviz chart.
 \describe{
 \item{\code{data_mgr}}{EpivizChartDataMgr.}
 
-\item{\code{name}}{Character string of an epiviz chart type.}
+\item{\code{name}}{Character string representing an epiviz chart type (tag name).}
 
 \item{\code{class}}{Character string of an epiviz chart's class attribute.}
 
 \item{\code{id}}{Character string of an epiviz chart's id attribute.}
 
-\item{\code{data}}{Character string of an epiviz chart's data attribute.}
+\item{\code{chr}}{(CharacterOrNULL) chromosome to to display in environment plot.}
 
-\item{\code{measurements}}{.}
+\item{\code{start}}{(NumericOrNULL) start location to display in environment plot.}
 
-\item{\code{tag}}{An object of class \code{\link[htmltools]{shiny.tag}} representing an epiviz chart in html.}
+\item{\code{end}}{(NumericOrNULL) end location to to display in environment plot.}
+
+\item{\code{measurements}}{Character string of an epiviz chart's measurements.}
 }}
 
 \section{Methods}{
 
 \describe{
+\item{\code{get_chr()}}{Get chromosome}
+
 \item{\code{get_class()}}{Get class}
 
-\item{\code{get_data()}}{Get data}
-
 \item{\code{get_data_mgr()}}{Return EpivizChart Data Manager}
+
+\item{\code{get_end()}}{Get end}
 
 \item{\code{get_id()}}{Get id}
 
@@ -41,11 +45,13 @@ Parent data container for an epiviz chart.
 
 \item{\code{get_name()}}{Get name}
 
-\item{\code{get_tag()}}{Get tag}
+\item{\code{get_start()}}{Get start}
+
+\item{\code{set_chr(chr)}}{Set the chromosome}
 
 \item{\code{set_class(class)}}{Set chart class}
 
-\item{\code{set_data(data)}}{Set data}
+\item{\code{set_end(end)}}{Set end}
 
 \item{\code{set_id(id)}}{Set chart id}
 
@@ -53,6 +59,6 @@ Parent data container for an epiviz chart.
 
 \item{\code{set_name(name)}}{Set name}
 
-\item{\code{set_tag(epiviz_tag)}}{Set tag}
+\item{\code{set_start(start)}}{Set start}
 }}
 

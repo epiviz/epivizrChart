@@ -11,12 +11,6 @@ Epiviz Navigation Class
 \section{Fields}{
 
 \describe{
-\item{\code{chr}}{(character) chromosome to to display in environment plot.}
-
-\item{\code{start}}{(numeric) start location to display in environment plot}
-
-\item{\code{end}}{(numeric) end location to to display in environment plot.}
-
 \item{\code{gene}}{(CharacterOrNULL)}
 
 \item{\code{strRange}}{(NumericOrNULL)}
@@ -30,6 +24,8 @@ Epiviz Navigation Class
 \item{\code{geneInRange}}{(CharacterOrNULL)}
 
 \item{\code{configSrc}}{(CharacterOrNULL)}
+
+\item{\code{parent}}{An EpivizEnvironment where the chart is nested or NULL}
 }}
 
 \section{Methods}{

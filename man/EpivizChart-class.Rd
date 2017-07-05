@@ -11,9 +11,30 @@ Data container for an epiviz chart.
 \section{Fields}{
 
 \describe{
-\item{\code{mgr}}{An object of class \code{\link[epivizrChart]{EpivizChartDataMgr}} used to serve data to epiviz chart.}
-
 \item{\code{obj}}{An object of class \code{\link[epivizrData]{EpivizData}}.}
+
+\item{\code{data}}{Character string of an epiviz chart's data attribute.}
+
+\item{\code{colors}}{Character string of an epiviz chart's colors attribute.}
+
+\item{\code{settings}}{character string of an epiviz chart's settings attribute.}
+
+\item{\code{parent}}{An EpivizEnvironment where the chart is nested or NULL}
 }}
 
+\section{Methods}{
+
+\describe{
+\item{\code{get_colors()}}{Get chart colors}
+
+\item{\code{get_data()}}{Get chart data}
+
+\item{\code{get_settings()}}{Get chart settings}
+
+\item{\code{set_colors(colors)}}{Set chart colors}
+
+\item{\code{set_data(data)}}{Set chart data}
+
+\item{\code{set_settings(settings)}}{Set chart settings}
+}}
 
