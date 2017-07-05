@@ -29,23 +29,20 @@ Genes Track Demo
 ```{r}
 library(Homo.sapiens)
 
-genes_track <- EpivizChart(Homo.sapiens, epiviz_env=epivizEnv)
-
+genes_track <- EpivizChart(Homo.sapiens, parent=epivizEnv)
 genes_track
 ```
 
 
 Blocks Track Demo
 ```{r}
-blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", epiviz_env=epivizEnv)
-
+blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizEnv)
 blocks_track
 ```
 
 Means Track Demo
 ```{r}
-means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), epiviz_env=epivizEnv)
-
+means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv)
 means_track
 ```
 
@@ -70,13 +67,11 @@ maEset <- ExpressionSet(
   annotation=annotation(apColonData)
 )
 
-eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), epiviz_env=epivizEnv)
-
+eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), parent=epivizEnv)
 eset_chart
 ```
 
-SummarizedExperiment
-
+SummarizedExperiment demo
 ```{r eval=TRUE}
 ref_sample <- 2 ^ rowMeans(log2(assay(tcga_colon_expression) + 1))
 scaled <- (assay(tcga_colon_expression) + 1) / ref_sample
@@ -92,8 +87,7 @@ mat <- cbind(cancer = means[, "Primary Tumor"], normal = means[, "Solid Tissue N
 
 sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
-se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), epiviz_env=epivizEnv)
-
+se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv)
 se_chart
 ```
 
