@@ -31,12 +31,22 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    remove_child = function(child) {
-      "Remove chart or navigation from environment"
+    remove_chart = function(child) {
+      "Remove chart from environment"
       if (!is(child, "EpivizPolymer"))
         stop(child, " must be an EpivizPolymer object")
 
+      if (is(child, "EpivizChart"))
+        .self$data_mgr$rm_measurements(child$get_id())
+
       .self$children[[child$get_id()]] <- NULL
+
+      invisible(.self)
+    },
+    remove_all_charts = function() {
+      "Remove all charts from environment"
+      for (child in .self$children)
+        .self$remove_chart(child)
 
       invisible(.self)
     },

@@ -44,6 +44,49 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       assign(ms_id, ms_record, envir=.self$.ms_list)
 
      return(ms_object)
+    },
+    rm_measurements = function(ms_obj_or_id) {
+      "remove registered measurements from a given data object"
+      ms_obj <- .get_ms_object(ms_obj_or_id)
+
+      if (!is(ms_obj, "EpivizData")) {
+        stop("'ms_obj' must be an 'EpivizData' object")
+      }
+
+      id <- ms_obj$get_id()
+      if (!exists(id, envir=.self$.ms_list, inherits=FALSE)) {
+        stop("measurement with id ", id, " not found")
+      }
+
+      ms_record <- .self$.ms_list[[id]]
+      ms_name <- ms_record$name
+      ms <- ms_record$obj$get_measurements()
+      rm(list=id, envir=.self$.ms_list)
+
+      invisible()
+    },
+    rm_all_measurements = function() {
+      "remove all registered measurements"
+      ids <- ls(.self$.ms_list)
+      if (length(ids)>0) {
+        for (id in ids) {
+          .self$rm_measurements(id)
+        }
+      }
+    },
+    .get_ms_object=function(ms_obj_or_id) {
+      ms_obj <- NULL
+      if (is.character(ms_obj_or_id)) {
+        # passed the id instead of the object
+        id <- ms_obj_or_id
+        if (!exists(id, envir=.self$.ms_list, inherits=FALSE)) {
+          stop("measurement with id ", id, " not found")
+        }
+        ms_obj <- .self$.ms_list[[id]]$obj
+      } else {
+        ms_obj <- ms_obj_or_id
+      }
+      ms_obj
     }
   )
 )
