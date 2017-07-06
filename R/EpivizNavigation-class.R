@@ -27,7 +27,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       strRange=NULL, stepRatio=NULL, zoomRatio=NULL, collapsed=NULL,
       geneInRange=NULL, configSrc=NULL, parent=NULL, ...) {
       for (arg in list(chr, start, end))
-        if (is.null(arg)) stop(arg, " cannot be NULL for an EpivizNavigation", call.=FALSE)
+        if (is.null(arg)) stop("EpivizNavigation must have chr, start, and end", call.=FALSE)
 
       .self$gene <- gene
       .self$strRange <- strRange
@@ -54,8 +54,14 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
         nav_id <- paste0("epivizNav_",  sample.int(1e10, 1))
       }
 
-      callSuper(data_mgr=mgr, name="epiviz-navigation", chr=chr, start=start,
-        end=end, id=nav_id, ...)
+      callSuper(data_mgr=mgr,
+        name="epiviz-navigation",
+        id=nav_id,
+        class="charts",
+        chr=chr,
+        start=start,
+        end=end,
+        ...)
 
       if (!is.null(parent)) parent$append_child(.self)
 
