@@ -39,7 +39,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       # TODO: Have measurements keep pointers to charts using its data,
       # when data has no more charts using it, then remove ms from mgr
 
-      .self$children[[child$get_id()]] <- NULL
+      .self$children[[chart$get_id()]] <- NULL
 
       invisible(.self)
     },
