@@ -9,13 +9,11 @@
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields = list(
     .ms_list = "environment",
-    .ms_obj_names = "list",
     .ms_idCounter = "integer"
   ),
   methods=list(
     initialize=function() {
       .self$.ms_list <- new.env(parent=emptyenv())
-      .self$.ms_obj_names = list()
       .self$.ms_idCounter <- 0L
     },
     add_measurements = function(obj, datasource_name=NULL,
@@ -43,9 +41,8 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
         obj=ms_object)
 
       assign(ms_id, ms_record, envir=.self$.ms_list)
-      .self$.ms_obj_names[[datasource_obj_name]] <- ms_id
 
-     return(ms_object)
+      ms_object
     },
     rm_measurements = function(ms_obj_or_id) {
       "remove registered measurements from a given data object"
@@ -90,26 +87,20 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
       ms_obj
     },
-    get_ms_obj_names = function() {
-      "Get key-value pair list of datasource object names (keys) with
-      their corresponding ids (values) in data manager"
-      .self$.ms_obj_names
-    },
-    get_data_json = function(ms_objs_or_ids, chr, start, end) {
+    get_data_json = function(measurements, chr, start, end) {
       data <- list(format="epiviz")
-      ms <- NULL
+      ms_json <- NULL
 
-      for (ms_obj_or_id in ms_objs_or_ids) {
-        if (!is(ms_obj_or_id)) stop(ms_obj_or_id, " must be of type EpivizData")
-        ms_obj <- .get_ms_object(ms_obj_or_id)
+      for (ms in measurements) {
+        ms_obj <- .get_ms_object(ms@datasourceId)
 
         ms_data <- ms_obj$toJSON(chr, start, end)
-        ms <- c(ms, ms_data$measurements)
+        ms_json <- c(ms_json, json_parser(ms_data$measurements))
 
-        data[[obj$get_id()]] <- json_parser(ms_data$data)
+        data[[ms_obj$get_id()]] <- json_parser(ms_data$data)
       }
 
-      list(measurements=ms, data=json_writer(data))
+      list(measurements=json_writer(ms_json), data=json_writer(data))
     }
   )
 )

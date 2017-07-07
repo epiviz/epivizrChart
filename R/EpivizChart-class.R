@@ -1,6 +1,5 @@
 #' Data container for an epiviz chart.
 #'
-#' @field obj An object of class \code{\link[epivizrData]{EpivizData}}.
 #' @field data Character string of an epiviz chart's data attribute.
 #' @field colors Character string of an epiviz chart's colors attribute.
 #' @field settings character string of an epiviz chart's settings attribute.
@@ -12,23 +11,25 @@
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
-    obj="ANY",
     data="CharacterOrNULL",
     colors="CharacterOrNULL",
     settings="CharacterOrNULL",
     parent="ANY"
   ),
   methods=list(
-    initialize = function(data_objs=NULL, datasource_name=NULL, parent=NULL,
-      chart=NULL, chr=NULL, start=NULL, end=NULL, settings=NULL, colors=NULL,
-      ...) {
-      .self$obj <- NULL
+    initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
+      measurements=NULL, chart=NULL, chr=NULL, start=NULL, end=NULL,
+      settings=NULL, colors=NULL, ...) {
+      if (is.null(data_obj) && is.null(measurements))
+        stop("Either data or measurements must not be NULL")
+
       .self$colors <- colors
       .self$settings <- settings
 
       chart_chr <- chr
       chart_start <- start
       chart_end <- end
+      chart_ms <- measurements
 
       # if parent environment/navigation is provided,
       # use its data manager, chr, start, and end
@@ -52,30 +53,20 @@ EpivizChart <- setRefClass("EpivizChart",
       }
       .self$parent <- parent
 
-
       # register data ---------------------------
-      obj_names <- mgr$get_ms_obj_names()
-      for (obj in data_objs) {
-        datasource_obj_name <- deparse(substitute(obj))
+      if (!is.null(data_obj)) {
+        datasource_obj_name <- deparse(substitute(data_obj))
+        if (is.null(datasource_name)) datasource_name <- datasource_obj_name
 
-        if (!(datasource_obj_name %in% names(obj_names))) {
-          if (is.null(datasource_name)) datasource_name <- datasource_obj_name
+        ms_obj <- mgr$add_measurements(data_obj,
+          datasource_name=datasource_name,
+          datasource_obj_name=datasource_obj_name, ...)
 
-          ms_obj <- mgr$add_measurements(obj, datasource_name=datasource_name,
-            datasource_obj_name=datasource_obj_name, ...)
-
-        } else {
-          # data already exists in data manager
-          id <- obj_names[[datasource_obj_name]]
-          ms_obj <- mgr$.get_ms_object(id)
-        }
-
-        .self$obj <- c(.self$obj, ms_obj)
+        chart_ms <- ms_obj$get_measurements()
       }
 
-      ms_obj_json <- mgr$get_data_json(
-        lapply(.self$obj, function(obj) obj$get_id()),
-          chr=chart_chr, start=chart_start, end=chart_end)
+      ms_obj_json <- mgr$get_data_json(measurements=chart_ms,
+        chr=chart_chr, start=chart_start, end=chart_end)
 
       .self$data <- ms_obj_json$data
 
@@ -83,7 +74,7 @@ EpivizChart <- setRefClass("EpivizChart",
       callSuper(data_mgr=mgr,
         name=chart_type_to_tag_name(ms_obj, chart),
         class="charts",
-        id=datasource_name, # ms_obj$get_id(),
+        id=sprintf("%s_%d", datasource_name,  sample.int(1e9, 1)),
         measurements=ms_obj_json$measurements,
         chr=chart_chr,
         start=chart_start,
@@ -132,9 +123,19 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_name(tag_name)
 
       invisible(.self)
-    },
-    navigate = function(chr, start, end) {
-      # TODO
-    }
+    }#,
+    #navigate = function(chr, start, end) {
+    #   ms <- json_parser(.self$get_measurements())
+    #
+    #   ms_obj_json <- .self$data_mgr$get_data_json(measurements=ms,
+    #     chr=chr, start=start, end=end)
+    #
+    #   .self$chr <- chr
+    #   .self$start <- start
+    #   .self$end <- end
+    #   .self$data <- ms_obj_json$data
+    #
+    #   invisible(.self)
+    # }
   )
 )

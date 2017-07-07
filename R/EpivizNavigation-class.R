@@ -51,7 +51,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
 
         # Because navigation is being nested inside an environment,
         # it is useful to have an id (random)
-        nav_id <- paste0("epivizNav_",  sample.int(1e10, 1))
+        nav_id <- sprintf("%s_%d", "epivizNav",  sample.int(1e9, 1))
       }
 
       callSuper(data_mgr=mgr,

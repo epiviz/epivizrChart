@@ -31,13 +31,13 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    remove_chart = function(child) {
+    remove_chart = function(chart) {
       "Remove chart from environment"
-      if (!is(child, "EpivizPolymer"))
-        stop(child, " must be an EpivizPolymer object")
+      if (!is(chart, "EpivizPolymer"))
+        stop(chart, " must be an EpivizPolymer object")
 
-      if (is(child, "EpivizChart"))
-        .self$data_mgr$rm_measurements(child$get_id())
+      # TODO: Have measurements keep pointers to charts using its data,
+      # when data has no more charts using it, then remove ms from mgr
 
       .self$children[[child$get_id()]] <- NULL
 
