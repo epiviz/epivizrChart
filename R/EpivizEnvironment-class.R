@@ -2,7 +2,7 @@
 #'
 #' @field range (CharacterOrNULL)
 #' @field initializeRegions (CharacterOrNULL)
-#' @field children A list of EpivizChart/EpivizNavigation elements.
+#' @field charts A list of EpivizChart/EpivizNavigation elements.
 #' @import htmltools
 #' @export EpivizEnvironment
 #' @exportClass EpivizEnvironment
@@ -11,23 +11,23 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
   fields=list(
     range="CharacterOrNULL",
     initializeRegions="CharacterOrNULL",
-    children="list"
+    charts="list"
   ),
   methods=list(
     initialize = function(name="epiviz-environment", chr=NULL, start=NULL, end=NULL, range=NULL,
       initializeRegions=NULL, ...) {
       .self$range <- range
       .self$initializeRegions <- initializeRegions
-      .self$children <- list()
+      .self$charts <- list()
 
       callSuper(name=name, chr=chr, start=start, end=end, ...)
     },
-    append_child = function(child) {
+    append_chart = function(chart) {
       "Append chart or navigation to environment"
-      if (!is(child, "EpivizPolymer"))
-        stop(child, " must be an EpivizPolymer object")
+      if (!is(chart, "EpivizPolymer"))
+        stop(chart, " must be an EpivizPolymer object")
 
-      .self$children[[child$get_id()]] <- child
+      .self$charts[[chart$get_id()]] <- chart
 
       invisible(.self)
     },
@@ -39,14 +39,14 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       # TODO: Have measurements keep pointers to charts using its data,
       # when data has no more charts using it, then remove ms from mgr
 
-      .self$children[[chart$get_id()]] <- NULL
+      .self$charts[[chart$get_id()]] <- NULL
 
       invisible(.self)
     },
     remove_all_charts = function() {
       "Remove all charts from environment"
-      for (child in .self$children)
-        .self$remove_chart(child)
+      for (chart in .self$charts)
+        .self$remove_chart(chart)
 
       invisible(.self)
     },
@@ -76,7 +76,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     },
     renderChart = function() {
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
-        list=lapply(.self$children, function(child) child$renderChart())
+        list=lapply(.self$charts, function(chart) chart$renderChart())
       )
     }
   )

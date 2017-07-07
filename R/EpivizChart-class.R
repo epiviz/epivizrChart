@@ -70,6 +70,8 @@ EpivizChart <- setRefClass("EpivizChart",
 
       .self$data <- ms_obj_json$data
 
+      if (is.null(datasource_name)) datasource_name <- "chart"
+
       # initialize  ---------------------------
       callSuper(data_mgr=mgr,
         name=chart_type_to_tag_name(ms_obj, chart),
