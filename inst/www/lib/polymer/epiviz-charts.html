@@ -47758,7 +47758,7 @@ It will also ensure that focus remains in the dialog.
 
                 mSet.foreach(function(m) {
 
-                    var mData = self.data[m.id()];
+                    var mData = self.data[m.datasourceId()];
                     var rowLength = mData.rows.values.chr.length;
 
                     var range =  new epiviz.datatypes.GenomicRange(mData.rows.values.chr[0], mData.rows.values.start[0], mData.rows.values.end[rowLength-1] - mData.rows.values.start[0]);

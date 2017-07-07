@@ -90,9 +90,10 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
     get_data_json = function(measurements, chr, start, end) {
       data <- list(format="epiviz")
       ms_json <- NULL
+      datasources <- lapply(measurements, function(ms) ms@datasourceId)
 
-      for (ms in measurements) {
-        ms_obj <- .get_ms_object(ms@datasourceId)
+      for (datasource in unique(datasources)) {
+        ms_obj <- .get_ms_object(datasource)
 
         ms_data <- ms_obj$toJSON(chr, start, end)
         ms_json <- c(ms_json, json_parser(ms_data$measurements))
