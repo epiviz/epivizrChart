@@ -9,22 +9,23 @@
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields = list(
     .ms_list = "environment",
+    .ms_obj_names = "list",
     .ms_idCounter = "integer"
   ),
   methods=list(
     initialize=function() {
       .self$.ms_list <- new.env(parent=emptyenv())
+      .self$.ms_obj_names = list()
       .self$.ms_idCounter <- 0L
     },
-    add_measurements = function(obj, datasource_name=NULL, datasource_origin_name=deparse(substitute(obj)), ...) {
+    add_measurements = function(obj, datasource_name=NULL,
+      datasource_obj_name=deparse(substitute(obj)), ...) {
       "register measurements in data manager"
-      if (missing(datasource_name) || is.null(datasource_name)) {
-        datasource_name <- datasource_origin_name
-      }
+      if (is.null(datasource_name))
+        datasource_name <- datasource_obj_name
 
-      if (!is.character(datasource_name)) {
+      if (!is.character(datasource_name))
         stop("data source name has to be a string: ", datasource_name)
-      }
 
       ms_object <- epivizrData:::register(obj, ...)
 
@@ -32,16 +33,17 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       ms_id <- sprintf("%s_%d", datasource_name, .self$.ms_idCounter)
       ms_object$set_id(ms_id)
       ms_object$set_name(datasource_name)
-      ms_object$set_source_name(datasource_origin_name)
+      ms_object$set_source_name(datasource_obj_name)
 
       measurements <- ms_object$get_measurements()
 
       ms_record <- list(measurements=measurements,
         name=datasource_name,
-        source_name=datasource_origin_name,
+        source_name=datasource_obj_name,
         obj=ms_object)
 
       assign(ms_id, ms_record, envir=.self$.ms_list)
+      .self$.ms_obj_names[[datasource_obj_name]] <- ms_id
 
      return(ms_object)
     },
@@ -74,7 +76,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
         }
       }
     },
-    .get_ms_object=function(ms_obj_or_id) {
+    .get_ms_object = function(ms_obj_or_id) {
       ms_obj <- NULL
       if (is.character(ms_obj_or_id)) {
         # passed the id instead of the object
@@ -87,6 +89,27 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
         ms_obj <- ms_obj_or_id
       }
       ms_obj
+    },
+    get_ms_obj_names = function() {
+      "Get key-value pair list of datasource object names (keys) with
+      their corresponding ids (values) in data manager"
+      .self$.ms_obj_names
+    },
+    get_data_json = function(ms_objs_or_ids, chr, start, end) {
+      data <- list(format="epiviz")
+      ms <- NULL
+
+      for (ms_obj_or_id in ms_objs_or_ids) {
+        if (!is(ms_obj_or_id)) stop(ms_obj_or_id, " must be of type EpivizData")
+        ms_obj <- .get_ms_object(ms_obj_or_id)
+
+        ms_data <- ms_obj$toJSON(chr, start, end)
+        ms <- c(ms, ms_data$measurements)
+
+        data[[obj$get_id()]] <- json_parser(ms_data$data)
+      }
+
+      list(measurements=ms, data=json_writer(data))
     }
   )
 )

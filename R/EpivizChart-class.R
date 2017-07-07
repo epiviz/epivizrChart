@@ -19,9 +19,10 @@ EpivizChart <- setRefClass("EpivizChart",
     parent="ANY"
   ),
   methods=list(
-    initialize = function(data_object, datasource_name=NULL,
-      datasource_origin_name=NULL, parent=NULL, chart=NULL,
-      chr=NULL, start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
+    initialize = function(data_objs=NULL, datasource_name=NULL, parent=NULL,
+      chart=NULL, chr=NULL, start=NULL, end=NULL, settings=NULL, colors=NULL,
+      ...) {
+      .self$obj <- NULL
       .self$colors <- colors
       .self$settings <- settings
 
@@ -51,26 +52,38 @@ EpivizChart <- setRefClass("EpivizChart",
       }
       .self$parent <- parent
 
+
       # register data ---------------------------
-      if (is.null(datasource_origin_name))
-        datasource_origin_name <- deparse(substitute(data_object))
-      if (is.null(datasource_name)) datasource_name <- datasource_origin_name
+      obj_names <- mgr$get_ms_obj_names()
+      for (obj in data_objs) {
+        datasource_obj_name <- deparse(substitute(obj))
 
-      ms_obj <- mgr$add_measurements(
-        data_object, datasource_name=datasource_name,
-        datasource_origin_name=datasource_origin_name,
-        ...
-      )
-      .self$obj <- ms_obj
+        if (!(datasource_obj_name %in% names(obj_names))) {
+          if (is.null(datasource_name)) datasource_name <- datasource_obj_name
 
-      ms_obj_json <- ms_obj$toJSON(chart_chr, chart_start, chart_end)
+          ms_obj <- mgr$add_measurements(obj, datasource_name=datasource_name,
+            datasource_obj_name=datasource_obj_name, ...)
+
+        } else {
+          # data already exists in data manager
+          id <- obj_names[[datasource_obj_name]]
+          ms_obj <- mgr$.get_ms_object(id)
+        }
+
+        .self$obj <- c(.self$obj, ms_obj)
+      }
+
+      ms_obj_json <- mgr$get_data_json(
+        lapply(.self$obj, function(obj) obj$get_id()),
+          chr=chart_chr, start=chart_start, end=chart_end)
+
       .self$data <- ms_obj_json$data
 
       # initialize  ---------------------------
       callSuper(data_mgr=mgr,
         name=chart_type_to_tag_name(ms_obj, chart),
         class="charts",
-        id=ms_obj$get_id(),
+        id=datasource_name, # ms_obj$get_id(),
         measurements=ms_obj_json$measurements,
         chr=chart_chr,
         start=chart_start,
@@ -119,6 +132,9 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_name(tag_name)
 
       invisible(.self)
+    },
+    navigate = function(chr, start, end) {
+      # TODO
     }
   )
 )
