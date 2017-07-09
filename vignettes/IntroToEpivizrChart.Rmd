@@ -91,8 +91,22 @@ se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c
 se_chart
 ```
 
+
+Adding chart using measurements (can also be from different data objects)
+```{r}
+measurements <- se_chart$chart_measurements
+heatmap_plot <- EpivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
+heatmap_plot
+```
+
+
 Show epiviz enivornment
 ```{r}
 epivizEnv
 ```
 
+Navigate to a new region
+```{r}
+epivizEnv$navigate(chr="chr11", start=110800000, end=130383180)
+epivizEnv
+```
