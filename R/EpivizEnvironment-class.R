@@ -78,6 +78,15 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
         list=lapply(.self$charts, function(chart) chart$renderChart())
       )
+    },
+    navigate = function(chr = NULL, start = NULL, end = NULL) {
+      .self$chr <- chr
+      .self$start <- start
+      .self$end <- end
+
+      for (chart in .self$charts) {
+        chart$navigate(chr, start, end)
+      }
     }
   )
 )

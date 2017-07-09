@@ -14,7 +14,8 @@ EpivizChart <- setRefClass("EpivizChart",
     data="CharacterOrNULL",
     colors="CharacterOrNULL",
     settings="CharacterOrNULL",
-    parent="ANY"
+    parent="ANY",
+    chart_measurements="ANY"
   ),
   methods=list(
     initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
@@ -65,6 +66,8 @@ EpivizChart <- setRefClass("EpivizChart",
         chart_ms <- ms_obj$get_measurements()
       }
 
+      .self$chart_measurements <- chart_ms
+
       ms_obj_json <- mgr$get_data_json(measurements=chart_ms,
         chr=chart_chr, start=chart_start, end=chart_end)
 
@@ -82,7 +85,7 @@ EpivizChart <- setRefClass("EpivizChart",
         start=chart_start,
         end=chart_end)
 
-      if (!is.null(parent)) parent$append_child(.self)
+      if (!is.null(parent)) parent$append_chart(.self)
 
       invisible(.self)
     },
@@ -125,19 +128,17 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_name(tag_name)
 
       invisible(.self)
-    }#,
-    #navigate = function(chr, start, end) {
-    #   ms <- json_parser(.self$get_measurements())
-    #
-    #   ms_obj_json <- .self$data_mgr$get_data_json(measurements=ms,
-    #     chr=chr, start=start, end=end)
-    #
-    #   .self$chr <- chr
-    #   .self$start <- start
-    #   .self$end <- end
-    #   .self$data <- ms_obj_json$data
-    #
-    #   invisible(.self)
-    # }
+    },
+    navigate = function(chr, start, end) {
+      ms_obj_json <- .self$data_mgr$get_data_json(measurements=.self$chart_measurements,
+        chr=chr, start=start, end=end)
+
+      .self$chr <- chr
+      .self$start <- start
+      .self$end <- end
+      .self$data <- ms_obj_json$data
+
+      invisible(.self)
+    }
   )
 )
