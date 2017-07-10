@@ -22,7 +22,7 @@ EpivizChart <- setRefClass("EpivizChart",
       measurements=NULL, chart=NULL, chr=NULL, start=NULL, end=NULL,
       settings=NULL, colors=NULL, ...) {
       if (is.null(data_obj) && is.null(measurements))
-        stop("Either data or measurements must not be NULL")
+        stop("You must pass either data or measurements")
 
       .self$colors <- colors
       .self$settings <- settings
@@ -64,6 +64,12 @@ EpivizChart <- setRefClass("EpivizChart",
           datasource_obj_name=datasource_obj_name, ...)
 
         chart_ms <- ms_obj$get_measurements()
+      } else {
+        # use measurements to plot data
+        ms_obj <- NULL
+
+        if (is.null(chart))
+          stop("You must pass 'chart' type when using measurements")
       }
 
       ms_obj_data <- mgr$get_data(measurements=chart_ms,
