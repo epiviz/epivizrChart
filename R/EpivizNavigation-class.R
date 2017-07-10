@@ -65,7 +65,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
         end=end,
         ...)
 
-      if (!is.null(parent)) parent$append_child(.self)
+      if (!is.null(parent)) parent$append_chart(.self)
 
       invisible(.self)
     },
