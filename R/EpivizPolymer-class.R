@@ -13,6 +13,7 @@ setClassUnion("LogicalOrNULL", c("logical", "NULL"))
 #' @field measurements Character string of an epiviz chart's measurements.
 #'
 #' @import htmltools
+#' @importFrom methods new
 #' @exportClass EpivizPolymer
 EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(

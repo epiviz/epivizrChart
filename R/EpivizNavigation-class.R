@@ -8,6 +8,7 @@
 #' @field configSrc (CharacterOrNULL)
 #' @field parent An EpivizEnvironment where the chart is nested or NULL
 #' @import htmltools
+#' @importFrom methods new
 #' @export EpivizNavigation
 #' @exportClass EpivizNavigation
 EpivizNavigation <- setRefClass("EpivizNavigation",

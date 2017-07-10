@@ -1,8 +1,13 @@
 ---
 title: "Visualizing Epiviz Charts with epivizrChart"
 author: "Brian Gottfried"
+date: "`r Sys.Date()`"
 output:
    BiocStyle::html_document
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Title of your vignette}
+  %\usepackage[UTF-8]{inputenc}
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
@@ -27,7 +32,7 @@ epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
 
 Genes Track Demo
 ```{r}
-library(Homo.sapiens)
+require(Homo.sapiens)
 
 genes_track <- EpivizChart(Homo.sapiens, parent=epivizEnv)
 genes_track

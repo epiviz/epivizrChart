@@ -11,8 +11,6 @@ Data container for an epiviz chart.
 \section{Fields}{
 
 \describe{
-\item{\code{obj}}{An object of class \code{\link[epivizrData]{EpivizData}}.}
-
 \item{\code{data}}{Character string of an epiviz chart's data attribute.}
 
 \item{\code{colors}}{Character string of an epiviz chart's colors attribute.}
@@ -30,6 +28,8 @@ Data container for an epiviz chart.
 \item{\code{get_data()}}{Get chart data}
 
 \item{\code{get_settings()}}{Get chart settings}
+
+\item{\code{navigate(chr, start, end)}}{Navigate a chart to a genomic location}
 
 \item{\code{set_colors(colors)}}{Set chart colors}
 

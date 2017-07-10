@@ -5,6 +5,7 @@
 #' @field charts A list of EpivizChart/EpivizNavigation elements.
 #' @import htmltools
 #' @export EpivizEnvironment
+#' @importFrom methods new
 #' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
@@ -80,6 +81,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       )
     },
     navigate = function(chr = NULL, start = NULL, end = NULL) {
+      "Navigate environment to a genomic location"
       .self$chr <- chr
       .self$start <- start
       .self$end <- end

@@ -15,19 +15,23 @@ Epiviz Environment Class
 
 \item{\code{initializeRegions}}{(CharacterOrNULL)}
 
-\item{\code{children}}{A list of EpivizChart/EpivizNavigation elements.}
+\item{\code{charts}}{A list of EpivizChart/EpivizNavigation elements.}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{\code{append_child(child)}}{Append chart or navigation to environment}
+\item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
 \item{\code{get_initializeRegions()}}{Get initializeRegions}
 
 \item{\code{get_range()}}{Get range}
 
-\item{\code{remove_child(child)}}{Remove chart or navigation from environment}
+\item{\code{navigate(chr = NULL, start = NULL, end = NULL)}}{Navigate environment to a genomic location}
+
+\item{\code{remove_all_charts()}}{Remove all charts from environment}
+
+\item{\code{remove_chart(chart)}}{Remove chart from environment}
 
 \item{\code{set_initializeRegions(initReg)}}{Set initializeRegions}
 

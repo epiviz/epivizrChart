@@ -6,6 +6,7 @@
 #' @field parent An EpivizEnvironment where the chart is nested or NULL
 #' @import epivizrData
 #' @import htmltools
+#' @importFrom methods new
 #' @export EpivizChart
 #' @exportClass EpivizChart
 EpivizChart <- setRefClass("EpivizChart",
@@ -130,6 +131,7 @@ EpivizChart <- setRefClass("EpivizChart",
       invisible(.self)
     },
     navigate = function(chr, start, end) {
+      "Navigate a chart to a genomic location"
       ms_obj_json <- .self$data_mgr$get_data_json(measurements=.self$chart_measurements,
         chr=chr, start=start, end=end)
 
