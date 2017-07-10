@@ -9,8 +9,8 @@
 #' @exportClass EpivizChartDataMgr
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields = list(
-    .ms_list = "environment",
-    .ms_idCounter = "integer"
+    .ms_list="environment",
+    .ms_idCounter="integer"
   ),
   methods=list(
     initialize=function() {
@@ -88,21 +88,21 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
       ms_obj
     },
-    get_data_json = function(measurements, chr, start, end) {
+    get_data = function(measurements, chr, start, end) {
       data <- list(format="epiviz")
-      ms_json <- NULL
+      ms_list <- NULL
       datasources <- lapply(measurements, function(ms) ms@datasourceId)
 
       for (datasource in unique(datasources)) {
         ms_obj <- .get_ms_object(datasource)
 
-        ms_data <- ms_obj$toJSON(chr, start, end)
-        ms_json <- c(ms_json, json_parser(ms_data$measurements))
+        ms_data <- ms_obj$get_data(chr, start, end)
+        ms_list <- c(ms_list, ms_obj$get_measurements())
 
-        data[[ms_obj$get_id()]] <- json_parser(ms_data$data)
+        data[[ms_obj$get_id()]] <- ms_data$data
       }
 
-      list(measurements=json_writer(ms_json), data=json_writer(data))
+      list(measurements=ms_list, data=data)
     }
   )
 )

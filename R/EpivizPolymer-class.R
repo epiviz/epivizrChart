@@ -1,6 +1,7 @@
 setClassUnion("CharacterOrNULL", c("character", "NULL"))
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
 setClassUnion("LogicalOrNULL", c("logical", "NULL"))
+setClassUnion("ListOrNULL", c("list", "NULL"))
 #' Parent data container for an epiviz chart.
 #'
 #' @field data_mgr EpivizChartDataMgr.
@@ -21,7 +22,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     name="character",
     class="CharacterOrNULL",
     id="CharacterOrNULL",
-    measurements="CharacterOrNULL",
+    measurements="ListOrNULL",
     chr="CharacterOrNULL",
     start="NumericOrNULL",
     end="NumericOrNULL"
@@ -114,7 +115,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     get_attributes = function() {
       list(class=.self$class,
         id=.self$id,
-        measurements=.self$measurements,
+        measurements=json_writer(lapply(.self$measurements, as.list)),
         chr=.self$chr,
         start=.self$start,
         end=.self$end)

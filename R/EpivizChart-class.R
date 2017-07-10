@@ -12,11 +12,10 @@
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
-    data="CharacterOrNULL",
+    data="list",
     colors="CharacterOrNULL",
     settings="CharacterOrNULL",
-    parent="ANY",
-    chart_measurements="ANY"
+    parent="ANY"
   ),
   methods=list(
     initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
@@ -67,12 +66,10 @@ EpivizChart <- setRefClass("EpivizChart",
         chart_ms <- ms_obj$get_measurements()
       }
 
-      .self$chart_measurements <- chart_ms
-
-      ms_obj_json <- mgr$get_data_json(measurements=chart_ms,
+      ms_obj_data <- mgr$get_data(measurements=chart_ms,
         chr=chart_chr, start=chart_start, end=chart_end)
 
-      .self$data <- ms_obj_json$data
+      .self$data <- ms_obj_data$data
 
       if (is.null(datasource_name)) datasource_name <- "chart"
 
@@ -81,7 +78,7 @@ EpivizChart <- setRefClass("EpivizChart",
         name=chart_type_to_tag_name(ms_obj, chart),
         class="charts",
         id=sprintf("%s_%d", datasource_name,  sample.int(1e9, 1)),
-        measurements=ms_obj_json$measurements,
+        measurements=ms_obj_data$measurements,
         chr=chart_chr,
         start=chart_start,
         end=chart_end)
@@ -116,7 +113,7 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$settings <- settings
     },
     get_attributes = function() {
-      c(list(data=.self$data,
+      c(list(data=json_writer(.self$data),
         colors=.self$colors,
         settings=.self$settings),
         callSuper())
@@ -132,13 +129,13 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     navigate = function(chr, start, end) {
       "Navigate a chart to a genomic location"
-      ms_obj_json <- .self$data_mgr$get_data_json(measurements=.self$chart_measurements,
-        chr=chr, start=start, end=end)
+      .self$set_chr(chr)
+      .self$set_start(start)
+      .self$set_end(end)
 
-      .self$chr <- chr
-      .self$start <- start
-      .self$end <- end
-      .self$data <- ms_obj_json$data
+      ms_data <- .self$data_mgr$get_data(measurements=.self$get_measurements(),
+        chr=chr, start=start, end=end)$data
+      .self$set_data(ms_data)
 
       invisible(.self)
     }

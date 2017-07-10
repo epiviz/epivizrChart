@@ -28,7 +28,8 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       strRange=NULL, stepRatio=NULL, zoomRatio=NULL, collapsed=NULL,
       geneInRange=NULL, configSrc=NULL, parent=NULL, ...) {
       for (arg in list(chr, start, end))
-        if (is.null(arg)) stop("EpivizNavigation must have chr, start, and end", call.=FALSE)
+        if (is.null(arg))
+          stop("EpivizNavigation must have chr, start, and end", call.=FALSE)
 
       .self$gene <- gene
       .self$strRange <- strRange

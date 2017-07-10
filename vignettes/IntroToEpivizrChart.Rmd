@@ -99,7 +99,7 @@ se_chart
 
 Adding chart using measurements (can also be from different data objects)
 ```{r}
-measurements <- se_chart$chart_measurements
+measurements <- se_chart$get_measurements()
 heatmap_plot <- EpivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
 heatmap_plot
 ```
