@@ -115,3 +115,15 @@ Navigate to a new region
 epivizEnv$navigate(chr="chr11", start=110800000, end=130383180)
 epivizEnv
 ```
+
+Add navigation with a particular start and end to an environment at a particular chromosome
+```{r}
+epivizEnv_2 <- EpivizEnvironment(chr="chr11")
+means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), start=130000000, end=130383180, parent=epivizEnv_2)
+
+epivizNav <- EpivizNavigation(start=99800000, end=103383180, parent=epivizEnv_2)
+blocks_track2 <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizNav)
+
+epivizEnv_2
+```
+
