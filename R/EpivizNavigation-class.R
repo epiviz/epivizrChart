@@ -1,4 +1,5 @@
 #' Epiviz Navigation Class
+#'
 #' @field gene (CharacterOrNULL)
 #' @field strRange (NumericOrNULL)
 #' @field stepRatio (NumericOrNULL)
@@ -39,7 +40,6 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       .self$geneInRange <- geneInRange
       .self$configSrc <- configSrc
       .self$parent <- parent
-      nav_id <- NULL
 
       # if parent environment is provided, use its data manager
       if (is.null(parent)) {
@@ -50,21 +50,18 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
           stop("Parent must be an EpivizEnvironment")
 
         mgr <- parent$get_data_mgr()
-
-        # Because navigation is being nested inside an environment,
-        # it is useful to have an id (random)
-        nav_id <- rand_id("epivizNav")
       }
 
       callSuper(data_mgr=mgr,
         name="epiviz-navigation",
-        id=nav_id,
+        id=rand_id("epivizNav"),
         class="charts",
         chr=chr,
         start=start,
         end=end,
         ...)
 
+      # nav is appended at this point because id needs to be initialized
       if (!is.null(parent)) parent$append_chart(.self)
 
       invisible(.self)
@@ -133,6 +130,8 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       .self$configSrc
     },
     get_attributes = function() {
+      "Get attributes for rendering chart. Fields that need to be in JSON
+      will be converted"
       c(list(
         gene=.self$gene,
         strRange=.self$strRange,

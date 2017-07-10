@@ -113,6 +113,8 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       invisible()
     },
     get_attributes = function() {
+      "Get attributes for rendering chart. Fields that need to be in JSON
+      will be converted"
       list(class=.self$class,
         id=.self$id,
         measurements=json_writer(lapply(.self$measurements, as.list)),
@@ -136,7 +138,6 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         # save file
         save_html(attachDependencies(.self$renderChart(),
           c(chart_dependencies())), file=index_html)
-        # on.exit(unlink(index_html))
 
         # view
         viewer <- getOption("viewer", utils::browseURL)

@@ -37,10 +37,11 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       if (!is(chart, "EpivizPolymer"))
         stop(chart, " must be an EpivizPolymer object")
 
-      # TODO: Have measurements keep pointers to charts using its data,
-      # when data has no more charts using it, then remove ms from mgr
+      chart_id <- chart$get_id()
+      # TODO: Remove ms_obj from data manager if
+      # there are no more charts using its data
 
-      .self$charts[[chart$get_id()]] <- NULL
+      .self$charts[[chart_id]] <- NULL
 
       invisible(.self)
     },
@@ -70,12 +71,15 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       invisible()
     },
     get_attributes = function() {
+      "Get attributes for rendering chart. Fields that need to be in JSON
+      will be converted"
       c(list(range=.self$range,
         initializeRegions=.self$initializeRegions),
         callSuper()
         )
     },
     renderChart = function() {
+      "Render to html"
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
         list=lapply(.self$charts, function(chart) chart$renderChart())
       )

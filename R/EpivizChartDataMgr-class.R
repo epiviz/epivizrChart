@@ -19,7 +19,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
     },
     add_measurements = function(obj, datasource_name=NULL,
       datasource_obj_name=deparse(substitute(obj)), ...) {
-      "register measurements in data manager"
+      "Register measurements in data manager"
       if (is.null(datasource_name))
         datasource_name <- datasource_obj_name
 
@@ -46,7 +46,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       ms_object
     },
     rm_measurements = function(ms_obj_or_id) {
-      "remove registered measurements from a given data object"
+      "Remove registered measurements from a given data object"
       ms_obj <- .get_ms_object(ms_obj_or_id)
 
       if (!is(ms_obj, "EpivizData")) {
@@ -54,19 +54,15 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
 
       id <- ms_obj$get_id()
-      if (!exists(id, envir=.self$.ms_list, inherits=FALSE)) {
+      if (!exists(id, envir=.self$.ms_list, inherits=FALSE))
         stop("measurement with id ", id, " not found")
-      }
 
-      ms_record <- .self$.ms_list[[id]]
-      ms_name <- ms_record$name
-      ms <- ms_record$obj$get_measurements()
       rm(list=id, envir=.self$.ms_list)
 
       invisible()
     },
     rm_all_measurements = function() {
-      "remove all registered measurements"
+      "Remove all registered measurements"
       ids <- ls(.self$.ms_list)
       if (length(ids)>0) {
         for (id in ids) {
@@ -88,7 +84,8 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
       ms_obj
     },
-    get_data = function(measurements, chr, start, end) {
+    get_data = function(measurements, chr=NULL, start=NULL, end=NULL) {
+      "Get data from data mgr based on measurements, chr, start, and end"
       data <- list(format="epiviz")
       ms_list <- NULL
       datasources <- lapply(measurements, function(ms) ms@datasourceId)

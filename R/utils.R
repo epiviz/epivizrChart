@@ -34,10 +34,9 @@ json_writer <- rjson::toJSON
 #' HTML dependencies of an EpivizChart
 chart_dependencies <- function() {
   deps <- list(
-    # TODO: fix version numbers, restructure dependencies
     webcomponents <- htmlDependency(
       name="webcomponents",
-      version="1",
+      version="0.7.24",
       src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
       #c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
       script="webcomponents-lite.js"
@@ -87,6 +86,7 @@ chart_type_to_tag_name = function(ms_obj, chart) {
 #' Random ID generator for epiviz charts
 #'
 #' @param prefix prefix for random ID
+#' @return random ID
 rand_id <- function(prefix = "") {
   sprintf("%s_%d", prefix, floor(stats::runif(1, 1e8, 1e9-1)))
 }

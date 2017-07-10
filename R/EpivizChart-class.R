@@ -13,8 +13,8 @@ EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
     data="list",
-    colors="CharacterOrNULL",
-    settings="CharacterOrNULL",
+    colors="ListOrNULL",
+    settings="ListOrNULL",
     parent="ANY"
   ),
   methods=list(
@@ -77,7 +77,7 @@ EpivizChart <- setRefClass("EpivizChart",
 
       .self$data <- ms_obj_data$data
 
-      if (is.null(datasource_name)) datasource_name <- "chart"
+      if (is.null(datasource_name)) datasource_name <- "epivizChart"
 
       # initialize  ---------------------------
       callSuper(data_mgr=mgr,
@@ -89,8 +89,8 @@ EpivizChart <- setRefClass("EpivizChart",
         start=chart_start,
         end=chart_end)
 
+      # chart is appended at this point because id needs to be initialized
       if (!is.null(parent)) parent$append_chart(.self)
-      # TODO: assign chart id to data object's charts
 
       invisible(.self)
     },
@@ -120,15 +120,19 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$settings <- settings
     },
     get_attributes = function() {
+      "Get attributes for rendering chart. Fields that need to be in JSON
+      will be converted"
       c(list(data=json_writer(.self$data),
-        colors=.self$colors,
-        settings=.self$settings),
+        colors=json_writer(.self$colors),
+        settings=json_writer(.self$settings)),
         callSuper())
     },
     renderChart = function() {
+      "Render to html"
      tag(.self$name, .self$get_attributes())
     },
     revisualize = function(chart_type) {
+      "Revisualize chart as the given chart type"
       tag_name <- chart_type_to_tag_name(.self$obj, chart_type)
       .self$set_name(tag_name)
 
