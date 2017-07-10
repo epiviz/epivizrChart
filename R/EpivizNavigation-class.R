@@ -28,10 +28,6 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     initialize = function(chr=NULL, start=NULL, end=NULL, gene=NULL,
       strRange=NULL, stepRatio=NULL, zoomRatio=NULL, collapsed=NULL,
       geneInRange=NULL, configSrc=NULL, parent=NULL, ...) {
-      for (arg in list(chr, start, end))
-        if (is.null(arg))
-          stop("EpivizNavigation must have chr, start, and end", call.=FALSE)
-
       .self$gene <- gene
       .self$strRange <- strRange
       .self$stepRatio <- stepRatio
@@ -40,6 +36,10 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       .self$geneInRange <- geneInRange
       .self$configSrc <- configSrc
       .self$parent <- parent
+
+      nav_chr <- chr
+      nav_start <- start
+      nav_end <- end
 
       # if parent environment is provided, use its data manager
       if (is.null(parent)) {
@@ -50,15 +50,23 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
           stop("Parent must be an EpivizEnvironment")
 
         mgr <- parent$get_data_mgr()
+
+        if (is.null(chr)) nav_chr <-  parent$get_chr()
+        if (is.null(start)) nav_start <- parent$get_start()
+        if (is.null(end)) nav_end <- parent$get_end()
       }
+
+      for (arg in list(nav_chr, nav_start, nav_end))
+        if (is.null(arg))
+          stop("EpivizNavigation must have chr, start, and end")
 
       callSuper(data_mgr=mgr,
         name="epiviz-navigation",
         id=rand_id("epivizNav"),
         class="charts",
-        chr=chr,
-        start=start,
-        end=end,
+        chr=nav_chr,
+        start=nav_start,
+        end=nav_end,
         ...)
 
       # nav is appended at this point because id needs to be initialized
