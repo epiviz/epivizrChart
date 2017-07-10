@@ -84,4 +84,11 @@ chart_type_to_tag_name = function(ms_obj, chart) {
   chart_tag
 }
 
+#' Random ID generator for epiviz charts
+#'
+#' @param prefix prefix for random ID
+rand_id <- function(prefix = "") {
+  sprintf("%s_%d", prefix, floor(stats::runif(1, 1e8, 1e9-1)))
+}
+
 

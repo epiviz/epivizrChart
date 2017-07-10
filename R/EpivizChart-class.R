@@ -83,13 +83,14 @@ EpivizChart <- setRefClass("EpivizChart",
       callSuper(data_mgr=mgr,
         name=chart_type_to_tag_name(ms_obj, chart),
         class="charts",
-        id=sprintf("%s_%d", datasource_name,  sample.int(1e9, 1)),
+        id=rand_id(datasource_name),
         measurements=ms_obj_data$measurements,
         chr=chart_chr,
         start=chart_start,
         end=chart_end)
 
       if (!is.null(parent)) parent$append_chart(.self)
+      # TODO: assign chart id to data object's charts
 
       invisible(.self)
     },
