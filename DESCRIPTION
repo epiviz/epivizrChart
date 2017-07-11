@@ -23,7 +23,8 @@ Suggests:
     antiProfilesData,
     hgu133plus2.db,
     Mus.musculus,
-    BiocStyle
+    BiocStyle,
+    Homo.sapiens
 Collate:
   'EpivizPolymer-class.R'
   'EpivizChart-class.R'
