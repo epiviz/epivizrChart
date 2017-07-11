@@ -1,6 +1,6 @@
 ---
-title: "Visualizing Epiviz Charts with epivizrChart"
-author: "Brian Gottfried"
+title: "Visualizing Epiviz Web Components with epivizrChart"
+author: "Hector Corrada Bravo, Jayaram Kancherla, Brian Gottfried"
 date: "`r Sys.Date()`"
 output:
    BiocStyle::html_document
@@ -57,7 +57,7 @@ epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
 Add a genome track to the environment. You can add charts to an environment by using the `parent` parameter. For this vignette, we use the human genome from the `Homo.sapiens` package.
-```{r}
+```{r warning=FALSE, message=FALSE}
 require(Homo.sapiens)
 
 genes_track <- EpivizChart(Homo.sapiens, parent=epivizEnv)
@@ -86,7 +86,7 @@ The `apColonData` object is an `ExpressionSet` containing gene expression data f
 
 To visualize an MA plot from the `apColonData`, we first create an `ExpressionSet` object and create an `EpivizChart` object.
 
-```{r warnings=FALSE, messages=FALSE}
+```{r warning=FALSE, message=FALSE}
 keep <- pData(apColonData)$SubType!="adenoma"
 apColonData <- apColonData[,keep]
 status <- pData(apColonData)$Status
@@ -111,7 +111,7 @@ eset_chart
 ```
 
 We can also visualize data from `SummarizedExperiment` objects. 
-```{r eval=TRUE}
+```{r}
 ref_sample <- 2 ^ rowMeans(log2(assay(tcga_colon_expression) + 1))
 scaled <- (assay(tcga_colon_expression) + 1) / ref_sample
 scaleFactor <- Biobase::rowMedians(t(scaled))
