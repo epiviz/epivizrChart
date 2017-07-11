@@ -76,7 +76,7 @@ chart_type_to_tag_name = function(ms_obj, chart) {
       ScatterPlot = "epiviz-json-scatter-plot",
       StackedLinePlot = "epiviz-json-stacked-line-plot",
       StackedLineTrack = "epiviz-json-stacked-line-track",
-      stop(chart, " is not a valid chart type. See documentation for supported chart types", call. = FALSE)
+      stop(chart, " is not a valid chart type. See documentation for supported chart types")
     )
   }
 

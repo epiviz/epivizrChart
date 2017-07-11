@@ -1,7 +1,7 @@
 #' Class providing data manager for epiviz charts.
 #'
-#' @field .ms_list (environment)
-#' @field .ms_idCounter (integer)
+#' @field .ms_list (environment) List of measurment records
+#' @field .ms_idCounter (integer) Counter for ID generator
 #'
 #' @importMethodsFrom epivizrData register
 #' @import epivizrData
@@ -85,7 +85,13 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       ms_obj
     },
     get_data = function(measurements, chr=NULL, start=NULL, end=NULL) {
-      "Get data from data mgr based on measurements, chr, start, and end"
+      "Get data from data mgr based on measurements, chr, start, and end
+      \\describe{
+        \\item{measurements}{{List of EpivizMeasurements}}
+        \\item{chr}{{Chromosome}
+        \\item{start}{{Start location}
+        \\item{end}{{End location}
+      }"
       data <- list(format="epiviz")
       ms_list <- NULL
       datasources <- lapply(measurements, function(ms) ms@datasourceId)

@@ -1,9 +1,9 @@
-#' Data container for an epiviz chart.
+#' Data container for an Epiviz chart component.
 #'
-#' @field data Character string of an epiviz chart's data attribute.
-#' @field colors Character string of an epiviz chart's colors attribute.
-#' @field settings character string of an epiviz chart's settings attribute.
-#' @field parent An EpivizEnvironment where the chart is nested or NULL
+#' @field data (list) Values of an epiviz chart's data attribute.
+#' @field colors (ListOrNULL) Epiviz chart's colors attribute.
+#' @field settings (ListOrNULL) Epiviz chart's settings attribute.
+#' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.
 #' @import epivizrData
 #' @import htmltools
 #' @importFrom methods new
@@ -132,14 +132,24 @@ EpivizChart <- setRefClass("EpivizChart",
      tag(.self$name, .self$get_attributes())
     },
     revisualize = function(chart_type) {
-      "Revisualize chart as the given chart type"
+      "Revisualize chart as the given chart type
+      \\describe{
+        \\item{chart_type}{{The type of chart to be visualized
+        (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
+        StackedLinePlot, StackedLineTrack)}
+      }"
       tag_name <- chart_type_to_tag_name(.self$obj, chart_type)
       .self$set_name(tag_name)
 
       invisible(.self)
     },
     navigate = function(chr, start, end) {
-      "Navigate a chart to a genomic location"
+      "Navigate chart to a genomic location
+      \\describe{
+        \\item{chr}{{Chromosome}
+        \\item{start}{{Start location}
+        \\item{end}{{End location}
+      }"
       .self$set_chr(chr)
       .self$set_start(start)
       .self$set_end(end)

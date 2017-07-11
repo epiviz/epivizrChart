@@ -1,8 +1,7 @@
-#' Epiviz Environment Class
+#' Data container for an Epiviz environment component.
 #'
-#' @field range (CharacterOrNULL)
-#' @field initializeRegions (CharacterOrNULL)
-#' @field charts A list of EpivizChart/EpivizNavigation elements.
+#' @field initializeRegions (ListOrNULL) List of gene names or regions to intialize navigations.
+#' @field charts List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.
 #' @import htmltools
 #' @export EpivizEnvironment
 #' @importFrom methods new
@@ -10,14 +9,12 @@
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
   fields=list(
-    range="CharacterOrNULL",
-    initializeRegions="CharacterOrNULL",
+    initializeRegions="ListOrNULL",
     charts="list"
   ),
   methods=list(
-    initialize = function(name="epiviz-environment", chr=NULL, start=NULL, end=NULL, range=NULL,
+    initialize = function(name="epiviz-environment", chr=NULL, start=NULL, end=NULL,
       initializeRegions=NULL, ...) {
-      .self$range <- range
       .self$initializeRegions <- initializeRegions
       .self$charts <- list()
 
@@ -52,18 +49,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    get_range = function() {
-      "Get range"
-      .self$range
-    },
     get_initializeRegions = function() {
       "Get initializeRegions"
       .self$initializeRegions
-    },
-    set_range = function(range) {
-      "Set range"
-      .self$range <- range
-      invisible()
     },
     set_initializeRegions = function(initReg) {
       "Set initializeRegions"
@@ -71,12 +59,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       invisible()
     },
     get_attributes = function() {
-      "Get attributes for rendering chart. Fields that need to be in JSON
-      will be converted"
-      c(list(range=.self$range,
-        initializeRegions=.self$initializeRegions),
-        callSuper()
-        )
+      "Get attributes for rendering chart"
+      c(list(initializeRegions=json_writer(.self$initializeRegions)),
+        callSuper())
     },
     renderChart = function() {
       "Render to html"
@@ -84,8 +69,13 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         list=lapply(.self$charts, function(chart) chart$renderChart())
       )
     },
-    navigate = function(chr = NULL, start = NULL, end = NULL) {
-      "Navigate environment to a genomic location"
+    navigate = function(chr=NULL, start=NULL, end=NULL) {
+      "Navigate environment to genomic location
+      \\describe{
+        \\item{chr}{{Chromosome}
+        \\item{start}{{Start location}
+        \\item{end}{{End location}
+      }"
       .self$chr <- chr
       .self$start <- start
       .self$end <- end

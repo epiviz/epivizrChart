@@ -1,17 +1,16 @@
 setClassUnion("CharacterOrNULL", c("character", "NULL"))
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
-setClassUnion("LogicalOrNULL", c("logical", "NULL"))
 setClassUnion("ListOrNULL", c("list", "NULL"))
-#' Parent data container for an epiviz chart.
+#' Data container for an epiviz web component.
 #'
-#' @field data_mgr EpivizChartDataMgr.
-#' @field name Character string representing an epiviz chart type (tag name).
-#' @field class Character string of an epiviz chart's class attribute.
-#' @field id Character string of an epiviz chart's id attribute.
-#' @field chr (CharacterOrNULL) chromosome to to display in environment plot.
-#' @field start (NumericOrNULL) start location to display in environment plot.
-#' @field end (NumericOrNULL) end location to to display in environment plot.
-#' @field measurements Character string of an epiviz chart's measurements.
+#' @field data_mgr \code{\link[epivizrChart]{EpivizChartDataMgr}}
+#' @field name (character) Epiviz chart type (tag name).
+#' @field class (CharacterOrNULL) Epiviz chart's class attribute.
+#' @field id (CharacterOrNULL) Epiviz chart's id attribute.
+#' @field chr (CharacterOrNULL) Chromosome location.
+#' @field start (NumericOrNULL) Start location.
+#' @field end (NumericOrNULL) End location.
+#' @field measurements (ListOrNULL) list of measurements of class \code{\link[epivizrData]{EpivizMeasurement}}.
 #'
 #' @import htmltools
 #' @importFrom methods new
@@ -113,8 +112,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
       invisible()
     },
     get_attributes = function() {
-      "Get attributes for rendering chart. Fields that need to be in JSON
-      will be converted"
+      "Get attributes for rendering chart"
       list(class=.self$class,
         id=.self$id,
         measurements=json_writer(lapply(.self$measurements, as.list)),
