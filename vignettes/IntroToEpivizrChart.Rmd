@@ -16,7 +16,7 @@ library(antiProfilesData)
 library(SummarizedExperiment)
 ```
 
-
+sample data sets we will be using for the vignette.
 ```{r}
 data(tcga_colon_blocks)
 data(tcga_colon_curves)
@@ -24,13 +24,39 @@ data(tcga_colon_expression)
 data(apColonData)
 ```
 
+# Create a Epiviz Chart
 
-Create an epiviz enivornment
+We can visualize a R/Bioconductor data object by creating an `EpivizChart` object. The chart type is inferred
+from the data object. We can filter data to a genomic region using the `chr`, `start` and `end` parameters.
+
+```{r}
+# creating a blocks track
+blocks_track <- EpivizChart(tcga_colon_blocks)
+blocks_track
+
+
+# create a line track and filter data
+lines_track <- EpivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"))
+lines_track
+```
+
+Instead of inferring a chart type from the data object, we can use the `chart` parameter to specify a chart type. Currently, we support the following chart types - `BlocksTrack`, `HeatmapPlot`, `LinePlot`, `LineTrack`, `ScatterPlot`, `StackedLinePlot`, `StackedLineTrack`.
+
+```{r}
+scatter_plot <- EpivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"), chart="ScatterPlot")
+scatter_plot
+```
+
+# Create an Epiviz Environment
+
+To enable brushing and share measurements across different charts, we use the `EpivizEnvironment` element. By using an environment, we only use one instance of the data manager so that, if different charts use the same data object, the data is not duplicated twice. If the environment is assigned to a genomic region, all the charts added to the environment visualize data from that region.
+
+Create an epiviz enivornment element
 ```{r}
 epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
 ```
 
-Genes Track Demo
+Add a genome track to the environment. You can add charts to an environment by using the `parent` parameter. For this vignette, we use the human genome from the `Homo.sapiens` package.
 ```{r}
 require(Homo.sapiens)
 
@@ -38,20 +64,28 @@ genes_track <- EpivizChart(Homo.sapiens, parent=epivizEnv)
 genes_track
 ```
 
-
-Blocks Track Demo
+Add a blocks track using the `tcga_colon_blocks` object.
 ```{r}
 blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizEnv)
 blocks_track
 ```
 
-Means Track Demo
+you can now render the `epivizEnv` object and see that both the charts are linked to each other. Hovering is now enabled across charts.
+
+```{r}
+epivizEnv
+```
+
+Similarly lets add a line track using the `tcga_colon_curves` data object. We can specify what columns to visualize from the data object.
 ```{r}
 means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv)
 means_track
 ```
 
-Scatter Plot Demo
+The `apColonData` object is an `ExpressionSet` containing gene expression data for colon normal and tumor samples for genes within regions of methylation loss identified [this paper](http://www.nature.com/ng/journal/v43/n8/full/ng.865.html). 
+
+To visualize an MA plot from the `apColonData`, we first create an `ExpressionSet` object and create an `EpivizChart` object.
+
 ```{r warnings=FALSE, messages=FALSE}
 keep <- pData(apColonData)$SubType!="adenoma"
 apColonData <- apColonData[,keep]
@@ -76,7 +110,7 @@ eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","
 eset_chart
 ```
 
-SummarizedExperiment demo
+We can also visualize data from `SummarizedExperiment` objects. 
 ```{r eval=TRUE}
 ref_sample <- 2 ^ rowMeans(log2(assay(tcga_colon_expression) + 1))
 scaled <- (assay(tcga_colon_expression) + 1) / ref_sample
@@ -96,34 +130,56 @@ se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c
 se_chart
 ```
 
-
-Adding chart using measurements (can also be from different data objects)
+If a data set is already added to epivizEnvironment, we can reuse the same data object and visualize the data using a different chart type. For example, lets visualize the `sumexp` using a `HeatmapPlot`. measurements from different data objects can also be used to create a chart.
 ```{r}
+# get measurements
 measurements <- se_chart$get_measurements()
+
+#create a heatmap using these measurements
 heatmap_plot <- EpivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
 heatmap_plot
 ```
 
-
-Show epiviz enivornment
+Render the Environment and all its charts.
 ```{r}
 epivizEnv
 ```
 
-Navigate to a new region
+# Navigate the genome
+
+We can navigate to another location on the genome using the `navigate` method. This will update the data for all the charts in the environment.
 ```{r}
 epivizEnv$navigate(chr="chr11", start=110800000, end=130383180)
 epivizEnv
 ```
 
-Add navigation with a particular start and end to an environment at a particular chromosome
-```{r}
-epivizEnv_2 <- EpivizEnvironment(chr="chr11")
-means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), start=130000000, end=130383180, parent=epivizEnv_2)
+# Epiviz Navigation Element
 
-epivizNav <- EpivizNavigation(start=99800000, end=103383180, parent=epivizEnv_2)
+Epiviz Navigation elements are useful to visualize data from a particular genomic region. For example, we can create an environment that shows data for an entire chromosome. But a navigation element can then show data for a genomic region. In an interactive session, Navigation elements also provide functionality to search by gene/probe and navigate to another genomic location. 
+
+```{r}
+# create a new environment to show data from entire chromosome 11
+epivizEnv_2 <- EpivizEnvironment(chr="chr11")
+
+# add a line track from tcga_colon_curves object to the environment
+means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv_2)
+
+# adds a scatter plot from the summarized experiment object
+se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv_2)
+
+# create a new navigation element that shows a particular region in chr11
+epivizNav <- EpivizNavigation(chr="chr11", start=99800000, end=103383180, parent=epivizEnv_2)
+
+# add a blocks track to the navigation element
 blocks_track2 <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizNav)
 
 epivizEnv_2
 ```
 
+# Remove charts
+
+To remove all the charts from an environment or navigation element, we can use the `remove_all_charts` methods.
+
+```{r}
+epivizEnv$remove_all_charts()
+```
