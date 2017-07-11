@@ -4,35 +4,34 @@
 \name{EpivizPolymer-class}
 \alias{EpivizPolymer-class}
 \alias{EpivizPolymer}
-\title{Parent data container for an epiviz chart.}
+\title{Data container for an epiviz web component.}
 \description{
-Parent data container for an epiviz chart.
+Data container for an epiviz web component.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{data_mgr}}{EpivizChartDataMgr.}
+\item{\code{data_mgr}}{\code{\link[epivizrChart]{EpivizChartDataMgr}}}
 
-\item{\code{name}}{Character string representing an epiviz chart type (tag name).}
+\item{\code{name}}{(character) Epiviz chart type (tag name).}
 
-\item{\code{class}}{Character string of an epiviz chart's class attribute.}
+\item{\code{class}}{(CharacterOrNULL) Epiviz chart's class attribute.}
 
-\item{\code{id}}{Character string of an epiviz chart's id attribute.}
+\item{\code{id}}{(CharacterOrNULL) Epiviz chart's id attribute.}
 
-\item{\code{chr}}{(CharacterOrNULL) chromosome to to display in environment plot.}
+\item{\code{chr}}{(CharacterOrNULL) Chromosome location.}
 
-\item{\code{start}}{(NumericOrNULL) start location to display in environment plot.}
+\item{\code{start}}{(NumericOrNULL) Start location.}
 
-\item{\code{end}}{(NumericOrNULL) end location to to display in environment plot.}
+\item{\code{end}}{(NumericOrNULL) End location.}
 
-\item{\code{measurements}}{Character string of an epiviz chart's measurements.}
+\item{\code{measurements}}{(ListOrNULL) list of measurements of class \code{\link[epivizrData]{EpivizMeasurement}}.}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
-will be converted}
+\item{\code{get_attributes()}}{Get attributes for rendering chart}
 
 \item{\code{get_chr()}}{Get chromosome}
 

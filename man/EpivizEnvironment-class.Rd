@@ -4,18 +4,16 @@
 \name{EpivizEnvironment-class}
 \alias{EpivizEnvironment-class}
 \alias{EpivizEnvironment}
-\title{Epiviz Environment Class}
+\title{Data container for an Epiviz environment component.}
 \description{
-Epiviz Environment Class
+Data container for an Epiviz environment component.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{range}}{(CharacterOrNULL)}
+\item{\code{initializeRegions}}{(ListOrNULL) List of gene names or regions to intialize navigations.}
 
-\item{\code{initializeRegions}}{(CharacterOrNULL)}
-
-\item{\code{charts}}{A list of EpivizChart/EpivizNavigation elements.}
+\item{\code{charts}}{List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.}
 }}
 
 \section{Methods}{
@@ -23,14 +21,16 @@ Epiviz Environment Class
 \describe{
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
-\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
-will be converted}
+\item{\code{get_attributes()}}{Get attributes for rendering chart}
 
 \item{\code{get_initializeRegions()}}{Get initializeRegions}
 
-\item{\code{get_range()}}{Get range}
-
-\item{\code{navigate(chr = NULL, start = NULL, end = NULL)}}{Navigate environment to a genomic location}
+\item{\code{navigate(chr = NULL, start = NULL, end = NULL)}}{Navigate environment to genomic location
+\describe{
+  \item{chr}{{Chromosome}
+  \item{start}{{Start location}
+  \item{end}{{End location}
+}}
 
 \item{\code{remove_all_charts()}}{Remove all charts from environment}
 
@@ -39,7 +39,5 @@ will be converted}
 \item{\code{renderChart()}}{Render to html}
 
 \item{\code{set_initializeRegions(initReg)}}{Set initializeRegions}
-
-\item{\code{set_range(range)}}{Set range}
 }}
 

@@ -11,9 +11,9 @@ Class providing data manager for epiviz charts.
 \section{Fields}{
 
 \describe{
-\item{\code{.ms_list}}{(environment)}
+\item{\code{.ms_list}}{(environment) List of measurment records}
 
-\item{\code{.ms_idCounter}}{(integer)}
+\item{\code{.ms_idCounter}}{(integer) Counter for ID generator}
 }}
 
 \section{Methods}{
@@ -22,7 +22,13 @@ Class providing data manager for epiviz charts.
 \item{\code{add_measurements(obj, datasource_name = NULL,
   datasource_obj_name = deparse(substitute(obj)), ...)}}{Register measurements in data manager}
 
-\item{\code{get_data(measurements, chr = NULL, start = NULL, end = NULL)}}{Get data from data mgr based on measurements, chr, start, and end}
+\item{\code{get_data(measurements, chr = NULL, start = NULL, end = NULL)}}{Get data from data mgr based on measurements, chr, start, and end
+\describe{
+  \item{measurements}{{List of EpivizMeasurements}}
+  \item{chr}{{Chromosome}
+  \item{start}{{Start location}
+  \item{end}{{End location}
+}}
 
 \item{\code{rm_all_measurements()}}{Remove all registered measurements}
 

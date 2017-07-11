@@ -4,27 +4,26 @@
 \name{EpivizChart-class}
 \alias{EpivizChart-class}
 \alias{EpivizChart}
-\title{Data container for an epiviz chart.}
+\title{Data container for an Epiviz chart component.}
 \description{
-Data container for an epiviz chart.
+Data container for an Epiviz chart component.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{data}}{Character string of an epiviz chart's data attribute.}
+\item{\code{data}}{(list) Values of an epiviz chart's data attribute.}
 
-\item{\code{colors}}{Character string of an epiviz chart's colors attribute.}
+\item{\code{colors}}{(ListOrNULL) Epiviz chart's colors attribute.}
 
-\item{\code{settings}}{character string of an epiviz chart's settings attribute.}
+\item{\code{settings}}{(ListOrNULL) Epiviz chart's settings attribute.}
 
-\item{\code{parent}}{An EpivizEnvironment where the chart is nested or NULL}
+\item{\code{parent}}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
-will be converted}
+\item{\code{get_attributes()}}{Get attributes for rendering chart}
 
 \item{\code{get_colors()}}{Get chart colors}
 
@@ -32,11 +31,21 @@ will be converted}
 
 \item{\code{get_settings()}}{Get chart settings}
 
-\item{\code{navigate(chr, start, end)}}{Navigate a chart to a genomic location}
+\item{\code{navigate(chr, start, end)}}{Navigate chart to a genomic location
+\describe{
+  \item{chr}{{Chromosome}
+  \item{start}{{Start location}
+  \item{end}{{End location}
+}}
 
 \item{\code{renderChart()}}{Render to html}
 
-\item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type}
+\item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type
+\describe{
+  \item{chart_type}{{The type of chart to be visualized
+  (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
+  StackedLinePlot, StackedLineTrack)}
+}}
 
 \item{\code{set_colors(colors)}}{Set chart colors}
 
