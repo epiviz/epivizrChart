@@ -31,6 +31,9 @@ Epiviz Navigation Class
 \section{Methods}{
 
 \describe{
+\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
+will be converted}
+
 \item{\code{get_collapsed()}}{Get collapsed}
 
 \item{\code{get_configSrc(src)}}{Get config}

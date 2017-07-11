@@ -23,6 +23,9 @@ Epiviz Environment Class
 \describe{
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
+\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
+will be converted}
+
 \item{\code{get_initializeRegions()}}{Get initializeRegions}
 
 \item{\code{get_range()}}{Get range}
@@ -32,6 +35,8 @@ Epiviz Environment Class
 \item{\code{remove_all_charts()}}{Remove all charts from environment}
 
 \item{\code{remove_chart(chart)}}{Remove chart from environment}
+
+\item{\code{renderChart()}}{Render to html}
 
 \item{\code{set_initializeRegions(initReg)}}{Set initializeRegions}
 

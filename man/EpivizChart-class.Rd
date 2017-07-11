@@ -23,6 +23,9 @@ Data container for an epiviz chart.
 \section{Methods}{
 
 \describe{
+\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
+will be converted}
+
 \item{\code{get_colors()}}{Get chart colors}
 
 \item{\code{get_data()}}{Get chart data}
@@ -30,6 +33,10 @@ Data container for an epiviz chart.
 \item{\code{get_settings()}}{Get chart settings}
 
 \item{\code{navigate(chr, start, end)}}{Navigate a chart to a genomic location}
+
+\item{\code{renderChart()}}{Render to html}
+
+\item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type}
 
 \item{\code{set_colors(colors)}}{Set chart colors}
 

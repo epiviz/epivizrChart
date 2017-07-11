@@ -31,6 +31,9 @@ Parent data container for an epiviz chart.
 \section{Methods}{
 
 \describe{
+\item{\code{get_attributes()}}{Get attributes for rendering chart. Fields that need to be in JSON
+will be converted}
+
 \item{\code{get_chr()}}{Get chromosome}
 
 \item{\code{get_class()}}{Get class}

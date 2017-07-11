@@ -20,10 +20,12 @@ Class providing data manager for epiviz charts.
 
 \describe{
 \item{\code{add_measurements(obj, datasource_name = NULL,
-  datasource_obj_name = deparse(substitute(obj)), ...)}}{register measurements in data manager}
+  datasource_obj_name = deparse(substitute(obj)), ...)}}{Register measurements in data manager}
 
-\item{\code{rm_all_measurements()}}{remove all registered measurements}
+\item{\code{get_data(measurements, chr = NULL, start = NULL, end = NULL)}}{Get data from data mgr based on measurements, chr, start, and end}
 
-\item{\code{rm_measurements(ms_obj_or_id)}}{remove registered measurements from a given data object}
+\item{\code{rm_all_measurements()}}{Remove all registered measurements}
+
+\item{\code{rm_measurements(ms_obj_or_id)}}{Remove registered measurements from a given data object}
 }}
 

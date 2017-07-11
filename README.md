@@ -19,6 +19,6 @@ install_github("epiviz/epivizrChart")
 The easiest way to try `epivizrChart` is to knit the package vignette
 
 ```
-require(epivizr)
+require(epivizrChart)
 browseVignettes("epivizrChart")
 ```
