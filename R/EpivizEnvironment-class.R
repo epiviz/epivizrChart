@@ -72,9 +72,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     navigate = function(chr=NULL, start=NULL, end=NULL) {
       "Navigate environment to genomic location
       \\describe{
-        \\item{chr}{{Chromosome}
-        \\item{start}{{Start location}
-        \\item{end}{{End location}
+        \\item{chr}{Chromosome}
+        \\item{start}{Start location}
+        \\item{end}{End location}
       }"
       .self$chr <- chr
       .self$start <- start

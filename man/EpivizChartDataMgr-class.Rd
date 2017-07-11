@@ -24,10 +24,10 @@ Class providing data manager for epiviz charts.
 
 \item{\code{get_data(measurements, chr = NULL, start = NULL, end = NULL)}}{Get data from data mgr based on measurements, chr, start, and end
 \describe{
-  \item{measurements}{{List of EpivizMeasurements}}
-  \item{chr}{{Chromosome}
-  \item{start}{{Start location}
-  \item{end}{{End location}
+  \item{measurements}{List of EpivizMeasurements}
+  \item{chr}{Chromosome}
+  \item{start}{Start location}
+  \item{end}{End location}
 }}
 
 \item{\code{rm_all_measurements()}}{Remove all registered measurements}

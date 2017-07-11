@@ -33,16 +33,16 @@ Data container for an Epiviz chart component.
 
 \item{\code{navigate(chr, start, end)}}{Navigate chart to a genomic location
 \describe{
-  \item{chr}{{Chromosome}
-  \item{start}{{Start location}
-  \item{end}{{End location}
+  \item{chr}{Chromosome}
+  \item{start}{Start location}
+  \item{end}{End location}
 }}
 
 \item{\code{renderChart()}}{Render to html}
 
 \item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type
 \describe{
-  \item{chart_type}{{The type of chart to be visualized
+  \item{chart_type}{The type of chart to be visualized
   (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
   StackedLinePlot, StackedLineTrack)}
 }}

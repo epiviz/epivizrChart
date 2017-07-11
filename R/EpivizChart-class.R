@@ -134,7 +134,7 @@ EpivizChart <- setRefClass("EpivizChart",
     revisualize = function(chart_type) {
       "Revisualize chart as the given chart type
       \\describe{
-        \\item{chart_type}{{The type of chart to be visualized
+        \\item{chart_type}{The type of chart to be visualized
         (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
         StackedLinePlot, StackedLineTrack)}
       }"
@@ -146,9 +146,9 @@ EpivizChart <- setRefClass("EpivizChart",
     navigate = function(chr, start, end) {
       "Navigate chart to a genomic location
       \\describe{
-        \\item{chr}{{Chromosome}
-        \\item{start}{{Start location}
-        \\item{end}{{End location}
+        \\item{chr}{Chromosome}
+        \\item{start}{Start location}
+        \\item{end}{End location}
       }"
       .self$set_chr(chr)
       .self$set_start(start)

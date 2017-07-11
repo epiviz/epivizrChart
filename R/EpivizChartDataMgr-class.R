@@ -87,10 +87,10 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
     get_data = function(measurements, chr=NULL, start=NULL, end=NULL) {
       "Get data from data mgr based on measurements, chr, start, and end
       \\describe{
-        \\item{measurements}{{List of EpivizMeasurements}}
-        \\item{chr}{{Chromosome}
-        \\item{start}{{Start location}
-        \\item{end}{{End location}
+        \\item{measurements}{List of EpivizMeasurements}
+        \\item{chr}{Chromosome}
+        \\item{start}{Start location}
+        \\item{end}{End location}
       }"
       data <- list(format="epiviz")
       ms_list <- NULL
