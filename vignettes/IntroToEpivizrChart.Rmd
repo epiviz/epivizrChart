@@ -31,19 +31,19 @@ from the data object. We can filter data to a genomic region using the `chr`, `s
 
 ```{r}
 # creating a blocks track
-blocks_track <- EpivizChart(tcga_colon_blocks)
+blocks_track <- epivizChart(tcga_colon_blocks)
 blocks_track
 
 
 # create a line track and filter data
-lines_track <- EpivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"))
+lines_track <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"))
 lines_track
 ```
 
 Instead of inferring a chart type from the data object, we can use the `chart` parameter to specify a chart type. Currently, we support the following chart types - `BlocksTrack`, `HeatmapPlot`, `LinePlot`, `LineTrack`, `ScatterPlot`, `StackedLinePlot`, `StackedLineTrack`.
 
 ```{r}
-scatter_plot <- EpivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"), chart="ScatterPlot")
+scatter_plot <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"), chart="ScatterPlot")
 scatter_plot
 ```
 
@@ -53,20 +53,20 @@ To enable brushing and share measurements across different charts, we use the `E
 
 Create an epiviz enivornment element
 ```{r}
-epivizEnv <- EpivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epivizEnv <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 ```
 
 Add a genome track to the environment. You can add charts to an environment by using the `parent` parameter. For this vignette, we use the human genome from the `Homo.sapiens` package.
 ```{r warning=FALSE, message=FALSE}
 require(Homo.sapiens)
 
-genes_track <- EpivizChart(Homo.sapiens, parent=epivizEnv)
+genes_track <- epivizChart(Homo.sapiens, parent=epivizEnv)
 genes_track
 ```
 
 Add a blocks track using the `tcga_colon_blocks` object.
 ```{r}
-blocks_track <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizEnv)
+blocks_track <- epivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizEnv)
 blocks_track
 ```
 
@@ -78,7 +78,7 @@ epivizEnv
 
 Similarly lets add a line track using the `tcga_colon_curves` data object. We can specify what columns to visualize from the data object.
 ```{r}
-means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv)
+means_track <- epivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv)
 means_track
 ```
 
@@ -106,7 +106,7 @@ maEset <- ExpressionSet(
   annotation=annotation(apColonData)
 )
 
-eset_chart <- EpivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), parent=epivizEnv)
+eset_chart <- epivizChart(maEset, datasource_name="MAPlot", columns=c("colonA","colonM"), parent=epivizEnv)
 eset_chart
 ```
 
@@ -126,17 +126,17 @@ mat <- cbind(cancer = means[, "Primary Tumor"], normal = means[, "Solid Tissue N
 
 sumexp <- SummarizedExperiment(mat, rowRanges=rowRanges(tcga_colon_expression))
 
-se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv)
+se_chart <- epivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv)
 se_chart
 ```
 
-If a data set is already added to epivizEnvironment, we can reuse the same data object and visualize the data using a different chart type. For example, lets visualize the `sumexp` using a `HeatmapPlot`. measurements from different data objects can also be used to create a chart.
+If a data set is already added to an `EpivizEnvironment`, we can reuse the same data object and visualize the data using a different chart type. For example, lets visualize the `sumexp` using a `HeatmapPlot`. measurements from different data objects can also be used to create a chart.
 ```{r}
 # get measurements
 measurements <- se_chart$get_measurements()
 
 #create a heatmap using these measurements
-heatmap_plot <- EpivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
+heatmap_plot <- epivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
 heatmap_plot
 ```
 
@@ -159,19 +159,19 @@ Epiviz Navigation elements are useful to visualize data from a particular genomi
 
 ```{r}
 # create a new environment to show data from entire chromosome 11
-epivizEnv_2 <- EpivizEnvironment(chr="chr11")
+epivizEnv_2 <- epivizEnv(chr="chr11")
 
 # add a line track from tcga_colon_curves object to the environment
-means_track <- EpivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv_2)
+means_track <- epivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv_2)
 
 # adds a scatter plot from the summarized experiment object
-se_chart <- EpivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv_2)
+se_chart <- epivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv_2)
 
 # create a new navigation element that shows a particular region in chr11
-epivizNav <- EpivizNavigation(chr="chr11", start=99800000, end=103383180, parent=epivizEnv_2)
+epivizNav <- epivizNav(chr="chr11", start=99800000, end=103383180, parent=epivizEnv_2)
 
 # add a blocks track to the navigation element
-blocks_track2 <- EpivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizNav)
+blocks_track2 <- epivizChart(tcga_colon_blocks, datasource_name="450kMeth", parent=epivizNav)
 
 epivizEnv_2
 ```
