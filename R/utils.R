@@ -64,8 +64,11 @@ chart_dependencies <- function() {
 #' @param ms_obj data infer chart type from data object
 #' @param chart explicitly define chart type
 #' @return epiviz chart component tag name
-chart_type_to_tag_name = function(ms_obj, chart) {
+chart_type_to_tag_name <- function(ms_obj, chart) {
   if (is.null(chart)) {
+    if (!is(ms_obj, "EpivizData"))
+      stop(ms_obj, " must be of class EpivizData")
+
     chart_tag <- ms_obj$get_default_chart_type_html()
   } else {
     chart_tag <- switch(chart,
