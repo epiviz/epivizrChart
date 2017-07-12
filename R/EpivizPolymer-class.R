@@ -121,6 +121,9 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         end=.self$end)
     },
     show = function() {
+      
+      assignInNamespace("renderDependencies", renderDependencies, "htmltools")
+
       if (isTRUE(getOption('knitr.in.progress'))) {
         knitr::knit_print(attachDependencies(.self$renderChart(),
             c(chart_dependencies())))
