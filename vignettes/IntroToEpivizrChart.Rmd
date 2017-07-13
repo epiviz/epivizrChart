@@ -3,11 +3,12 @@ title: "Visualizing Epiviz Web Components with epivizrChart"
 author: "Hector Corrada Bravo, Jayaram Kancherla, Brian Gottfried"
 date: "`r Sys.Date()`"
 output:
-   BiocStyle::html_document
+  BiocStyle::html_document
+#   knitr:::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Title of your vignette}
-  %\usepackage[UTF-8]{inputenc}
+  # %\usepackage[UTF-8]{inputenc}
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}

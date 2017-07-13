@@ -219,3 +219,23 @@ renderDependencies <- function(dependencies,
   
   HTML(paste(html, collapse = "\n"))
 }
+
+
+#' @rdname knitr_methods
+#' @export
+knit_print.shiny.tag <- function(x, ...) {
+  x <- htmltools:::tagify(x)
+  output <- surroundSingletons(x)
+  deps <- resolveDependencies(findDependencies(x, tagify = FALSE), resolvePackageDir = FALSE)
+  content <- htmltools:::takeHeads(output)
+  head_content <- htmltools:::doRenderTags(tagList(content$head))
+  
+  meta <- if (length(head_content) > 1 || head_content != "") {
+    list(structure(head_content, class = "shiny_head"))
+  }
+  meta <- c(meta, deps)
+  
+  knitr::asis_output(
+    htmltools:::htmlPreserve(format(content$ui, indent=FALSE)),
+    meta = meta)
+}
