@@ -4,11 +4,10 @@ author: "Hector Corrada Bravo, Jayaram Kancherla, Brian Gottfried"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
-#   knitr:::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Title of your vignette}
-  # %\usepackage[UTF-8]{inputenc}
+  %\usepackage[UTF-8]{inputenc}
 ---
 
 ```{r setup, eval=TRUE, include=FALSE}
@@ -17,7 +16,7 @@ library(antiProfilesData)
 library(SummarizedExperiment)
 ```
 
-sample data sets we will be using for the vignette.
+Sample data sets we will be using for the vignette.
 ```{r}
 data(tcga_colon_blocks)
 data(tcga_colon_curves)
@@ -34,7 +33,6 @@ from the data object. We can filter data to a genomic region using the `chr`, `s
 # creating a blocks track
 blocks_track <- epivizChart(tcga_colon_blocks)
 blocks_track
-
 
 # create a line track and filter data
 lines_track <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"))
@@ -71,7 +69,7 @@ blocks_track <- epivizChart(tcga_colon_blocks, datasource_name="450kMeth", paren
 blocks_track
 ```
 
-you can now render the `epivizEnv` object and see that both the charts are linked to each other. Hovering is now enabled across charts.
+You can now render the `epivizEnv` object and see that both the charts are linked to each other. Hovering is now enabled across charts.
 
 ```{r}
 epivizEnv
@@ -136,7 +134,7 @@ If a data set is already added to an `EpivizEnvironment`, we can reuse the same 
 # get measurements
 measurements <- se_chart$get_measurements()
 
-#create a heatmap using these measurements
+# create a heatmap using these measurements
 heatmap_plot <- epivizChart(measurements=measurements, parent=epivizEnv, chart="HeatmapPlot")
 heatmap_plot
 ```
@@ -165,7 +163,7 @@ epivizEnv_2 <- epivizEnv(chr="chr11")
 # add a line track from tcga_colon_curves object to the environment
 means_track <- epivizChart(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), parent=epivizEnv_2)
 
-# adds a scatter plot from the summarized experiment object
+# add a scatter plot from the summarized experiment object
 se_chart <- epivizChart(sumexp, datasource_name="Mean by Sample Type", columns=c("normal", "cancer"), parent=epivizEnv_2)
 
 # create a new navigation element that shows a particular region in chr11

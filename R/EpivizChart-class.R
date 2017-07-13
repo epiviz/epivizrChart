@@ -19,8 +19,8 @@ EpivizChart <- setRefClass("EpivizChart",
   ),
   methods=list(
     initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
-      measurements=NULL, chart=NULL, chr=NULL, start=NULL, end=NULL,
-      settings=NULL, colors=NULL, ...) {
+      datasource_obj_name=NULL, measurements=NULL, chart=NULL, chr=NULL,
+      start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
       if (is.null(data_obj) && is.null(measurements))
         stop("You must pass either data or measurements")
 
@@ -56,9 +56,6 @@ EpivizChart <- setRefClass("EpivizChart",
 
       # register data ---------------------------
       if (!is.null(data_obj)) {
-        datasource_obj_name <- deparse(substitute(data_obj))
-        if (is.null(datasource_name)) datasource_name <- datasource_obj_name
-
         ms_obj <- mgr$add_measurements(data_obj,
           datasource_name=datasource_name,
           datasource_obj_name=datasource_obj_name, ...)

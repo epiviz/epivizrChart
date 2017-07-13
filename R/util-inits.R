@@ -21,9 +21,16 @@ epivizChart <- function(data_obj=NULL, datasource_name=NULL, parent=NULL,
   measurements=NULL, chart=NULL, chr=NULL, start=NULL, end=NULL,
   settings=NULL, colors=NULL, ...) {
 
+  if (!is.null(data_obj)) {
+    ds_obj_name <- deparse(substitute(data_obj))
+  } else {
+    ds_obj_name <- NULL
+  }
+
   EpivizChart(data_obj=data_obj, datasource_name=datasource_name,
-    parent=parent, measurements=measurements, chart=chart, chr=chr,
-    start=start, end=end, settings=settings, colors=colors, ...)
+    datasource_obj_name=ds_obj_name, parent=parent, measurements=measurements,
+    chart=chart, chr=chr, start=start, end=end, settings=settings,
+    colors=colors, ...)
 }
 
 #' Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.
