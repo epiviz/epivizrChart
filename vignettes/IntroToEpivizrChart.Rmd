@@ -183,7 +183,7 @@ To remove all the charts from an environment or navigation element, we can use t
 epivizEnv$remove_all_charts()
 ```
 
-# Add Charts with settings
+# Create Charts with settings and colors
 
 ```{r}
 settings <- list(
@@ -194,9 +194,11 @@ settings <- list(
   rightMargin=10,
   minBlockDistance=10,
   useColorBy=FALSE,
-  blockColorBy=""
-)
-
+  blockColorBy="")
 blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180, settings=settings)
 blocks_track
+
+colors <- RColorBrewer::brewer.pal(3, "Dark2")
+lines_track <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"), colors=colors)
+lines_track
 ```

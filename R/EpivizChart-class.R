@@ -1,7 +1,7 @@
 #' Data container for an Epiviz chart component.
 #'
 #' @field data (list) Values of an epiviz chart's data attribute.
-#' @field colors (ListOrNULL) Epiviz chart's colors attribute.
+#' @field colors (CharacterOrNULL) Epiviz chart's colors attribute.
 #' @field settings (ListOrNULL) Epiviz chart's settings attribute.
 #' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.
 #' @import epivizrData
@@ -13,7 +13,7 @@ EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
     data="list",
-    colors="ListOrNULL",
+    colors="CharacterOrNULL",
     settings="ListOrNULL",
     parent="ANY"
   ),

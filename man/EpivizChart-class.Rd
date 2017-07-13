@@ -13,7 +13,7 @@ Data container for an Epiviz chart component.
 \describe{
 \item{\code{data}}{(list) Values of an epiviz chart's data attribute.}
 
-\item{\code{colors}}{(ListOrNULL) Epiviz chart's colors attribute.}
+\item{\code{colors}}{(CharacterOrNULL) Epiviz chart's colors attribute.}
 
 \item{\code{settings}}{(ListOrNULL) Epiviz chart's settings attribute.}
 
