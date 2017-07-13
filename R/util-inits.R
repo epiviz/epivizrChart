@@ -55,6 +55,7 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, gene=NULL,
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
 #' @param initializeRegions List of gene names or regions to intialize navigations.
+#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizPolymer}}
 #' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 #'
 #' @examples

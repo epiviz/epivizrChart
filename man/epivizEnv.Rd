@@ -15,6 +15,8 @@ epivizEnv(chr = NULL, start = NULL, end = NULL,
 \item{end}{The end location, e.g., end=130383180.}
 
 \item{initializeRegions}{List of gene names or regions to intialize navigations.}
+
+\item{...}{Additional params to pass to \code{\link[epivizrChart]{EpivizPolymer}}}
 }
 \value{
 An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
