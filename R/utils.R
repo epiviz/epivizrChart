@@ -32,28 +32,28 @@ json_parser <- rjson::fromJSON
 json_writer <- rjson::toJSON
 
 #' HTML dependencies of an EpivizChart
-chart_dependencies <- function() {
+chart_dependencies <- function(knitr=FALSE) {
+  
+  polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
+  
+  if(!knitr) {
+    polymer_lib = "lib/epiviz-charts-1/epiviz-charts.html"
+  }
+  
   deps <- list(
     webcomponents <- htmlDependency(
       name="webcomponents",
       version="0.7.24",
       src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
-      #c(href="https://epiviz.github.io/polymer/charts/components/webcomponentsjs"),
       script="webcomponents-lite.js"
     ),
     epiviz_charts <- htmlDependency(
       name="epiviz-charts",
       version="1",
+      head = paste0("<link rel='import' href='",  polymer_lib, "'>"),
       src=system.file(package = "epivizrChart", "www", "lib/polymer"),
-      #c(href="https://epiviz.github.io/polymer"),
-      import="epiviz-charts.html"
-    )#,
-    # epiviz_data_source <- htmlDependency(
-    #  name="epiviz-data-source",
-    #  version="1",
-    #  src=c(href="https://epiviz.github.io/polymer/charts/components/epiviz-data-source"),
-    #  import="epiviz-data-source.html"
-    # )
+      all_files=TRUE
+    )
   )
 
   deps

@@ -4,7 +4,7 @@
 \alias{chart_dependencies}
 \title{HTML dependencies of an EpivizChart}
 \usage{
-chart_dependencies()
+chart_dependencies(knitr = FALSE)
 }
 \description{
 HTML dependencies of an EpivizChart

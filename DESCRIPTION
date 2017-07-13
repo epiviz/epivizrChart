@@ -41,7 +41,6 @@ Collate:
   'EpivizEnvironment-class.R'
   'EpivizNavigation-class.R'
   'vignette_data.R'
-  'htmltools_utils.R'
   'utils.R'
   'util-inits.R'
 VignetteBuilder: knitr

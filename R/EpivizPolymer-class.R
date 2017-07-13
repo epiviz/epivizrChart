@@ -122,35 +122,12 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     },
     show = function() {
       
-      # assignInNamespace("renderDependencies", renderDependencies, "htmltools")
-      # assignInNamespace("htmlDependency", htmlDependency, "htmltools")
-      
-      # library("htmltools")
-      
-      # TODO after pull request is accepted in htmltools
-      # unlockBinding("renderDependencies", as.environment("package:htmltools")) 
-      # unlockBinding("htmlDependency", as.environment("package:htmltools")) 
-      # unlockBinding("knit_print.shiny.tag", as.environment("package:htmltools")) 
-      
-      
-      # assignInNamespace("renderDependencies", renderDependencies, "htmltools")
-      # assignInNamespace("htmlDependency", htmlDependency, "htmltools")
-      # assignInNamespace("knit_print.shiny.tag", knit_print.shiny.tag, "htmltools")
-      
-      
-      # assign("renderDependencies", renderDependencies, "package:htmltools")
-      # assign("htmlDependency", htmlDependency, "package:htmltools")
-      # assign("knit_print.shiny.tag", knit_print.shiny.tag, "package:htmltools")
-      
-      
-      # makeActiveBinding("renderDependencies", renderDependencies, .GlobalEnv)
-      # makeActiveBinding("htmlDependency", htmlDependency, .GlobalEnv)
-      
       if (isTRUE(getOption('knitr.in.progress'))) {
         knitr::knit_print(attachDependencies(.self$renderChart(),
-            c(chart_dependencies())))
+            c(chart_dependencies(knitr=TRUE))))
 
       } else {
+        
         # temporary directory for output
         tmp_dir <- tempfile(pattern=paste0("epivizrChart", "_", .self$get_id()))
         dir.create(tmp_dir)
