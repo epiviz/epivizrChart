@@ -5,8 +5,8 @@ date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
 vignette: >
-  %\VignetteEngine{knitr::knitr}
-  %\VignetteIndexEntry{Title of your vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Introduction to epivizrChart}
   %\usepackage[UTF-8]{inputenc}
 ---
 
