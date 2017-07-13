@@ -23,6 +23,6 @@ An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.
 }
 \examples{
-epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 
 }

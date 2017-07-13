@@ -58,7 +58,7 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, gene=NULL,
 #' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 #'
 #' @examples
-#' epiviz <- epivizEnvironment(chr="chr11", start=99800000, end=103383180)
+#' epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
 epivizEnv <- function(chr=NULL, start=NULL, end=NULL,

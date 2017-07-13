@@ -6,6 +6,9 @@
 \usage{
 chart_dependencies(knitr = FALSE)
 }
+\arguments{
+\item{knitr}{whether knitr is in progress}
+}
 \description{
 HTML dependencies of an EpivizChart
 }

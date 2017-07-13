@@ -32,6 +32,7 @@ json_parser <- rjson::fromJSON
 json_writer <- rjson::toJSON
 
 #' HTML dependencies of an EpivizChart
+#' @param knitr whether knitr is in progress
 chart_dependencies <- function(knitr=FALSE) {
   
   polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
@@ -64,6 +65,8 @@ chart_dependencies <- function(knitr=FALSE) {
 #' @param ms_obj data infer chart type from data object
 #' @param chart explicitly define chart type
 #' @return epiviz chart component tag name
+#' 
+#' @importFrom methods is
 chart_type_to_tag_name <- function(ms_obj, chart) {
   if (is.null(chart)) {
     if (!is(ms_obj, "EpivizData"))
