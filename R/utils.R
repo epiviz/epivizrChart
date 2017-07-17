@@ -33,6 +33,7 @@ json_writer <- rjson::toJSON
 
 #' HTML dependencies of an EpivizChart
 #' @param knitr whether knitr is in progress
+#' @return list of polymer dependencies
 chart_dependencies <- function(knitr=FALSE) {
   
   polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")

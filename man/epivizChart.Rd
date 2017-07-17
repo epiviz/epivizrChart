@@ -38,6 +38,10 @@ An object of class \code{\link[epivizrChart]{EpivizChart}}.
 Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.
 }
 \examples{
-# See package vignette for example usage.
+data(tcga_colon_blocks)
+start <- 99800000
+end <- 103383180
+blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=start, end=end)
+# See package vignette for more examples.
 
 }

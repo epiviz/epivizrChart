@@ -14,7 +14,6 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #'
 #' @import htmltools
 #' @importFrom methods new
-#' @exportClass EpivizPolymer
 EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(
     data_mgr="ANY",

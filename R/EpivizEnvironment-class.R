@@ -3,9 +3,7 @@
 #' @field initializeRegions (ListOrNULL) List of gene names or regions to intialize navigations.
 #' @field charts List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.
 #' @import htmltools
-#' @export EpivizEnvironment
 #' @importFrom methods new
-#' @exportClass EpivizEnvironment
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
   fields=list(

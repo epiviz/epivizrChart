@@ -6,7 +6,6 @@
 #' @importMethodsFrom epivizrData register
 #' @import epivizrData
 #' @importFrom methods new
-#' @exportClass EpivizChartDataMgr
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields = list(
     .ms_list="environment",

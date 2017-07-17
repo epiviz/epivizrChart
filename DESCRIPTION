@@ -16,9 +16,6 @@ Description: This package provides an API for interactive visualization of genom
     documents or can be visualized in the R Studio's default viewer.
 Imports:
     epivizrData (>= 1.5.1),
-    GenomicRanges,
-    S4Vectors,
-    IRanges,
     htmltools,
     rjson,
     methods
@@ -27,6 +24,9 @@ Suggests:
     roxygen2,
     knitr,
     Biobase,
+    GenomicRanges,
+    S4Vectors,
+    IRanges,
     SummarizedExperiment,
     antiProfilesData,
     hgu133plus2.db,

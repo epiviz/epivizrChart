@@ -7,8 +7,6 @@
 #' @import epivizrData
 #' @import htmltools
 #' @importFrom methods new
-#' @export EpivizChart
-#' @exportClass EpivizChart
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizPolymer",
   fields=list(
