@@ -15,7 +15,9 @@ EpivizChart <- setRefClass("EpivizChart",
     data="list",
     colors="CharacterOrNULL",
     settings="ListOrNULL",
-    parent="ANY"
+    parent="ANY",
+    default_settings="ListOrNULL",
+    default_colors="CharacterOrNULL"
   ),
   methods=list(
     initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
@@ -25,7 +27,6 @@ EpivizChart <- setRefClass("EpivizChart",
         stop("You must pass either data or measurements")
 
       .self$colors <- colors
-      .self$settings <- settings
 
       chart_chr <- chr
       chart_start <- start
@@ -73,7 +74,14 @@ EpivizChart <- setRefClass("EpivizChart",
         chr=chart_chr, start=chart_start, end=chart_end)
 
       .self$data <- ms_obj_data$data
+      
+      chart_defaults <- chart_default_settings_colors(chart_type_to_tag_name(ms_obj, chart))
+      
+      .self$default_settings <- chart_defaults$settings
+      .self$default_colors <- chart_defaults$colors
 
+      .self$set_settings(settings)
+      
       if (is.null(datasource_name)) datasource_name <- "epivizChart"
 
       # initialize  ---------------------------
@@ -114,7 +122,22 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     set_settings = function(settings) {
       "Set chart settings"
-      .self$settings <- settings
+      
+      if(is.null(.self$settings)) {
+        .self$settings <- lapply(.self$default_settings, function(name) {
+          name$defaultValue
+        })
+        
+        names(.self$settings) <- sapply(.self$default_settings, function(name) {
+          name$id
+        })
+      }
+      
+      if(!is.null(settings)) {
+        for(name in names(settings)) {
+          .self$settings[[name]] <- settings[[name]]
+        } 
+      }
     },
     get_attributes = function() {
       "Get attributes for rendering chart. Fields that need to be in JSON
@@ -156,6 +179,9 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_data(ms_data)
 
       invisible(.self)
+    },
+    get_available_settings = function() {
+      print(.settings_as_df(.self$default_settings))
     }
   )
 )

@@ -14,6 +14,8 @@ vignette: >
 library(epivizrChart)
 library(antiProfilesData)
 library(SummarizedExperiment)
+library(RColorBrewer)
+library(Homo.sapiens)
 ```
 
 Sample data sets we will be using for the vignette.
@@ -186,16 +188,18 @@ epivizEnv$remove_all_charts()
 # Create Charts with settings and colors
 
 ```{r}
+
+blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180)
+
+# to list availble settings for a chart
+blocks_track$get_available_settings()
+
 settings <- list(
   title="Blocks",
-  topMargin=15,
-  bottomMargin=20,
-  leftMargin=20,
-  rightMargin=10,
-  minBlockDistance=10,
-  useColorBy=FALSE,
-  blockColorBy="")
-blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180, settings=settings)
+  minBlockDistance=10
+  )
+
+blocks_track$set_settings(settings)
 blocks_track
 
 colors <- RColorBrewer::brewer.pal(3, "Dark2")
