@@ -72,14 +72,14 @@ EpivizChart <- setRefClass("EpivizChart",
         chr=chart_chr, start=chart_start, end=chart_end)
 
       .self$data <- ms_obj_data$data
-      
+
       chart_defaults <- chart_default_settings_colors(chart_type_to_tag_name(ms_obj, chart))
-      
+
       .self$default_settings <- chart_defaults$settings
       .self$default_colors <- chart_defaults$colors
 
       .self$set_settings(settings)
-      
+
       if (is.null(datasource_name)) datasource_name <- "epivizChart"
 
       # initialize  ---------------------------
@@ -114,27 +114,35 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$data <- data
       invisible()
     },
+    set_default_colors = function(colors) {
+      "Set default chart colors"
+      .self$default_colors <- colors
+    },
+    set_default_settings = function(settings) {
+      "Set default chart settings"
+      .self$default_settings <- settings
+    },
     set_colors = function(colors) {
       "Set chart colors"
       .self$colors <- colors
     },
     set_settings = function(settings) {
       "Set chart settings"
-      
-      if(is.null(.self$settings)) {
+
+      if(is.null(.self$settings) || is.null(settings)) {
         .self$settings <- lapply(.self$default_settings, function(name) {
           name$defaultValue
         })
-        
+
         names(.self$settings) <- sapply(.self$default_settings, function(name) {
           name$id
         })
       }
-      
+
       if(!is.null(settings)) {
         for(name in names(settings)) {
           .self$settings[[name]] <- settings[[name]]
-        } 
+        }
       }
     },
     get_attributes = function() {
@@ -158,6 +166,14 @@ EpivizChart <- setRefClass("EpivizChart",
       }"
       tag_name <- chart_type_to_tag_name(.self$obj, chart_type)
       .self$set_name(tag_name)
+
+      # update chart settings for the new chart type being visualized
+      new_settings <- chart_default_settings_colors(tag_name)
+
+      .self$set_default_settings(new_settings$settings)
+      .self$set_default_colors(new_settings$colors)
+      # passing NULL applies the new default settings to settings
+      .self$set_settings(NULL)
 
       invisible(.self)
     },
