@@ -61,21 +61,14 @@ chart_dependencies <- function(knitr=FALSE) {
   deps
 }
 
-#' Get epiviz chart component from data object
+#' Get epiviz chart component name from chart type
 #'
-#' @param ms_obj data infer chart type from data object
-#' @param chart explicitly define chart type
-#' @return epiviz chart component tag name
-#' 
+#' @param chart chart type, e.g., 'HeatmapPlot'
+#' @return epiviz chart component name
+#'
 #' @importFrom methods is
-chart_type_to_tag_name <- function(ms_obj, chart) {
-  if (is.null(chart)) {
-    if (!is(ms_obj, "EpivizData"))
-      stop(ms_obj, " must be of class EpivizData")
-
-    chart_tag <- ms_obj$get_default_chart_type_html()
-  } else {
-    chart_tag <- switch(chart,
+chart_type_to_tag_name <- function(chart) {
+    switch(chart,
       GenesTrack = "epiviz-json-genes-track",
       BlocksTrack = "epiviz-json-blocks-track",
       HeatmapPlot = "epiviz-json-heatmap-plot",
@@ -86,21 +79,17 @@ chart_type_to_tag_name <- function(ms_obj, chart) {
       StackedLineTrack = "epiviz-json-stacked-line-track",
       stop(chart, " is not a valid chart type. See documentation for supported chart types")
     )
-  }
-
-  chart_tag
 }
-
 
 #' Get default chart settings and colors
 #' @param json_chart_type chart type
 #' @return list of settings and colors
-#' 
+#'
 chart_default_settings_colors <- function(json_chart_type) {
   # if (!is.null(ms_obj)) {
   #   chart_type <- ms_obj$get_default_chart_type_html()
   # }
-  
+
   chart_settings <- switch(json_chart_type,
                            "epiviz-json-genes-track" = list(
                              settings = list(
@@ -209,7 +198,7 @@ chart_default_settings_colors <- function(json_chart_type) {
                                  "possibleValues"=NULL
                                )
                              ),
-                             colors = c(                               
+                             colors = c(
                                "#f9a65a",
                                "#599ad3",
                                "#79c36a",
@@ -934,9 +923,9 @@ chart_default_settings_colors <- function(json_chart_type) {
                              )
                            ),
                            stop(json_chart_type,
-                                " is not a valid chart type. See documentation for supported chart types") 
+                                " is not a valid chart type. See documentation for supported chart types")
   )
-  
+
   chart_settings
 }
 
@@ -949,7 +938,7 @@ rand_id <- function(prefix = "") {
 }
 
 #' (taken from epivizr) print settings in a readable format
-#' 
+#'
 .settings_as_df <- function(chart_settings) {
   ids <- sapply(chart_settings, function(x) x$id)
   labels <- sapply(chart_settings, function(x) x$label)

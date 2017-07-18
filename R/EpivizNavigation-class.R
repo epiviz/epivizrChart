@@ -77,6 +77,26 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     get_attributes = function() {
       "Get attributes for rendering chart"
       c(list(gene=.self$gene, geneInRange=.self$geneInRange), callSuper())
+    },
+    clone_charts = function(charts) {
+      "Clone EpivizCharts and append to navigation. Each chart must already
+      exist in the navigation's data manager, otherwise an error will occur
+      when attempting to intialize using their measurements
+      \\describe{
+      \\item{charts}{list of EpivizCharts whose data exists in the
+      navigation's data manager }}"
+      for (chart in charts) {
+        if (!identical(chart$get_data_mgr(), .self$get_data_mgr()))
+          stop(chart, " and navigation must share a data manager")
+
+        if (is(chart, "EpivizChart")) {
+          ms <- chart$get_measurements()
+
+          epivizChart(measurements=ms,
+            datasource_name=ms[[1]]@name,
+            chart=chart$get_chart_type(), parent=.self)
+        }
+      }
     }
   )
 )

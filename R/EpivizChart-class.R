@@ -15,7 +15,8 @@ EpivizChart <- setRefClass("EpivizChart",
     settings="ListOrNULL",
     parent="ANY",
     default_settings="ListOrNULL",
-    default_colors="CharacterOrNULL"
+    default_colors="CharacterOrNULL",
+    chart_type="character"
   ),
   methods=list(
     initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
@@ -60,12 +61,20 @@ EpivizChart <- setRefClass("EpivizChart",
           datasource_obj_name=datasource_obj_name, ...)
 
         chart_ms <- ms_obj$get_measurements()
+
+        if (!is.null(chart)) {
+          .self$chart_type <- chart
+        } else {
+          .self$chart_type <- ms_obj$get_default_chart_type()
+        }
       } else {
         # use measurements to plot data
         ms_obj <- NULL
 
         if (is.null(chart))
           stop("You must pass 'chart' type when using measurements")
+
+        .self$chart_type <- chart
       }
 
       ms_obj_data <- mgr$get_data(measurements=chart_ms,
@@ -73,7 +82,8 @@ EpivizChart <- setRefClass("EpivizChart",
 
       .self$data <- ms_obj_data$data
 
-      chart_defaults <- chart_default_settings_colors(chart_type_to_tag_name(ms_obj, chart))
+      chart_defaults <- chart_default_settings_colors(
+        chart_type_to_tag_name(.self$chart_type))
 
       .self$default_settings <- chart_defaults$settings
       .self$default_colors <- chart_defaults$colors
@@ -84,7 +94,7 @@ EpivizChart <- setRefClass("EpivizChart",
 
       # initialize  ---------------------------
       callSuper(data_mgr=mgr,
-        name=chart_type_to_tag_name(ms_obj, chart),
+        name=chart_type_to_tag_name(.self$chart_type),
         class="charts",
         id=rand_id(datasource_name),
         measurements=ms_obj_data$measurements,
@@ -108,6 +118,10 @@ EpivizChart <- setRefClass("EpivizChart",
     get_settings = function() {
       "Get chart settings"
       .self$settings
+    },
+    get_chart_type = function() {
+      "Get chart type"
+      .self$chart_type
     },
     set_data = function(data) {
       "Set chart data"
@@ -155,7 +169,7 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     renderChart = function() {
       "Render to html"
-     tag(.self$name, .self$get_attributes())
+      tag(.self$name, .self$get_attributes())
     },
     revisualize = function(chart_type) {
       "Revisualize chart as the given chart type
@@ -164,7 +178,7 @@ EpivizChart <- setRefClass("EpivizChart",
         (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
         StackedLinePlot, StackedLineTrack)}
       }"
-      tag_name <- chart_type_to_tag_name(.self$obj, chart_type)
+      tag_name <- chart_type_to_tag_name(chart_type)
       .self$set_name(tag_name)
 
       # update chart settings for the new chart type being visualized
