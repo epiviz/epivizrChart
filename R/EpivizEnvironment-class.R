@@ -61,6 +61,10 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       c(list(initializeRegions=json_writer(.self$initializeRegions)),
         callSuper())
     },
+    get_charts = function() {
+      "Get charts within environment"
+      .self$charts
+    },
     renderChart = function() {
       "Render to html"
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
