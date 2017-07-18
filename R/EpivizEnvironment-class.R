@@ -107,6 +107,33 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       names(ordered_charts) <- chart_ids
       .self$set_charts(ordered_charts)
+    },
+    init_region = function(chr=NULL, start=NULL, end=NULL) {
+      "Initialize navigation based on a genomic region
+      \\describe{
+        \\item{chr}{Chromosome}
+        \\item{chr}{Start location}
+        \\item{chr}{End location}
+      }"
+      nav <- epivizNav(chr=chr, start=start, end=end, parent=.self)
+      nav$clone_charts(.self$get_charts())
+
+      invisible(.self)
+    },
+    init_regions = function(regions) {
+      "Initialize navigations based on a genomic regions
+      \\describe{
+        \\item{regions}{List of named lists of genomic locations, e.g.,
+        list(list(chr='chr11', start=99800000, end=103383180))}
+      }"
+      for (region in regions) {
+        if (is.null(names(region)))
+          stop(region, " must be named with chr, start, and end")
+
+        .self$init_region(region$chr, region$start, region$end)
+      }
+
+      invisible(.self)
     }
   )
 )
