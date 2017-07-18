@@ -118,7 +118,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       nav <- epivizNav(chr=chr, start=start, end=end, parent=.self)
       nav$clone_charts(.self$get_charts())
 
-      invisible(.self)
+      invisible(nav)
     },
     init_regions = function(regions) {
       "Initialize navigations based on a genomic regions
