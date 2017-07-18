@@ -65,6 +65,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Get charts within environment"
       .self$charts
     },
+    set_charts = function(charts) {
+      .self$charts <- charts
+    },
     renderChart = function() {
       "Render to html"
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
@@ -85,6 +88,25 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       for (chart in .self$charts) {
         chart$navigate(chr, start, end)
       }
+    },
+    order_charts = function(ordered_charts) {
+      "Order the charts within an environment
+      \\describe{
+      \\item{charts}{An ordered list of EpivizPolymer objects}
+      }"
+      if (length(ordered_charts) != length(.self$charts))
+        stop("The charts to be ordered must include all
+          charts from environment")
+
+      chart_ids <- sapply(ordered_charts, function(chart) {
+        if (!identical(chart$get_data_mgr(), .self$get_data_mgr()))
+          stop(chart, " must be from the environment")
+
+        chart$get_id()
+      })
+
+      names(ordered_charts) <- chart_ids
+      .self$set_charts(ordered_charts)
     }
   )
 )

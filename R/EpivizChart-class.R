@@ -71,6 +71,9 @@ EpivizChart <- setRefClass("EpivizChart",
         # use measurements to plot data
         ms_obj <- NULL
 
+        if (is.null(parent))
+          stop("You must pass a 'parent' when using measurements")
+
         if (is.null(chart))
           stop("You must pass 'chart' type when using measurements")
 
