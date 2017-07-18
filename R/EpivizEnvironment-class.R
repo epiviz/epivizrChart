@@ -134,6 +134,14 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       }
 
       invisible(.self)
+    },
+    add_data = function(...) {
+      "Add data to environment's data manager
+      \\describe{
+        \\item{...}{Arguments for add_measurements and register, e.g., data,
+        datasource_name, datasource_obj_name, type, etc}
+      }"
+      .self$data_mgr$add_measurements(...)
     }
   )
 )
