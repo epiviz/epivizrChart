@@ -44,6 +44,8 @@ test_that("removing charts from an environment works", {
   expect_true(se_plot$get_id() %in% env_charts)
 
   env$remove_all_charts()
+  
+  env_charts <- lapply(env$charts, function(chart) chart$get_id())
 
   expect_false(blocks_chart$get_id() %in% env_charts)
   expect_false(line_chart$get_id() %in% env_charts)
