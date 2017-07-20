@@ -34,7 +34,7 @@ test_that("initializing charts works with data objects", {
   expect_that(line_ms_obj, is_a("EpivizBpData"))
 
   line_default <- line_ms_obj$get_default_chart_type_html()
-  expect_that(blocks_track$get_name(), equals(line_default))
+  expect_that(line_track$get_name(), equals(line_default))
 
   # ExpressionSet -------------------------------------------------------------
   eset_plot <- epivizChart(test_data$eset)
@@ -47,7 +47,7 @@ test_that("initializing charts works with data objects", {
   expect_that(eset_mgr, is_a("EpivizChartDataMgr"))
 
   eset_ms_obj <- eset_mgr$.get_ms_object(eset_ms@datasourceId)
-  expect_that(line_ms_obj, is_a("EpivizFeatureData"))
+  expect_that(eset_ms_obj, is_a("EpivizFeatureData"))
 
   eset_default <- eset_ms_obj$get_default_chart_type_html()
   expect_that(eset_plot$get_name(), equals(eset_default))
