@@ -190,8 +190,9 @@ epivizEnv$remove_all_charts()
 # Create Charts with settings and colors
 
 ```{r}
+colors <- RColorBrewer::brewer.pal(3, "Dark2")
 
-blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180)
+blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180, colors=colors)
 
 # to list availble settings for a chart
 blocks_track$get_available_settings()
@@ -204,7 +205,13 @@ settings <- list(
 blocks_track$set_settings(settings)
 blocks_track
 
+blocks_track$set_colors(c("#D95F02"))
+blocks_track
+
 colors <- RColorBrewer::brewer.pal(3, "Dark2")
-lines_track <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"), colors=colors)
+lines_track <- epivizChart(tcga_colon_curves, chr="chr11", start=99800000, end=103383180, type="bp", columns=c("cancerMean","normalMean"))
+lines_track
+
+lines_track$set_colors(colors)
 lines_track
 ```
