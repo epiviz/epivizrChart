@@ -2,18 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{chart_type_to_tag_name}
 \alias{chart_type_to_tag_name}
-\title{Get epiviz chart component from data object}
+\title{Get epiviz chart component name from chart type}
 \usage{
-chart_type_to_tag_name(ms_obj, chart)
+chart_type_to_tag_name(chart)
 }
 \arguments{
-\item{ms_obj}{data infer chart type from data object}
-
-\item{chart}{explicitly define chart type}
+\item{chart}{chart type, e.g., 'HeatmapPlot'}
 }
 \value{
-epiviz chart component tag name
+epiviz chart component name
 }
 \description{
-Get epiviz chart component from data object
+Get epiviz chart component name from chart type
 }
