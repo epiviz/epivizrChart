@@ -25,6 +25,8 @@ Data container for an Epiviz chart component.
 \describe{
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
+\item{\code{get_chart_type()}}{Get chart type}
+
 \item{\code{get_colors()}}{Get chart colors}
 
 \item{\code{get_data()}}{Get chart data}
@@ -50,6 +52,10 @@ Data container for an Epiviz chart component.
 \item{\code{set_colors(colors)}}{Set chart colors}
 
 \item{\code{set_data(data)}}{Set chart data}
+
+\item{\code{set_default_colors(colors)}}{Set default chart colors}
+
+\item{\code{set_default_settings(settings)}}{Set default chart settings}
 
 \item{\code{set_settings(settings)}}{Set chart settings}
 }}

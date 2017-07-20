@@ -21,6 +21,13 @@ Data container for an Epiviz navigation component.
 \section{Methods}{
 
 \describe{
+\item{\code{clone_charts(charts)}}{Clone EpivizCharts and append to navigation. Each chart must already
+exist in the navigation's data manager, otherwise an error will occur
+when attempting to intialize using their measurements
+\describe{
+\item{charts}{list of EpivizCharts whose data exists in the
+navigation's data manager }}}
+
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
 \item{\code{get_gene()}}{Get gene}
