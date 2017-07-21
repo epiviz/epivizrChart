@@ -120,15 +120,14 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         end=.self$end)
     },
     show = function() {
-      
+
       if (isTRUE(getOption('knitr.in.progress'))) {
         knitr::knit_print(attachDependencies(.self$renderChart(),
             c(chart_dependencies(knitr=TRUE))))
 
       } else {
-        
         # temporary directory for output
-        tmp_dir <- tempfile(pattern=paste0("epivizrChart", "_", .self$get_id()))
+        tmp_dir <- tempfile(pattern=paste0(rand_id("epivizChart")))
         dir.create(tmp_dir)
 
         # output file
