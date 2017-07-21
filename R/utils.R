@@ -276,7 +276,7 @@ chart_default_settings_colors <- function(json_chart_type) {
                                list(
                                  "id"="maxColumns",
                                  "type"="number",
-                                 "defaultValue"=40,
+                                 "defaultValue"=120,
                                  "label"="Max columns",
                                  "possibleValues"=NULL
                                ),
@@ -388,7 +388,7 @@ chart_default_settings_colors <- function(json_chart_type) {
                                list(
                                  "id"="step",
                                  "type"="number",
-                                 "defaultValue"=50,
+                                 "defaultValue"=1,
                                  "label"="Step",
                                  "possibleValues"=NULL
                                ),
@@ -423,7 +423,7 @@ chart_default_settings_colors <- function(json_chart_type) {
                                list(
                                  "id"="lineThickness",
                                  "type"="number",
-                                 "defaultValue"=1,
+                                 "defaultValue"=1.1,
                                  "label"="Line thickness",
                                  "possibleValues"=NULL
                                ),
@@ -556,7 +556,7 @@ chart_default_settings_colors <- function(json_chart_type) {
                                list(
                                  "id"="lineThickness",
                                  "type"="number",
-                                 "defaultValue"=3,
+                                 "defaultValue"=1.1,
                                  "label"="Line thickness",
                                  "possibleValues"=NULL
                                ),
