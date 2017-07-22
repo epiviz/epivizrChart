@@ -86,14 +86,14 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       \\item{charts}{An ordered list of EpivizPolymer objects}
       }"
       if (length(ordered_charts) != length(.self$charts))
-        stop("The charts to be ordered must include all
-          charts from environment")
+        stop("Ordering charts requires all charts from environment")
 
       chart_ids <- sapply(ordered_charts, function(chart) {
-        if (!identical(chart$get_data_mgr(), .self$get_data_mgr()))
+        chart_id <- chart$get_id()
+        if (!(chart_id %in% names(.self$charts)))
           stop(chart, " must be from the environment")
 
-        chart$get_id()
+        chart_id
       })
 
       names(ordered_charts) <- chart_ids

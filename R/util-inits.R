@@ -124,7 +124,7 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
 
     data_mgr <- parent$get_data_mgr()
 
-    # use parent's regions if not provided
+    # use parent's region if not provided
     if (is.null(chr)) chr <-  parent$get_chr()
     if (is.null(start)) start <- parent$get_start()
     if (is.null(end)) end <- parent$get_end()

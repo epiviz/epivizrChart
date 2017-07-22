@@ -61,13 +61,17 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     set_settings = function(settings) {
       "Set chart settings"
-      # override default settings
+      # override settings
       chart_settings <- .self$get_settings()
       for (setting in names(settings)) {
         if (setting %in% names(chart_settings))
           chart_settings[[setting]] <- settings[[setting]]
       }
       .self$settings <- chart_settings
+    },
+    get_parent = function() {
+      "Get parent of EpivizChart"
+      .self$parent
     },
     get_attributes = function() {
       "Get attributes for rendering chart. Fields that need to be in JSON
@@ -81,26 +85,15 @@ EpivizChart <- setRefClass("EpivizChart",
       "Render to html"
       tag(.self$name, .self$get_attributes())
     },
-    revisualize = function(chart_type) {
-      "Revisualize chart as the given chart type
-      \\describe{
-        \\item{chart_type}{The type of chart to be visualized
-        (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
-        StackedLinePlot, StackedLineTrack)}
-      }"
-      tag_name <- chart_type_to_tag_name(chart_type)
-      .self$set_name(tag_name)
-
-      # update chart settings for the new chart type being visualized
-      new_settings <- chart_default_settings_colors(tag_name)
-
-      .self$set_default_settings(new_settings$settings)
-      .self$set_default_colors(new_settings$colors)
-      # passing NULL applies the new default settings to settings
-      .self$set_settings(NULL)
-
-      invisible(.self)
-    },
+    # revisualize = function(chart_type) {
+    #   "Revisualize chart as the given chart type
+    #   \\describe{
+    #     \\item{chart_type}{The type of chart to be visualized
+    #     (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
+    #     StackedLinePlot, StackedLineTrack)}
+    #   }"
+    #   TODO
+    # },
     navigate = function(chr, start, end) {
       "Navigate chart to a genomic location
       \\describe{
