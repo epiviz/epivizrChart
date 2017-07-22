@@ -13,6 +13,8 @@ Data container for an Epiviz Line Track.
 \describe{
 \item{\code{get_chart_type()}}{Get chart type}
 
+\item{\code{get_default_colors()}}{Get default colors}
+
 \item{\code{get_default_settings()}}{Get default settings}
 
 \item{\code{get_name()}}{Get name}

@@ -4,10 +4,10 @@
 \alias{chart_default_settings_colors}
 \title{Get default chart settings and colors}
 \usage{
-chart_default_settings_colors(json_chart_type)
+chart_default_settings_colors(chart_type)
 }
 \arguments{
-\item{json_chart_type}{chart type}
+\item{chart_type}{chart type}
 }
 \value{
 list of settings and colors

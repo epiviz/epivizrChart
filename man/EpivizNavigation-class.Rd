@@ -11,9 +11,9 @@ Data container for an Epiviz navigation component.
 \section{Fields}{
 
 \describe{
-\item{\code{gene}}{(CharacterOrNULL) Gene}
+\item{\code{gene}}{(character) Gene}
 
-\item{\code{geneInRange}}{(CharacterOrNULL) Nearest Gene in range.}
+\item{\code{geneInRange}}{(character) Nearest Gene in range.}
 
 \item{\code{parent}}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where navigation is appended.}
 }}
