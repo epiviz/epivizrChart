@@ -8,4 +8,13 @@
 \description{
 Data container for an Epiviz Genes Track.
 }
+\section{Methods}{
+
+\describe{
+\item{\code{get_chart_type()}}{Get chart type}
+
+\item{\code{get_default_settings()}}{Get default settings}
+
+\item{\code{get_name()}}{Get name}
+}}
 

@@ -29,6 +29,8 @@ Data container for an Epiviz environment component.
 
 \item{\code{get_charts()}}{Get charts within environment}
 
+\item{\code{get_name()}}{Get name}
+
 \item{\code{init_region(chr = NULL, start = NULL, end = NULL)}}{Initialize navigation based on a genomic region
 \describe{
   \item{chr}{Chromosome}
@@ -54,10 +56,17 @@ Data container for an Epiviz environment component.
 \item{charts}{An ordered list of EpivizPolymer objects}
 }}
 
+\item{\code{plot(...)}}{Plot an EpivizChart within the environment
+ \describe{
+  \item{...}{Arguments for epivizChart}
+}}
+
 \item{\code{remove_all_charts()}}{Remove all charts from environment}
 
 \item{\code{remove_chart(chart)}}{Remove chart from environment}
 
 \item{\code{renderChart()}}{Render to html}
+
+\item{\code{set_charts(charts)}}{Set charts of environment}
 }}
 

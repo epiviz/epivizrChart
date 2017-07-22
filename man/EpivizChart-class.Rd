@@ -13,9 +13,9 @@ Data container for an Epiviz chart component.
 \describe{
 \item{\code{data}}{(list) Values of an epiviz chart's data attribute.}
 
-\item{\code{colors}}{(CharacterOrNULL) Epiviz chart's colors attribute.}
+\item{\code{colors}}{(character) Epiviz chart's colors attribute.}
 
-\item{\code{settings}}{(ListOrNULL) Epiviz chart's settings attribute.}
+\item{\code{settings}}{(list) Epiviz chart's settings attribute.}
 
 \item{\code{parent}}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.}
 }}
@@ -25,11 +25,15 @@ Data container for an Epiviz chart component.
 \describe{
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
+\item{\code{get_available_settings()}}{Get available settings}
+
 \item{\code{get_chart_type()}}{Get chart type}
 
 \item{\code{get_colors()}}{Get chart colors}
 
 \item{\code{get_data()}}{Get chart data}
+
+\item{\code{get_parent()}}{Get parent}
 
 \item{\code{get_settings()}}{Get chart settings}
 
@@ -41,13 +45,6 @@ Data container for an Epiviz chart component.
 }}
 
 \item{\code{renderChart()}}{Render to html}
-
-\item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type
-\describe{
-  \item{chart_type}{The type of chart to be visualized
-  (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
-  StackedLinePlot, StackedLineTrack)}
-}}
 
 \item{\code{set_colors(colors)}}{Set chart colors}
 

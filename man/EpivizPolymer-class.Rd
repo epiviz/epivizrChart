@@ -37,7 +37,7 @@ Data container for an epiviz web component.
 
 \item{\code{get_class()}}{Get class}
 
-\item{\code{get_data_mgr()}}{Return EpivizChart Data Manager}
+\item{\code{get_data_mgr()}}{Get data manager}
 
 \item{\code{get_end()}}{Get end}
 

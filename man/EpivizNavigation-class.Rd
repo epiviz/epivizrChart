@@ -34,6 +34,8 @@ navigation's data manager }}}
 
 \item{\code{get_geneInRange()}}{Get gene in range}
 
+\item{\code{get_name()}}{Get name of Epiviz Web Component}
+
 \item{\code{set_gene(gene)}}{Set gene}
 
 \item{\code{set_geneInRange(gene)}}{Set step ratio}
