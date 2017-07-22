@@ -114,7 +114,9 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     get_available_settings = function() {
       "Get available settings"
-      chart_defaults <- chart_default_settings_colors(.self$get_name())
+      chart_defaults <- chart_default_settings_colors(
+        .self$get_chart_type())
+
       print(.settings_as_df(chart_defaults$settings))
     }
   )
