@@ -25,11 +25,8 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       invisible(.self)
     },
     plot = function (...) {
-      "Initialize an EpivizChart and append to environment"
-      chart <- epivizChart(parent=.self, ...)
-      .self$append_chart(chart)
-
-      invisible(chart)
+      "Plot an EpivizChart within the environment"
+      epivizChart(parent=.self, ...)
     },
     remove_chart = function(chart) {
       "Remove chart from environment"
