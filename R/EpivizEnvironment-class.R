@@ -1,22 +1,19 @@
 #' Data container for an Epiviz environment component.
 #'
-#' @field initializeRegions (ListOrNULL) List of gene names or regions to intialize navigations.
 #' @field charts List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.
 #' @import htmltools
 #' @importFrom methods new
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizPolymer",
   fields=list(
-    initializeRegions="ListOrNULL",
     charts="list"
   ),
   methods=list(
-    initialize = function(name="epiviz-environment", chr=NULL, start=NULL, end=NULL,
-      initializeRegions=NULL, ...) {
-      .self$initializeRegions <- initializeRegions
+    initialize = function(name="epiviz-environment", ...) {
+      .self$set_name("epiviz-environment")
       .self$charts <- list()
 
-      callSuper(name=name, chr=chr, start=start, end=end, ...)
+      callSuper(...)
     },
     append_chart = function(chart) {
       "Append chart or navigation to environment"
@@ -47,19 +44,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    get_initializeRegions = function() {
-      "Get initializeRegions"
-      .self$initializeRegions
-    },
-    set_initializeRegions = function(initReg) {
-      "Set initializeRegions"
-      .self$initializeRegions <- initRegs
-      invisible()
-    },
     get_attributes = function() {
       "Get attributes for rendering chart"
-      c(list(initializeRegions=json_writer(.self$initializeRegions)),
-        callSuper())
+      c(callSuper())
     },
     get_charts = function() {
       "Get charts within environment"

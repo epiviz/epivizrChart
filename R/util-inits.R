@@ -21,20 +21,86 @@
 #' # See package vignette for more examples.
 #'
 #' @export
-epivizChart <- function(data_obj=NULL, datasource_name=NULL, parent=NULL,
-  measurements=NULL, chart=NULL, chr=NULL, start=NULL, end=NULL,
-  settings=NULL, colors=NULL, ...) {
+epivizChart <- function(data_obj=NULL, measurements=NULL,
+  datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,
+  start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
 
-  if (!is.null(data_obj)) {
-    ds_obj_name <- deparse(substitute(data_obj))
+  if (is.null(data_obj) && is.null(measurements))
+    stop("You must pass either data or measurements")
+
+  # if parent environment/navigation is provided,
+  # use its data manager, chr, start, and end
+  if (!is.null(parent)) {
+    if (!is(parent, "EpivizEnvironment"))
+      stop("Parent must be an EpivizEnvironment or EpivizNavigation")
+
+    data_mgr <- parent$get_data_mgr()
+
+    parent_chr <- parent$get_chr()
+    if (!is.null(parent_chr)) chr <- parent_chr
+
+    parent_st <- parent$get_start()
+    if (!is.null(parent_st)) start <- parent_st
+
+    parent_end <- parent$get_end()
+    if (!is.null(parent_end)) end <- parent_end
   } else {
-    ds_obj_name <- NULL
+    data_mgr <- EpivizChartDataMgr()
   }
 
-  EpivizChart(data_obj=data_obj, datasource_name=datasource_name,
-    datasource_obj_name=ds_obj_name, parent=parent, measurements=measurements,
-    chart=chart, chr=chr, start=start, end=end, settings=settings,
-    colors=colors, ...)
+  # register data -------------------------------------------------------------
+  if (!is.null(data_obj)) {
+    ms_obj <- data_mgr$add_measurements(data_obj,
+      datasource_name=datasource_name,
+      datasource_obj_name=deparse(substitute(data_obj)),
+      ...)
+
+    measurements <- ms_obj$get_measurements()
+
+    if (is.null(chart))
+      chart <- ms_obj$get_default_chart_type()
+
+  } else {
+    # use measurements to plot data
+    ms_obj <- NULL
+
+    if (is.null(parent))
+      stop("You must pass a 'parent' when using measurements")
+
+    if (is.null(chart))
+      stop("You must pass 'chart' type when using measurements")
+  }
+
+  ms_data <- data_mgr$get_data(measurements=measurements,
+    chr=chr, start=start, end=end)
+
+  # initialize chart ----------------------------------------------------------
+  chart_generator <- switch(chart,
+    GenesTrack=EpivizGenesTrack,
+    BlocksTrack=EpivizBlocksTrack,
+    HeatmapPlot=EpivizHeatmapPlot,
+    LinePlot=EpivizLinePlot,
+    LineTrack=EpivizLineTrack,
+    ScatterPlot=EpivizScatterPlot,
+    StackedLinePlot=EpivizStackedLinePlot,
+    StackedLineTrack=EpivizStackedLineTrack,
+    stop(chart,  " is not a valid chart type.",
+      " See documentation for supported chart types")
+  )
+
+  epiviz_chart <- chart_generator(data_mgr=data_mgr,
+    measurements=ms_data$measurements,
+    data=ms_data$data,
+    chr=chr,
+    start=start,
+    end=end,
+    settings=settings,
+    colors=colors,
+    parent=parent)
+
+  if (!is.null(parent)) parent$append_chart(epiviz_chart)
+
+  epiviz_chart
 }
 
 #' Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.
@@ -42,21 +108,35 @@ epivizChart <- function(data_obj=NULL, datasource_name=NULL, parent=NULL,
 #' @param chr The chromosome to filter on, e.g., chr="chr11".
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param gene TODO
-#' @param geneInRange TODO
 #' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
-#' @param ... Additional arguments passed to \code{\link[epivizrChart]{EpivizPolymer}}.
+#' @param ... Additional arguments for initializing navigation, e.g., gene and geneInRange.
 #' @return An object of class \code{\link[epivizrChart]{EpivizNavigation}}.
 #'
 #' @examples
 #' epiviz <- epivizNav(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
-epivizNav <- function(chr=NULL, start=NULL, end=NULL, gene=NULL,
-  geneInRange=NULL, parent=NULL, ...) {
+epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
+  # use parent's data manager
+  if (!is.null(parent)) {
+    if (!is(parent, "EpivizEnvironment"))
+      stop("Parent must be an EpivizEnvironment")
 
-  EpivizNavigation(chr=chr, start=start, end=end, gene=gene,
-    geneInRange=geneInRange, parent=parent, ...)
+    data_mgr <- parent$get_data_mgr()
+
+    # use parent's regions if not provided
+    if (is.null(chr)) chr <-  parent$get_chr()
+    if (is.null(start)) start <- parent$get_start()
+    if (is.null(end)) end <- parent$get_end()
+  } else {
+    data_mgr <- EpivizChartDataMgr()
+  }
+
+  epivizNav <- EpivizNavigation(chr=chr, start=start, end=end, parent=parent, data_mgr=data_mgr, ...)
+
+  if (!is.null(parent)) parent$append_chart(epivizNav)
+
+  epivizNav
 }
 
 
@@ -73,9 +153,8 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, gene=NULL,
 #' epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
-epivizEnv <- function(chr=NULL, start=NULL, end=NULL,
-  initializeRegions=NULL, ...) {
+epivizEnv <- function(chr=NULL, start=NULL, end=NULL, ...) {
+  data_mgr <- EpivizChartDataMgr()
 
-  EpivizEnvironment(chr=chr, start=start, end=end,
-    initializeRegions=initializeRegions, ...)
+  EpivizEnvironment(chr=chr, start=start, end=end, data_mgr=data_mgr, ...)
 }

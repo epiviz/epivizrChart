@@ -13,46 +13,21 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     parent="ANY"
   ),
   methods=list(
-    initialize = function(chr=NULL, start=NULL, end=NULL, gene=NULL,
-      geneInRange=NULL, parent=NULL, ...) {
+    initialize = function(gene=NULL, geneInRange=NULL, parent=NULL,
+      chr=NULL, start=NULL, end=NULL, ...) {
       .self$gene <- gene
       .self$geneInRange <- geneInRange
       .self$parent <- parent
 
-      nav_chr <- chr
-      nav_start <- start
-      nav_end <- end
-
-      # if parent environment is provided, use its data manager
-      if (is.null(parent)) {
-        mgr <- EpivizChartDataMgr()
-
-      } else {
-        if (!is(parent, "EpivizEnvironment"))
-          stop("Parent must be an EpivizEnvironment")
-
-        mgr <- parent$get_data_mgr()
-
-        if (is.null(chr)) nav_chr <-  parent$get_chr()
-        if (is.null(start)) nav_start <- parent$get_start()
-        if (is.null(end)) nav_end <- parent$get_end()
+      # check if region is provided
+      if (is.null(chr) || is.null(start) || is.null(end)) {
+        stop("EpivizNavigation must have a region: chr, start, and end")
       }
 
-      for (arg in list(nav_chr, nav_start, nav_end))
-        if (is.null(arg))
-          stop("EpivizNavigation must have chr, start, and end")
+      callSuper(...)
 
-      callSuper(data_mgr=mgr,
-        name="epiviz-navigation",
-        id=rand_id("epivizNav"),
-        class="charts",
-        chr=nav_chr,
-        start=nav_start,
-        end=nav_end,
-        ...)
-
-      # nav is appended at this point because id needs to be initialized
-      if (!is.null(parent)) parent$append_chart(.self)
+      .self$set_name("epiviz-navigation")
+      .self$set_id(rand_id("nav"))
 
       invisible(.self)
     },
@@ -94,9 +69,9 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
 
           epivizChart(measurements=ms,
             datasource_name=ms[[1]]@name,
-            chart=chart$get_chart_type(), 
-            settings=chart$get_settings(),  
-            colors=chart$get_colors(), parent=.self) 
+            chart=chart$get_chart_type(),
+            settings=chart$get_settings(),
+            colors=chart$get_colors(), parent=.self)
         }
       }
     }

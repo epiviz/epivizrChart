@@ -13,102 +13,26 @@ EpivizChart <- setRefClass("EpivizChart",
     data="list",
     colors="CharacterOrNULL",
     settings="ListOrNULL",
-    parent="ANY",
-    default_settings="ListOrNULL",
-    default_colors="CharacterOrNULL",
-    chart_type="character"
+    parent="ANY"
   ),
   methods=list(
-    initialize = function(data_obj=NULL, datasource_name=NULL, parent=NULL,
-      datasource_obj_name=NULL, measurements=NULL, chart=NULL, chr=NULL,
-      start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
-      if (is.null(data_obj) && is.null(measurements))
-        stop("You must pass either data or measurements")
-
+    initialize=function(data=NULL, colors=NULL, settings=NULL, parent=NULL, ...) {
+      .self$data <- data
       .self$colors <- colors
 
-      chart_chr <- chr
-      chart_start <- start
-      chart_end <- end
-      chart_ms <- measurements
-
-      # if parent environment/navigation is provided,
-      # use its data manager, chr, start, and end
-      if (is.null(parent)) {
-        mgr <- EpivizChartDataMgr()
-
-      } else {
-        if (!is(parent, "EpivizEnvironment"))
-          stop("Parent must be an EpivizEnvironment or EpivizNavigation")
-
-        mgr <- parent$get_data_mgr()
-
-        parent_chr <- parent$get_chr()
-        if (!is.null(parent_chr)) chart_chr <- parent_chr
-
-        parent_st <- parent$get_start()
-        if (!is.null(parent_st)) chart_start <- parent_st
-
-        parent_end <- parent$get_end()
-        if (!is.null(parent_end)) chart_end <- parent_end
+      # override default settings
+      chart_settings <- .self$get_default_settings()
+      for (setting in names(settings)) {
+        if (setting %in% names(chart_settings))
+          chart_settings[[setting]] <- settings[[setting]]
       }
+
+      .self$settings <- chart_settings
       .self$parent <- parent
+      .self$set_class("charts")
+      .self$set_id(rand_id("chart"))
 
-      # register data ---------------------------
-      if (!is.null(data_obj)) {
-        ms_obj <- mgr$add_measurements(data_obj,
-          datasource_name=datasource_name,
-          datasource_obj_name=datasource_obj_name, ...)
-
-        chart_ms <- ms_obj$get_measurements()
-
-        if (!is.null(chart)) {
-          .self$chart_type <- chart
-        } else {
-          .self$chart_type <- ms_obj$get_default_chart_type()
-        }
-      } else {
-        # use measurements to plot data
-        ms_obj <- NULL
-
-        if (is.null(parent))
-          stop("You must pass a 'parent' when using measurements")
-
-        if (is.null(chart))
-          stop("You must pass 'chart' type when using measurements")
-
-        .self$chart_type <- chart
-      }
-
-      ms_obj_data <- mgr$get_data(measurements=chart_ms,
-        chr=chart_chr, start=chart_start, end=chart_end)
-
-      .self$data <- ms_obj_data$data
-
-      chart_defaults <- chart_default_settings_colors(
-        chart_type_to_tag_name(.self$chart_type))
-
-      .self$default_settings <- chart_defaults$settings
-      .self$default_colors <- chart_defaults$colors
-
-      .self$set_settings(settings)
-
-      if (is.null(datasource_name)) datasource_name <- "epivizChart"
-
-      # initialize  ---------------------------
-      callSuper(data_mgr=mgr,
-        name=chart_type_to_tag_name(.self$chart_type),
-        class="charts",
-        id=rand_id(datasource_name),
-        measurements=ms_obj_data$measurements,
-        chr=chart_chr,
-        start=chart_start,
-        end=chart_end)
-
-      # chart is appended at this point because id needs to be initialized
-      if (!is.null(parent)) parent$append_chart(.self)
-
-      invisible(.self)
+      callSuper(...)
     },
     get_data = function() {
       "Get chart data"
@@ -131,36 +55,19 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$data <- data
       invisible()
     },
-    set_default_colors = function(colors) {
-      "Set default chart colors"
-      .self$default_colors <- colors
-    },
-    set_default_settings = function(settings) {
-      "Set default chart settings"
-      .self$default_settings <- settings
-    },
     set_colors = function(colors) {
       "Set chart colors"
       .self$colors <- colors
     },
     set_settings = function(settings) {
       "Set chart settings"
-
-      if(is.null(.self$settings) || is.null(settings)) {
-        .self$settings <- lapply(.self$default_settings, function(name) {
-          name$defaultValue
-        })
-
-        names(.self$settings) <- sapply(.self$default_settings, function(name) {
-          name$id
-        })
+      # override default settings
+      chart_settings <- .self$get_settings()
+      for (setting in names(settings)) {
+        if (setting %in% names(chart_settings))
+          chart_settings[[setting]] <- settings[[setting]]
       }
-
-      if(!is.null(settings)) {
-        for(name in names(settings)) {
-          .self$settings[[name]] <- settings[[name]]
-        }
-      }
+      .self$settings <- chart_settings
     },
     get_attributes = function() {
       "Get attributes for rendering chart. Fields that need to be in JSON
@@ -212,7 +119,8 @@ EpivizChart <- setRefClass("EpivizChart",
       invisible(.self)
     },
     get_available_settings = function() {
-      print(.settings_as_df(.self$default_settings))
+      chart_defaults <- chart_default_settings_colors(.self$get_name())
+      print(.settings_as_df(chart_defaults$settings))
     }
   )
 )

@@ -16,30 +16,25 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #' @importFrom methods new
 EpivizPolymer <- setRefClass("EpivizPolymer",
   fields=list(
-    data_mgr="ANY",
+    data_mgr="EpivizChartDataMgr",
     name="character",
     class="CharacterOrNULL",
     id="CharacterOrNULL",
     measurements="ListOrNULL",
     chr="CharacterOrNULL",
     start="NumericOrNULL",
-    end="NumericOrNULL"
+    end="NumericOrNULL",
+    dependencies="ANY"
   ),
   methods=list(
-    initialize = function(data_mgr=NULL, name=NULL, class=NULL,
-      id=NULL, measurements=NULL, chr=NULL, start=NULL, end=NULL) {
-      if (is.null(data_mgr)) {
-        .self$data_mgr <- EpivizChartDataMgr()
-      } else {
-        .self$data_mgr <- data_mgr
-      }
-      .self$name <- name
-      .self$class <- class
-      .self$id <- id
+    initialize = function(data_mgr=NULL, measurements=NULL,
+      chr=NULL, start=NULL, end=NULL) {
+      .self$data_mgr <- data_mgr
       .self$measurements <- measurements
       .self$chr <- chr
       .self$start <- start
       .self$end <- end
+      .self$dependencies <- .self$get_dependencies()
 
       invisible(.self)
     },
@@ -123,7 +118,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
       if (isTRUE(getOption('knitr.in.progress'))) {
         knitr::knit_print(attachDependencies(.self$renderChart(),
-            c(chart_dependencies(knitr=TRUE))))
+          .self$get_dependencies(knitr=TRUE)))
 
       } else {
         # temporary directory for output
@@ -133,9 +128,11 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         # output file
         index_html <- file.path(tmp_dir, "index.html")
 
+        # environement get_deps will have to iterate through all charts and resolve dependencies.
+
         # save file
         save_html(attachDependencies(.self$renderChart(),
-          c(chart_dependencies())), file=index_html)
+          .self$get_dependencies()), file=index_html)
 
         # view
         viewer <- getOption("viewer", utils::browseURL)
@@ -143,6 +140,25 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
         invisible()
       }
+    },
+    get_dependencies=function(knitr=FALSE) {
+      polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
+
+      if(!knitr) {
+        polymer_lib = "lib/epiviz-charts-1/epiviz-charts.html"
+      }
+
+      list(webcomponents=htmlDependency(
+        name="webcomponents",
+        version="0.7.24",
+        src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
+        script="webcomponents-lite.js"),
+        polymer=htmlDependency(
+          name="epiviz-charts",
+          version="1",
+          head = paste0("<link rel='import' href='",  polymer_lib, "'>"),
+          src=system.file(package = "epivizrChart", "www", "lib/polymer"))
+      )
     }
   )
 )
