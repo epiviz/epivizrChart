@@ -28,7 +28,7 @@ data(tcga_colon_expression)
 data(apColonData)
 ```
 
-# Create a Epiviz Chart
+# Create an Epiviz Chart
 
 We can visualize a R/Bioconductor data object by creating an `EpivizChart` object. The chart type is inferred
 from the data object. We can filter data to a genomic region using the `chr`, `start` and `end` parameters.
@@ -163,7 +163,7 @@ Render the Environment and all its charts.
 epivizEnv
 ```
 
-# Navigate the genome
+# Navigate the Genome
 
 We can navigate to another location on the genome using the `navigate` method. This will update the data for all the charts in the environment.
 ```{r}
@@ -209,7 +209,7 @@ epivizEnv
 ```
 
 
-# Remove charts
+# Remove Charts
 
 To remove all the charts from an environment or navigation element, we can use the `remove_all_charts` methods.
 
@@ -217,7 +217,7 @@ To remove all the charts from an environment or navigation element, we can use t
 epivizEnv$remove_all_charts()
 ```
 
-# Create Charts with settings and colors
+# Create Charts with Settings and Colors
 
 ```{r}
 colors <- brewer.pal(3, "Dark2")
