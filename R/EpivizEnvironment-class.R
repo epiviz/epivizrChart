@@ -9,7 +9,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     charts="list"
   ),
   methods=list(
-    initialize = function(name="epiviz-environment", ...) {
+    initialize = function(...) {
       .self$set_name("epiviz-environment")
       .self$charts <- list()
 
@@ -23,6 +23,13 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       .self$charts[[chart$get_id()]] <- chart
 
       invisible(.self)
+    },
+    plot = function (...) {
+      "Initialize an EpivizChart and append to environment"
+      chart <- epivizChart(parent=.self, ...)
+      .self$append_chart(chart)
+
+      invisible(chart)
     },
     remove_chart = function(chart) {
       "Remove chart from environment"
