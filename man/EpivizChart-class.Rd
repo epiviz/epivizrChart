@@ -50,6 +50,11 @@ Data container for an Epiviz chart component.
 
 \item{\code{set_data(data)}}{Set chart data}
 
-\item{\code{set_settings(settings)}}{Set chart settings}
+\item{\code{set_settings(settings)}}{Modify current settings
+\describe{
+  \item{settings}{List of new settings.
+    Call get_available_settings for settings available to modify.
+  }
+}}
 }}
 

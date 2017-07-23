@@ -5,18 +5,18 @@
 EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-genes-track")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("GenesTrack")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -26,7 +26,7 @@ EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
         marginRight=10
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#f9a65a",
         "#599ad3",
@@ -48,18 +48,18 @@ EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
 EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-blocks-track")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("BlocksTrack")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -71,7 +71,7 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
         blockColorBy="colLabel"
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#f9a65a",
         "#599ad3",
@@ -93,18 +93,18 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
 EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-heatmap-plot")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("HeatmapPlot")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -126,7 +126,7 @@ EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
         showDendrogram=TRUE
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#1859a9",
         "#ed2d2e",
@@ -149,18 +149,18 @@ EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
 EpivizLinePlot <- setRefClass("EpivizLinePlot",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-line-plot")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("LinePlot")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -182,7 +182,7 @@ EpivizLinePlot <- setRefClass("EpivizLinePlot",
         abLine="default"
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#393b79",
         "#5254a3",
@@ -217,18 +217,18 @@ EpivizLinePlot <- setRefClass("EpivizLinePlot",
 EpivizLineTrack <- setRefClass("EpivizLineTrack",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-line-track")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("LineTrack")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -249,7 +249,7 @@ EpivizLineTrack <- setRefClass("EpivizLineTrack",
         abLine="default"
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#1859a9",
         "#ed2d2e",
@@ -272,18 +272,18 @@ EpivizLineTrack <- setRefClass("EpivizLineTrack",
 EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-scatter-plot")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("ScatterPlot")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -300,7 +300,7 @@ EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
         abLine="default"
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#1f77b4",
         "#ff7f0e",
@@ -325,18 +325,18 @@ EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
 EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-stacked-line-plot")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("StackedLinePlot")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -354,7 +354,7 @@ EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
         hoverOpacity=.06
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#393b79",
         "#5254a3",
@@ -389,18 +389,18 @@ EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
 EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
   contains="EpivizChart",
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       callSuper(...)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-json-stacked-line-track")
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       return("StackedLineTrack")
     },
-    get_default_settings = function() {
+    get_default_settings=function() {
       "Get default settings"
       list(
         title="",
@@ -415,7 +415,7 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
         abLine="default"
       )
     },
-    get_default_colors = function() {
+    get_default_colors=function() {
       "Get default colors"
       c("#1f77b4",
         "#ff7f0e",

@@ -17,76 +17,80 @@ EpivizChart <- setRefClass("EpivizChart",
     parent="EpivizEnvOrNULL"
   ),
   methods=list(
-    initialize=function(data=NULL, colors=NULL, settings=NULL, parent=NULL, ...) {
+    initialize=function(data=NULL, colors=NULL,
+      settings=NULL, parent=NULL, ...) {
       .self$data <- data
+
       .self$colors <- .self$get_default_colors()
       .self$set_colors(colors)
 
-      # override default settings
-      chart_settings <- .self$get_default_settings()
-      for (setting in names(settings)) {
-        if (setting %in% names(chart_settings))
-          chart_settings[[setting]] <- settings[[setting]]
-      }
+      .self$settings <- .self$get_default_settings()
+      .self$set_settings(settings)
 
-      .self$settings <- chart_settings
       .self$parent <- parent
       .self$set_class("charts")
       .self$set_id(rand_id(.self$get_chart_type()))
 
       callSuper(...)
     },
-    get_data = function() {
+    get_data=function() {
       "Get chart data"
       .self$data
     },
-    get_colors = function() {
+    get_colors=function() {
       "Get chart colors"
       .self$colors
     },
-    get_settings = function() {
+    get_settings=function() {
       "Get chart settings"
       .self$settings
     },
-    get_chart_type = function() {
+    get_chart_type=function() {
       "Get chart type"
       .self$chart_type
     },
-    set_data = function(data) {
+    set_data=function(data) {
       "Set chart data"
       .self$data <- data
       invisible()
     },
-    set_colors = function(colors) {
+    set_colors=function(colors) {
       "Set chart colors"
       .self$colors[seq_len(length(colors))] <- colors
+      invisible()
     },
-    set_settings = function(settings) {
-      "Set chart settings"
-      # override settings
+    set_settings=function(settings) {
+      "Modify current settings
+      \\describe{
+        \\item{settings}{List of new settings.
+          Call get_available_settings for settings available to modify.
+        }
+      }"
       chart_settings <- .self$get_settings()
       for (setting in names(settings)) {
         if (setting %in% names(chart_settings))
           chart_settings[[setting]] <- settings[[setting]]
       }
       .self$settings <- chart_settings
+
+      invisible()
     },
-    get_parent = function() {
+    get_parent=function() {
       "Get parent"
       .self$parent
     },
-    get_attributes = function() {
+    get_attributes=function() {
       "Get attributes for rendering chart"
       c(list(data=json_writer(.self$data),
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
         callSuper())
     },
-    renderChart = function() {
+    renderChart=function() {
       "Render to html"
       tag(.self$name, .self$get_attributes())
     },
-    # revisualize = function(chart_type) {
+    # revisualize=function(chart_type) {
     #   "Revisualize chart as the given chart type
     #   \\describe{
     #     \\item{chart_type}{The type of chart to be visualized
@@ -95,7 +99,7 @@ EpivizChart <- setRefClass("EpivizChart",
     #   }"
     #   TODO
     # },
-    navigate = function(chr, start, end) {
+    navigate=function(chr, start, end) {
       "Navigate chart to a genomic location
       \\describe{
         \\item{chr}{Chromosome}
@@ -112,7 +116,7 @@ EpivizChart <- setRefClass("EpivizChart",
 
       invisible(.self)
     },
-    get_available_settings = function() {
+    get_available_settings=function() {
       "Get available settings"
       chart_defaults <- chart_default_settings_colors(
         .self$get_chart_type())

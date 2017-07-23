@@ -9,19 +9,19 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     charts="list"
   ),
   methods=list(
-    initialize = function(...) {
+    initialize=function(...) {
       .self$charts <- list()
 
       callSuper(...)
     },
-    plot = function (...) {
+    plot=function(...) {
       "Plot an EpivizChart within the environment
        \\describe{
         \\item{...}{Arguments for epivizChart}
       }"
       epivizChart(parent=.self, ...)
     },
-    append_chart = function(chart) {
+    append_chart=function(chart) {
       "Append chart or navigation to environment"
       if (!is(chart, "EpivizPolymer"))
         stop(chart, " must be an EpivizPolymer object")
@@ -30,7 +30,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    remove_chart = function(chart) {
+    remove_chart=function(chart) {
       "Remove chart from environment"
       if (!is(chart, "EpivizPolymer"))
         stop(chart, " must be an EpivizPolymer object")
@@ -43,36 +43,36 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    remove_all_charts = function() {
+    remove_all_charts=function() {
       "Remove all charts from environment"
       for (chart in .self$charts)
         .self$remove_chart(chart)
 
       invisible(.self)
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-environment")
     },
-    get_attributes = function() {
+    get_attributes=function() {
       "Get attributes for rendering chart"
       c(callSuper())
     },
-    get_charts = function() {
+    get_charts=function() {
       "Get charts within environment"
       .self$charts
     },
-    set_charts = function(charts) {
+    set_charts=function(charts) {
       "Set charts of environment"
       .self$charts <- charts
     },
-    renderChart = function() {
+    renderChart=function() {
       "Render to html"
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
         list=lapply(.self$charts, function(chart) chart$renderChart())
       )
     },
-    navigate = function(chr=NULL, start=NULL, end=NULL) {
+    navigate=function(chr=NULL, start=NULL, end=NULL) {
       "Navigate environment to genomic location
       \\describe{
         \\item{chr}{Chromosome}
@@ -87,7 +87,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         chart$navigate(chr, start, end)
       }
     },
-    order_charts = function(ordered_charts) {
+    order_charts=function(ordered_charts) {
       "Order the charts within an environment
       \\describe{
       \\item{charts}{An ordered list of EpivizPolymer objects}
@@ -106,7 +106,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       names(ordered_charts) <- chart_ids
       .self$set_charts(ordered_charts)
     },
-    init_region = function(chr=NULL, start=NULL, end=NULL) {
+    init_region=function(chr=NULL, start=NULL, end=NULL) {
       "Initialize navigation based on a genomic region
       \\describe{
         \\item{chr}{Chromosome}
@@ -118,7 +118,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(nav)
     },
-    init_regions = function(regions) {
+    init_regions=function(regions) {
       "Initialize navigations based on a genomic regions
       \\describe{
         \\item{regions}{List of named lists of genomic locations, e.g.,
@@ -133,7 +133,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
-    add_data = function(...) {
+    add_data=function(...) {
       "Add data to environment's data manager
       \\describe{
         \\item{...}{Arguments for add_measurements and register, e.g., data,

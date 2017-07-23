@@ -8,12 +8,12 @@
 EpivizNavigation <- setRefClass("EpivizNavigation",
   contains="EpivizEnvironment",
   fields=list(
-    gene = "CharacterOrNULL",
-    geneInRange = "CharacterOrNULL",
+    gene="CharacterOrNULL",
+    geneInRange="CharacterOrNULL",
     parent="EpivizEnvOrNULL"
   ),
   methods=list(
-    initialize = function(gene=NULL, geneInRange=NULL, parent=NULL,
+    initialize=function(gene=NULL, geneInRange=NULL, parent=NULL,
       chr=NULL, start=NULL, end=NULL, ...) {
       .self$gene <- gene
       .self$geneInRange <- geneInRange
@@ -29,33 +29,33 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
 
       callSuper(chr=chr, start=start, end=end,...)
     },
-    set_gene = function(gene) {
+    set_gene=function(gene) {
       "Set gene"
       .self$gene <- gene
       invisible()
     },
-    set_geneInRange = function(gene) {
+    set_geneInRange=function(gene) {
       "Set step ratio"
       .self$geneInRange <- gene
       invisible()
     },
-    get_name = function() {
+    get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-navigation")
     },
-    get_gene = function() {
+    get_gene=function() {
       "Get gene"
       .self$gene
     },
-    get_geneInRange = function() {
+    get_geneInRange=function() {
       "Get gene in range"
       .self$geneInRange
     },
-    get_attributes = function() {
+    get_attributes=function() {
       "Get attributes for rendering chart"
       c(list(gene=.self$gene, geneInRange=.self$geneInRange), callSuper())
     },
-    clone_charts = function(charts) {
+    clone_charts=function(charts) {
       "Clone EpivizCharts and append to navigation. Each chart must already
       exist in the navigation's data manager, otherwise an error will occur
       when attempting to intialize using their measurements

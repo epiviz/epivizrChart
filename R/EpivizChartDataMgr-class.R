@@ -7,7 +7,7 @@
 #' @import epivizrData
 #' @importFrom methods new
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
-  fields = list(
+  fields=list(
     .ms_list="environment",
     .ms_idCounter="integer"
   ),
@@ -16,7 +16,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       .self$.ms_list <- new.env(parent=emptyenv())
       .self$.ms_idCounter <- 0L
     },
-    add_measurements = function(obj, datasource_name=NULL,
+    add_measurements=function(obj, datasource_name=NULL,
       datasource_obj_name=deparse(substitute(obj)), ...) {
       "Register measurements in data manager"
       if (is.null(datasource_name))
@@ -44,7 +44,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
 
       ms_object
     },
-    rm_measurements = function(ms_obj_or_id) {
+    rm_measurements=function(ms_obj_or_id) {
       "Remove registered measurements from a given data object"
       ms_obj <- .get_ms_object(ms_obj_or_id)
 
@@ -60,7 +60,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
 
       invisible()
     },
-    rm_all_measurements = function() {
+    rm_all_measurements=function() {
       "Remove all registered measurements"
       ids <- ls(.self$.ms_list)
       if (length(ids)>0) {
@@ -69,7 +69,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
         }
       }
     },
-    .get_ms_object = function(ms_obj_or_id) {
+    .get_ms_object=function(ms_obj_or_id) {
       ms_obj <- NULL
       if (is.character(ms_obj_or_id)) {
         # passed the id instead of the object
@@ -83,7 +83,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
       ms_obj
     },
-    get_data = function(measurements, chr=NULL, start=NULL, end=NULL) {
+    get_data=function(measurements, chr=NULL, start=NULL, end=NULL) {
       "Get data from data mgr based on measurements, chr, start, and end
       \\describe{
         \\item{measurements}{List of EpivizMeasurements}

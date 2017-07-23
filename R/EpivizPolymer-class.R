@@ -26,7 +26,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     end="NumericOrNULL"
   ),
   methods=list(
-    initialize = function(data_mgr=EpivizChartDataMgr(),
+    initialize=function(data_mgr=EpivizChartDataMgr(),
       measurements=NULL, chr=NULL, start=NULL, end=NULL) {
       .self$data_mgr <- data_mgr
       .self$name <- .self$get_name()
@@ -37,74 +37,74 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
       invisible(.self)
     },
-    get_data_mgr = function() {
+    get_data_mgr=function() {
       "Get data manager"
       .self$data_mgr
     },
-    get_name = function() {
+    get_name=function() {
       "Get name"
       .self$name
     },
-    get_class = function() {
+    get_class=function() {
       "Get class"
       .self$class
     },
-    get_id = function() {
+    get_id=function() {
       "Get id"
       .self$id
     },
-    get_measurements = function() {
+    get_measurements=function() {
       "Get measurements"
       .self$measurements
     },
-    get_chr = function() {
+    get_chr=function() {
       "Get chromosome"
       .self$chr
     },
-    get_start = function() {
+    get_start=function() {
       "Get start"
       .self$start
     },
-    get_end = function() {
+    get_end=function() {
       "Get end"
       .self$end
     },
-    set_name = function(name) {
+    set_name=function(name) {
       "Set name"
       .self$name <- name
       invisible()
     },
-    set_class = function(class) {
+    set_class=function(class) {
       "Set chart class"
       .self$class <- class
       invisible()
     },
-    set_id = function(id) {
+    set_id=function(id) {
       "Set chart id"
       .self$id <- id
       invisible()
     },
-    set_measurements = function(ms) {
+    set_measurements=function(ms) {
       "Set measurements"
       .self$measurements <- ms
       invisible()
     },
-    set_chr = function(chr) {
+    set_chr=function(chr) {
       "Set the chromosome"
       .self$chr <- chr
       invisible()
     },
-    set_start = function(start) {
+    set_start=function(start) {
       "Set start"
       .self$start <- start
       invisible()
     },
-    set_end = function(end) {
+    set_end=function(end) {
       "Set end"
       .self$end <- end
       invisible()
     },
-    get_attributes = function() {
+    get_attributes=function() {
       "Get attributes for rendering chart"
       list(class=.self$class,
         id=.self$id,
@@ -113,8 +113,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         start=.self$start,
         end=.self$end)
     },
-    show = function() {
-
+    show=function() {
       if (isTRUE(getOption('knitr.in.progress'))) {
         knitr::knit_print(attachDependencies(.self$renderChart(),
           .self$get_dependencies(knitr=TRUE)))
@@ -138,23 +137,23 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         invisible()
       }
     },
-    get_dependencies = function(knitr=FALSE) {
-      polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
+    get_dependencies=function(knitr=FALSE) {
+      polymer_lib <- system.file(package="epivizrChart",
+        "www", "lib/polymer/", "epiviz-charts.html")
 
       if(!knitr) {
-        polymer_lib = "lib/epiviz-charts-1/epiviz-charts.html"
+        polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
       }
 
       list(webcomponents=htmlDependency(
         name="webcomponents",
         version="0.7.24",
-        src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
+        src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
         script="webcomponents-lite.js"),
-        polymer=htmlDependency(
-          name="epiviz-charts",
+        polymer=htmlDependency(name="epiviz-charts",
           version="1",
-          head = paste0("<link rel='import' href='",  polymer_lib, "'>"),
-          src=system.file(package = "epivizrChart", "www", "lib/polymer"))
+          head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
+          src=system.file(package="epivizrChart", "www", "lib/polymer"))
       )
     }
   )
