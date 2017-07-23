@@ -4,9 +4,9 @@
 \name{EpivizPolymer-class}
 \alias{EpivizPolymer-class}
 \alias{EpivizPolymer}
-\title{Data container for an epiviz web component.}
+\title{Data container for an Epiviz web component.}
 \description{
-Data container for an epiviz web component.
+Data container for an Epiviz web component.
 }
 \section{Fields}{
 

@@ -1,7 +1,7 @@
 setClassUnion("CharacterOrNULL", c("character", "NULL"))
 setClassUnion("NumericOrNULL", c("numeric", "NULL"))
 setClassUnion("ListOrNULL", c("list", "NULL"))
-#' Data container for an epiviz web component.
+#' Data container for an Epiviz web component.
 #'
 #' @field data_mgr \code{\link[epivizrChart]{EpivizChartDataMgr}}
 #' @field name (character) Epiviz chart type (tag name).
@@ -145,15 +145,18 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
       }
 
-      list(webcomponents=htmlDependency(
-        name="webcomponents",
-        version="0.7.24",
-        src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
-        script="webcomponents-lite.js"),
-        polymer=htmlDependency(name="epiviz-charts",
+      list(
+        webcomponents=htmlDependency(
+          name="webcomponents",
+          version="0.7.24",
+          src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
+          script="webcomponents-lite.js"),
+        polymer=htmlDependency(
+          name="epiviz-charts",
           version="1",
           head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"))
+          src=system.file(package="epivizrChart", "www", "lib/polymer"),
+          all_files=TRUE)
       )
     }
   )

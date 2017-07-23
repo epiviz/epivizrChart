@@ -8,7 +8,7 @@
 #' @param chr The chromosome to filter on, e.g., chr="chr11".
 #' @param start The start location, e.g., start=110800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param settings List of settings, e.g., list(tite="Blocks Chart"). When chart is rendered to html this will be converted to a string encoded as JSON.
+#' @param settings List of settings, e.g., list(title="Blocks Chart").
 #' @param colors List of colors. When chart is rendered to html this will be converted to a string encoded as JSON
 #' @param ... Additional arguments passed to \code{\link[epivizrData]{register}}, e.g., type="bp", columns=c("normal, cancer").
 #' @return An object of class \code{\link[epivizrChart]{EpivizChart}}.

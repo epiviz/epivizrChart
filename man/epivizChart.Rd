@@ -25,7 +25,7 @@ epivizChart(data_obj = NULL, measurements = NULL, datasource_name = NULL,
 
 \item{end}{The end location, e.g., end=130383180.}
 
-\item{settings}{List of settings, e.g., list(tite="Blocks Chart"). When chart is rendered to html this will be converted to a string encoded as JSON.}
+\item{settings}{List of settings, e.g., list(title="Blocks Chart").}
 
 \item{colors}{List of colors. When chart is rendered to html this will be converted to a string encoded as JSON}
 
