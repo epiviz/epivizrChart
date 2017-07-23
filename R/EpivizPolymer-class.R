@@ -26,10 +26,12 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     end="NumericOrNULL"
   ),
   methods=list(
-    initialize=function(data_mgr=EpivizChartDataMgr(),
+    initialize=function(data_mgr=EpivizChartDataMgr(), class=NULL,
       measurements=NULL, chr=NULL, start=NULL, end=NULL) {
       .self$data_mgr <- data_mgr
       .self$name <- .self$get_name()
+      .self$class <- class
+      .self$id <- rand_id(.self$get_chart_type())
       .self$measurements <- measurements
       .self$chr <- chr
       .self$start <- start

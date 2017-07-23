@@ -24,10 +24,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
         stop("EpivizNavigation must have a region: chr, start, and end")
       }
 
-      .self$set_class("charts")
-      .self$set_id(rand_id("EpivizNav"))
-
-      callSuper(chr=chr, start=start, end=end,...)
+      callSuper(chr=chr, start=start, end=end, class="charts", ...)
     },
     set_gene=function(gene) {
       "Set gene"
@@ -42,6 +39,10 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
     get_name=function() {
       "Get name of Epiviz Web Component"
       return("epiviz-navigation")
+    },
+    get_chart_type=function() {
+      "Get chart type"
+      return("EpivizNavigation")
     },
     get_gene=function() {
       "Get gene"

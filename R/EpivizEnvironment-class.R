@@ -54,9 +54,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Get name of Epiviz Web Component"
       return("epiviz-environment")
     },
-    get_attributes=function() {
-      "Get attributes for rendering chart"
-      c(callSuper())
+    get_chart_type=function() {
+      "Get chart type"
+      return("EpivizEnvironment")
     },
     get_charts=function() {
       "Get charts within environment"

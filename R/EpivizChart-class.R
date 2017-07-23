@@ -28,10 +28,8 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_settings(settings)
 
       .self$parent <- parent
-      .self$set_class("charts")
-      .self$set_id(rand_id(.self$get_chart_type()))
 
-      callSuper(...)
+      callSuper(class="charts", ...)
     },
     get_data=function() {
       "Get chart data"
