@@ -36,14 +36,15 @@ json_writer <- rjson::toJSON
 #' @return list of settings and colors
 #'
 chart_default_settings_colors <- function(chart_type) {
-  chart_settings_json <- json_parser(file=system.file("chart_defaults.JSON", package="epivizrChart"))
-  
-  if(!(json_chart_type %in% names(chart_settings_json))) {
-    stop(json_chart_type,
+  chart_settings_json <- json_parser(
+    file=system.file("chart_defaults.JSON", package="epivizrChart"))
+
+  if(!(chart_type %in% names(chart_settings_json))) {
+    stop(chart_type,
          " is not a valid chart type. See documentation for supported chart types")
   }
-  
-  chart_settings <- chart_settings_json[[json_chart_type]]
+
+  chart_settings <- chart_settings_json[[chart_type]]
   chart_settings
 }
 
