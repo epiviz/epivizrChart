@@ -74,21 +74,10 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
   ms_data <- data_mgr$get_data(measurements=measurements,
     chr=chr, start=start, end=end)
 
-  # initialize chart ----------------------------------------------------------
-  chart_generator <- switch(chart,
-    GenesTrack=EpivizGenesTrack,
-    BlocksTrack=EpivizBlocksTrack,
-    HeatmapPlot=EpivizHeatmapPlot,
-    LinePlot=EpivizLinePlot,
-    LineTrack=EpivizLineTrack,
-    ScatterPlot=EpivizScatterPlot,
-    StackedLinePlot=EpivizStackedLinePlot,
-    StackedLineTrack=EpivizStackedLineTrack,
-    stop(chart,  " is not a valid chart type.",
-      " See documentation for supported chart types")
-  )
-
-  epiviz_chart <- chart_generator(data_mgr=data_mgr,
+  # initialization ------------------------------------------------------------
+  epiviz_chart <- .initialize_chart(
+    chart_type=chart,
+    data_mgr=data_mgr,
     measurements=ms_data$measurements,
     data=ms_data$data,
     chr=chr,
@@ -102,6 +91,27 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 
   epiviz_chart
 }
+
+#' Initialize Epiviz Chart based on chart type
+#' @field chart_type Chart type.
+#' @field ... Arguments for \code{\link[epivizrChart]{EpivizChart}} objects.
+.initialize_chart <- function(chart_type, ...) {
+  epiviz_chart <- switch(chart_type,
+    GenesTrack=EpivizGenesTrack,
+    BlocksTrack=EpivizBlocksTrack,
+    HeatmapPlot=EpivizHeatmapPlot,
+    LinePlot=EpivizLinePlot,
+    LineTrack=EpivizLineTrack,
+    ScatterPlot=EpivizScatterPlot,
+    StackedLinePlot=EpivizStackedLinePlot,
+    StackedLineTrack=EpivizStackedLineTrack,
+    stop(chart,  " is not a valid chart type.",
+      " See documentation for supported chart types")
+  )
+
+  epiviz_chart(...)
+}
+
 
 #' Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.
 #'

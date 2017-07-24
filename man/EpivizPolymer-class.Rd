@@ -17,7 +17,7 @@ Data container for an Epiviz web component.
 
 \item{\code{class}}{(CharacterOrNULL) Epiviz chart's class attribute.}
 
-\item{\code{id}}{(CharacterOrNULL) Epiviz chart's id attribute.}
+\item{\code{id}}{(character) Epiviz chart's id attribute.}
 
 \item{\code{chr}}{(CharacterOrNULL) Chromosome location.}
 

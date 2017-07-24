@@ -6,7 +6,7 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #' @field data_mgr \code{\link[epivizrChart]{EpivizChartDataMgr}}
 #' @field name (character) Epiviz chart type (tag name).
 #' @field class (CharacterOrNULL) Epiviz chart's class attribute.
-#' @field id (CharacterOrNULL) Epiviz chart's id attribute.
+#' @field id (character) Epiviz chart's id attribute.
 #' @field chr (CharacterOrNULL) Chromosome location.
 #' @field start (NumericOrNULL) Start location.
 #' @field end (NumericOrNULL) End location.
@@ -19,7 +19,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     data_mgr="EpivizChartDataMgr",
     name="character",
     class="CharacterOrNULL",
-    id="CharacterOrNULL",
+    id="character",
     measurements="ListOrNULL",
     chr="CharacterOrNULL",
     start="NumericOrNULL",
@@ -27,11 +27,12 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
   ),
   methods=list(
     initialize=function(data_mgr=EpivizChartDataMgr(), class=NULL,
-      measurements=NULL, chr=NULL, start=NULL, end=NULL) {
+      id=rand_id(.self$get_chart_type()), measurements=NULL,
+      chr=NULL, start=NULL, end=NULL) {
       .self$data_mgr <- data_mgr
       .self$name <- .self$get_name()
       .self$class <- class
-      .self$id <- rand_id(.self$get_chart_type())
+      .self$id <- id
       .self$measurements <- measurements
       .self$chr <- chr
       .self$start <- start

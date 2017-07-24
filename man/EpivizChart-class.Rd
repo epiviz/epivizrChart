@@ -46,6 +46,13 @@ Data container for an Epiviz chart component.
 
 \item{\code{renderChart()}}{Render to html}
 
+\item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type
+\describe{
+  \item{chart_type}{The type of chart to be visualized
+  (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
+  StackedLinePlot, StackedLineTrack)}
+}}
+
 \item{\code{set_colors(colors)}}{Set chart colors}
 
 \item{\code{set_data(data)}}{Set chart data}

@@ -30,6 +30,8 @@ navigation's data manager }}}
 
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
+\item{\code{get_chart_type()}}{Get chart type}
+
 \item{\code{get_gene()}}{Get gene}
 
 \item{\code{get_geneInRange()}}{Get gene in range}

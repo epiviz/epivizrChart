@@ -88,15 +88,30 @@ EpivizChart <- setRefClass("EpivizChart",
       "Render to html"
       tag(.self$name, .self$get_attributes())
     },
-    # revisualize=function(chart_type) {
-    #   "Revisualize chart as the given chart type
-    #   \\describe{
-    #     \\item{chart_type}{The type of chart to be visualized
-    #     (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
-    #     StackedLinePlot, StackedLineTrack)}
-    #   }"
-    #   TODO
-    # },
+     revisualize=function(chart_type) {
+       "Revisualize chart as the given chart type
+       \\describe{
+         \\item{chart_type}{The type of chart to be visualized
+         (BlocksTrack, HeatmapPlot, LinePlot, LineTrack, ScatterPlot,
+         StackedLinePlot, StackedLineTrack)}
+       }"
+       epiviz_chart <- .initialize_chart(
+         chart_type=chart_type,
+         data_mgr=.self$get_data_mgr(),
+         measurements=.self$get_measurements(),
+         data=.self$get_data(),
+         chr=.self$get_chr(),
+         start=.self$get_start(),
+         end=.self$get_end(),
+         settings=.self$get_settings(),
+         colors=.self$get_colors(),
+         parent=.self$get_parent())
+
+       if (!is.null(epiviz_chart$get_parent()))
+         parent$append_chart(epiviz_chart)
+
+       epiviz_chart
+     },
     navigate=function(chr, start, end) {
       "Navigate chart to a genomic location
       \\describe{
