@@ -123,7 +123,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
 
       } else {
         # temporary directory for output
-        tmp_dir <- tempfile(pattern=paste0(rand_id("epivizChart")))
+        tmp_dir <- tempfile(pattern=rand_id("epiviz"))
         dir.create(tmp_dir)
 
         # output file

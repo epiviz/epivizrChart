@@ -79,9 +79,9 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         \\item{start}{Start location}
         \\item{end}{End location}
       }"
-      .self$chr <- chr
-      .self$start <- start
-      .self$end <- end
+      .self$set_chr(chr)
+      .self$set_start(start)
+      .self$set_end(end)
 
       for (chart in .self$charts) {
         chart$navigate(chr, start, end)
@@ -104,7 +104,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       })
 
       names(ordered_charts) <- chart_ids
-      .self$set_charts(ordered_charts)
+      .self$charts <- ordered_charts
     },
     init_region=function(chr=NULL, start=NULL, end=NULL) {
       "Initialize navigation based on a genomic region
@@ -114,7 +114,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         \\item{chr}{End location}
       }"
       nav <- epivizNav(chr=chr, start=start, end=end, parent=.self)
-      nav$clone_charts(.self$get_charts())
+      nav$clone_charts(.self$charts)
 
       invisible(nav)
     },

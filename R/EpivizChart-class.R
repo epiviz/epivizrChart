@@ -64,7 +64,7 @@ EpivizChart <- setRefClass("EpivizChart",
           Call get_available_settings for settings available to modify.
         }
       }"
-      chart_settings <- .self$get_settings()
+      chart_settings <- .self$settings
       for (setting in names(settings)) {
         if (setting %in% names(chart_settings))
           chart_settings[[setting]] <- settings[[setting]]
@@ -86,7 +86,7 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     renderChart=function() {
       "Render to html"
-      tag(.self$name, .self$get_attributes())
+      tag(.self$get_name(), .self$get_attributes())
     },
      revisualize=function(chart_type) {
        "Revisualize chart as the given chart type
@@ -99,16 +99,16 @@ EpivizChart <- setRefClass("EpivizChart",
          chart_type=chart_type,
          data_mgr=.self$get_data_mgr(),
          measurements=.self$get_measurements(),
-         data=.self$get_data(),
+         data=.self$data,
          chr=.self$get_chr(),
          start=.self$get_start(),
          end=.self$get_end(),
-         settings=.self$get_settings(),
-         colors=.self$get_colors(),
-         parent=.self$get_parent())
+         settings=.self$settings,
+         colors=.self$colors,
+         parent=.self$parent)
 
-       if (!is.null(epiviz_chart$get_parent()))
-         parent$append_chart(epiviz_chart)
+       if (!is.null(.self$parent))
+         .self$parent$append_chart(epiviz_chart)
 
        epiviz_chart
      },
@@ -123,9 +123,11 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$set_start(start)
       .self$set_end(end)
 
-      ms_data <- .self$data_mgr$get_data(measurements=.self$get_measurements(),
-        chr=chr, start=start, end=end)$data
-      .self$set_data(ms_data)
+      ms_data <- .self$data_mgr$get_data(
+        measurements=.self$get_measurements(),
+        chr=chr, start=start, end=end)
+      
+      .self$data <- ms_data$data
 
       invisible(.self)
     },
