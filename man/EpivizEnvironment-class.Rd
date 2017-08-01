@@ -25,20 +25,20 @@ Data container for an Epiviz environment component.
 
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
-\item{\code{get_chart_type()}}{Get chart type}
-
 \item{\code{get_charts()}}{Get charts within environment}
+
+\item{\code{get_chart_type()}}{Get chart type}
 
 \item{\code{get_name()}}{Get name}
 
 \item{\code{init_region(chr = NULL, start = NULL, end = NULL)}}{Initialize navigation based on a genomic region
 \describe{
   \item{chr}{Chromosome}
-  \item{chr}{Start location}
-  \item{chr}{End location}
+  \item{start}{Start location}
+  \item{end}{End location}
 }}
 
-\item{\code{init_regions(regions)}}{Initialize navigations based on a genomic regions
+\item{\code{init_regions(regions)}}{Initialize navigations based on genomic regions
 \describe{
   \item{regions}{List of named lists of genomic locations, e.g.,
   list(list(chr='chr11', start=99800000, end=103383180))}

@@ -20,6 +20,7 @@
 #' blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=start, end=end)
 #' # See package vignette for more examples.
 #'
+#' @importFrom methods is
 #' @export
 epivizChart <- function(data_obj=NULL, measurements=NULL,
   datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,
@@ -105,7 +106,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     ScatterPlot=EpivizScatterPlot,
     StackedLinePlot=EpivizStackedLinePlot,
     StackedLineTrack=EpivizStackedLineTrack,
-    stop(chart,  " is not a valid chart type.",
+    stop(chart_type,  " is not a valid chart type.",
       " See documentation for supported chart types")
   )
 
@@ -125,6 +126,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 #' @examples
 #' epiviz <- epivizNav(chr="chr11", start=99800000, end=103383180)
 #'
+#' @importFrom methods is
 #' @export
 epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
   # use parent's data manager
@@ -156,7 +158,6 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
 #' @param chr The chromosome to filter on, e.g., chr="chr11"
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param initializeRegions List of gene names or regions to intialize navigations.
 #' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizPolymer}}
 #' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 #'
