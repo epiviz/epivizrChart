@@ -13,7 +13,8 @@ EpivizDataSource <- setRefClass("EpivizDataSource",
     provider_url="character"
   ),
   methods=list(
-    initialize=function(provider_type="", provider_id="", provider_url="", ...) {
+    initialize=function(provider_type="epiviz.data.WebsocketDataProvider",
+      provider_id=rand_id("epiviz"), provider_url="",...) {
       .self$provider_type <- provider_type
       .self$provider_id <- provider_id
       .self$provider_url <- provider_url

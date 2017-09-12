@@ -84,3 +84,39 @@ rand_id <- function(prefix="") {
 .constructURL <- function(host="localhost", port=7123L, path="") {
   sprintf("ws://%s:%d/%s", host, port, path)
 }
+
+
+#' (taken from epivizr) register epiviz actions
+#'
+.register_all_the_epiviz_things <- function(app) {
+  # register actions requested from epiviz app
+  app$server$register_action("getMeasurements", function(request_data) {
+    app$data_mgr$get_measurements()
+  })
+
+  app$server$register_action("getRows", function(request_data) {
+    app$data_mgr$get_rows(request_data$seqName,
+      request_data$start,
+      request_data$end,
+      request_data$metadata,
+      request_data$datasource)
+  })
+
+  app$server$register_action("getValues", function(request_data) {
+    app$data_mgr$get_values(request_data$seqName,
+      request_data$start,
+      request_data$end,
+      request_data$datasource,
+      request_data$measurement)
+  })
+
+  app$server$register_action("getSeqInfos", function(request_data) {
+    app$data_mgr$get_seqinfo()
+  })
+
+  app$server$register_action("setChartSettings", function(request_data) {
+    app$chart_mgr$.update_chart_settings(request_data)
+  })
+
+  ## TODO: register action 'search'
+}

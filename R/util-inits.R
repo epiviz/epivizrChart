@@ -188,21 +188,29 @@ epivizDS <- function(type, p_id, url, ...) {
 
 #' Initialize an \code{\link[epivizrChart]{EpivizApp}} app.
 #'
-#' @param TODO
+#' @param register_function
 #' @param ... Additional params to pass to \code{\link[epivizrServerChart]{EpivizServer}}
 #' @return An object of class \code{\link[epivizrChart]{EpivizApp}}
 #'
 #' @examples
 #'
 #' @export
-epiviz <- function(...) {
-  srv <- epivizrServer::createServer(...)
-  # register functions here
-  srv$start_server()
+epiviz <- function(register_function=.register_all_the_epiviz_things, ...) {
+  server <- epivizrServer::createServer(...)
+  data_mgr <- epivizrData::createMgr(server)
+  server$start_server() # move this out
 
-  url <- .constructURL(port=srv$.port)
-  ds <- EpivizDataSource(provider_type="epiviz.data.WebsocketDataProvider",
-    provider_id=rand_id("EpivizApp"), provider_url=url)
+  url <- .constructURL(port=server$.port)
 
-  EpivizApp(server=srv, epiviz_data_source=ds)
+  ds <- EpivizDataSource(
+    provider_type="epiviz.data.WebsocketDataProvider",
+    provider_id=rand_id("EpivizApp"),
+    provider_url=url
+  )
+
+  app <- EpivizApp(server=server, epiviz_data_source=ds, data_mgr=data_mgr)
+
+  register_function(app)
+
+  app
 }
