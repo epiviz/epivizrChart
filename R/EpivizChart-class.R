@@ -11,7 +11,7 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #' @import htmltools
 #' @importFrom methods new
 EpivizChart <- setRefClass("EpivizChart",
-  contains="EpivizPolymer",
+  contains="EpivizViewComponent",
   fields=list(
     data="list",
     colors="CharacterOrNULL",
@@ -80,13 +80,13 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$parent
     },
     get_attributes=function() {
-      "Get attributes for rendering chart"
+      "Get attributes for rendering component"
       c(list(data=json_writer(.self$data),
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
         callSuper())
     },
-    renderChart=function() {
+    render_component=function() {
       "Render to html"
       tag(.self$get_name(), .self$get_attributes())
     },
@@ -128,7 +128,7 @@ EpivizChart <- setRefClass("EpivizChart",
       ms_data <- .self$data_mgr$get_data(
         measurements=.self$get_measurements(),
         chr=chr, start=start, end=end)
-      
+
       .self$data <- ms_data$data
 
       invisible(.self)

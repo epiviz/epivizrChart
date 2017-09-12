@@ -12,8 +12,8 @@ EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
       "Get name of Epiviz Web Component"
       return("epiviz-json-genes-track")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("GenesTrack")
     },
     get_default_settings=function() {
@@ -55,8 +55,8 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
       "Get name of Epiviz Web Component"
       return("epiviz-json-blocks-track")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("BlocksTrack")
     },
     get_default_settings=function() {
@@ -100,8 +100,8 @@ EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
       "Get name of Epiviz Web Component"
       return("epiviz-json-heatmap-plot")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("HeatmapPlot")
     },
     get_default_settings=function() {
@@ -156,8 +156,8 @@ EpivizLinePlot <- setRefClass("EpivizLinePlot",
       "Get name of Epiviz Web Component"
       return("epiviz-json-line-plot")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("LinePlot")
     },
     get_default_settings=function() {
@@ -224,8 +224,8 @@ EpivizLineTrack <- setRefClass("EpivizLineTrack",
       "Get name of Epiviz Web Component"
       return("epiviz-json-line-track")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("LineTrack")
     },
     get_default_settings=function() {
@@ -279,8 +279,8 @@ EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
       "Get name of Epiviz Web Component"
       return("epiviz-json-scatter-plot")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("ScatterPlot")
     },
     get_default_settings=function() {
@@ -332,8 +332,8 @@ EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
       "Get name of Epiviz Web Component"
       return("epiviz-json-stacked-line-plot")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("StackedLinePlot")
     },
     get_default_settings=function() {
@@ -396,8 +396,8 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
       "Get name of Epiviz Web Component"
       return("epiviz-json-stacked-line-track")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("StackedLineTrack")
     },
     get_default_settings=function() {

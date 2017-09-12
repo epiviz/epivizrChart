@@ -40,8 +40,8 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       "Get name of Epiviz Web Component"
       return("epiviz-navigation")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("EpivizNavigation")
     },
     get_gene=function() {
