@@ -16,6 +16,7 @@ Description: This package provides an API for interactive visualization of genom
     documents or can be visualized in the R Studio's default viewer.
 Imports:
     epivizrData (>= 1.5.1),
+    epivizrServer,
     htmltools,
     rjson,
     methods
@@ -34,15 +35,17 @@ Suggests:
     BiocStyle,
     Homo.sapiens
 Collate:
+  'utils.R'
   'EpivizChartDataMgr-class.R'
-  'EpivizPolymer-class.R'
+  'EpivizWebComponent-class.R' 
+  'EpivizViewComponent-class.R'
   'EpivizEnvironment-class.R'
   'EpivizChart-class.R'
   'EpivizNavigation-class.R'
   'EpivizCharts-classes.R'
   'EpivizDataSource-class.R'
+  'EpivizApp-class.R'
   'vignette_data.R'
-  'utils.R'
   'util-inits.R'
 VignetteBuilder: knitr
 Depends: R (>= 3.4.0)

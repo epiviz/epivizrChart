@@ -4,7 +4,7 @@
 #' @import htmltools
 #' @importFrom methods new
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
-  contains="EpivizPolymer",
+  contains="EpivizViewComponent",
   fields=list(
     charts="list"
   ),
@@ -54,8 +54,8 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Get name of Epiviz Web Component"
       return("epiviz-environment")
     },
-    get_chart_type=function() {
-      "Get chart type"
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
       return("EpivizEnvironment")
     },
     get_charts=function() {
@@ -66,10 +66,10 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Set charts of environment"
       .self$charts <- charts
     },
-    renderChart=function() {
+    render_component=function() {
       "Render to html"
       tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
-        list=lapply(.self$charts, function(chart) chart$renderChart())
+        list=lapply(.self$charts, function(chart) chart$render_component())
       )
     },
     navigate=function(chr=NULL, start=NULL, end=NULL) {
