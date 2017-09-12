@@ -44,7 +44,7 @@ Data container for an Epiviz chart component.
   \item{end}{End location}
 }}
 
-\item{\code{renderChart()}}{Render to html}
+\item{\code{render_component()}}{Render to html}
 
 \item{\code{revisualize(chart_type)}}{Revisualize chart as the given chart type
 \describe{

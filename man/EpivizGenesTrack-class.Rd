@@ -11,12 +11,12 @@ Data container for an Epiviz Genes Track.
 \section{Methods}{
 
 \describe{
-\item{\code{get_chart_type()}}{Get chart type}
+\item{\code{get_component_type()}}{Get component type for prefix of random id generator}
 
 \item{\code{get_default_colors()}}{Get default colors}
 
 \item{\code{get_default_settings()}}{Get default settings}
 
-\item{\code{get_name()}}{Get name}
+\item{\code{get_name()}}{Get name of Epiviz Web Component}
 }}
 

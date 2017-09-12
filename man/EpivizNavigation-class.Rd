@@ -30,7 +30,7 @@ navigation's data manager }}}
 
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
-\item{\code{get_chart_type()}}{Get chart type}
+\item{\code{get_component_type()}}{Get component type for prefix of random id generator}
 
 \item{\code{get_gene()}}{Get gene}
 

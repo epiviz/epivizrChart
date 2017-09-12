@@ -25,11 +25,11 @@ Data container for an Epiviz environment component.
 
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
-\item{\code{get_chart_type()}}{Get chart type}
-
 \item{\code{get_charts()}}{Get charts within environment}
 
-\item{\code{get_name()}}{Get name}
+\item{\code{get_component_type()}}{Get component type for prefix of random id generator}
+
+\item{\code{get_name()}}{Get name of Epiviz Web Component}
 
 \item{\code{init_region(chr = NULL, start = NULL, end = NULL)}}{Initialize navigation based on a genomic region
 \describe{
@@ -65,7 +65,7 @@ Data container for an Epiviz environment component.
 
 \item{\code{remove_chart(chart)}}{Remove chart from environment}
 
-\item{\code{renderChart()}}{Render to html}
+\item{\code{render_component()}}{Render to html}
 
 \item{\code{set_charts(charts)}}{Set charts of environment}
 }}

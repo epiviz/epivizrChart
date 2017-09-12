@@ -4,7 +4,7 @@
 \alias{epivizDS}
 \title{Initialize an \code{\link[epivizrChart]{EpivizDataSource}} object.}
 \usage{
-epivizDS(type = "", p_id = "", url = "", ...)
+epivizDS(type, p_id, url, ...)
 }
 \arguments{
 \item{type}{TODO}

@@ -11,12 +11,6 @@ Data container for an Epiviz Data Source component.
 \section{Fields}{
 
 \describe{
-\item{\code{name}}{(character) Epiviz Data Source (tag name).}
-
-\item{\code{class}}{(CharacterOrNULL) Epiviz chart's class attribute.}
-
-\item{\code{id}}{(character) Epiviz chart's id attribute.}
-
 \item{\code{provider_type}}{(character)}
 
 \item{\code{provider_id}}{(character)}
@@ -27,13 +21,11 @@ Data container for an Epiviz Data Source component.
 \section{Methods}{
 
 \describe{
-\item{\code{get_attributes()}}{Get attributes for rendering chart}
+\item{\code{get_attributes()}}{Get attributes for rendering web component}
 
-\item{\code{get_class()}}{Get class}
+\item{\code{get_component_type()}}{Get component type for prefix of random id generator}
 
-\item{\code{get_id()}}{Get id}
-
-\item{\code{get_name()}}{Get name}
+\item{\code{get_name()}}{Get name of Epiviz Web Component}
 
 \item{\code{get_provider_id()}}{Get provider id}
 
@@ -42,12 +34,6 @@ Data container for an Epiviz Data Source component.
 \item{\code{get_provider_url()}}{Get provider url}
 
 \item{\code{render_component()}}{Render to html}
-
-\item{\code{set_class(class)}}{Set chart class}
-
-\item{\code{set_id(id)}}{Set chart id}
-
-\item{\code{set_name(name)}}{Set name}
 
 \item{\code{set_provder_url(url)}}{Set provider url}
 
