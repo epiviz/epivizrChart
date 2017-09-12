@@ -74,3 +74,13 @@ rand_id <- function(prefix="") {
                     stringsAsFactors=FALSE)
   out
 }
+
+#' Construct URL for Websocket connection between R and UI
+#'
+#' @param host host
+#' @param port port
+#' @param path path
+#' @return url
+.constructURL <- function(host="localhost", port=7123L, path="") {
+  sprintf("ws://%s:%d/%s", host, port, path)
+}
