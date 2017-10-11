@@ -85,38 +85,39 @@ rand_id <- function(prefix="") {
   sprintf("ws://%s:%d/%s", host, port, path)
 }
 
-
 #' (taken from epivizr) register epiviz actions
 #'
-.register_all_the_epiviz_things <- function(app) {
+.register_all_the_epiviz_things <- function(srv, app) {
   # register actions requested from epiviz app
-  app$server$register_action("getMeasurements", function(request_data) {
-    app$data_mgr$get_measurements()
+  srv$register_action("getMeasurements", function(request_data) {
+    app$get_measurements()
   })
 
-  app$server$register_action("getRows", function(request_data) {
-    app$data_mgr$get_rows(request_data$seqName,
+  srv$register_action("getRows", function(request_data) {
+    app$get_rows(request_data$seqName,
       request_data$start,
       request_data$end,
       request_data$metadata,
       request_data$datasource)
   })
 
-  app$server$register_action("getValues", function(request_data) {
-    app$data_mgr$get_values(request_data$seqName,
+  srv$register_action("getValues", function(request_data) {
+    app$get_values(request_data$seqName,
       request_data$start,
       request_data$end,
       request_data$datasource,
       request_data$measurement)
   })
 
-  app$server$register_action("getSeqInfos", function(request_data) {
-    app$data_mgr$get_seqinfo()
+  srv$register_action("getSeqInfos", function(request_data) {
+    # TODO
+    #app$get_seqinfo()
   })
 
-  app$server$register_action("setChartSettings", function(request_data) {
-    app$chart_mgr$.update_chart_settings(request_data)
+  srv$register_action("setChartSettings", function(request_data) {
+    message("request data: ", request_data)
   })
-
   ## TODO: register action 'search'
+
+  invisible()
 }

@@ -1,16 +1,23 @@
+setClassUnion("EpivizDSorNULL", c("EpivizDataSource", "NULL"))
 #' Data container for an Epiviz environment component.
 #'
-#' @field charts List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.
+#' @field charts List of class \code{\link[epivizrChart]{EpivizViewComponent}} used to track nested elements.
+#' @field interactive Logical value of whether componenet is interactive with data source componenet..
+#' @field epiviz_ds  \code{\link[epivizrChart]{EpivizDataSource}} object for interactive documents.
 #' @import htmltools
 #' @importFrom methods new
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizViewComponent",
   fields=list(
-    charts="list"
+    charts="list",
+    interactive="logical",
+    epiviz_ds='EpivizDSorNULL'
   ),
   methods=list(
-    initialize=function(...) {
+    initialize=function(interactive=FALSE, epiviz_ds=NULL, ...) {
       .self$charts <- list()
+      .self$interactive <- interactive
+      .self$epiviz_ds <- epiviz_ds
 
       callSuper(...)
     },
@@ -23,8 +30,8 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     },
     append_chart=function(chart) {
       "Append chart or navigation to environment"
-      if (!is(chart, "EpivizPolymer"))
-        stop(chart, " must be an EpivizPolymer object")
+      if (!is(chart, "EpivizViewComponent"))
+        stop(chart, " must be an EpivizViewComponent object")
 
       .self$charts[[chart$get_id()]] <- chart
 
@@ -32,8 +39,8 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     },
     remove_chart=function(chart) {
       "Remove chart from environment"
-      if (!is(chart, "EpivizPolymer"))
-        stop(chart, " must be an EpivizPolymer object")
+      if (!is(chart, "EpivizViewComponent"))
+        stop(chart, " must be an EpivizViewComponent object")
 
       chart_id <- chart$get_id()
       # TODO: Remove ms_obj from data manager if
@@ -90,7 +97,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     order_charts=function(ordered_charts) {
       "Order the charts within an environment
       \\describe{
-      \\item{charts}{An ordered list of EpivizPolymer objects}
+      \\item{charts}{An ordered list of EpivizViewComponent objects}
       }"
       if (length(ordered_charts) != length(.self$charts))
         stop("Ordering charts requires all charts from environment")
@@ -140,6 +147,19 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         datasource_name, datasource_obj_name, type, etc}
       }"
       .self$data_mgr$add_measurements(...)
+    },
+    get_measurements=function(){
+      "Get measurements from environment's data manager"
+      .self$data_mgr$get_measurements()
+    },
+    get_rows=function(...){
+      "Get row data from environment's data manager"
+      .self$data_mgr$get_rows(...)
+    },
+    get_values=function(...){
+      "Get value data from environment's data manager"
+      .self$data_mgr$get_values(...)
+    },
     get_dependencies=function(knitr=FALSE) {
       # TODO
       # c(list(EpivizEnvironment=htmlDependency(

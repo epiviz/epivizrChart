@@ -29,11 +29,18 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
   if (is.null(data_obj) && is.null(measurements))
     stop("You must pass either data or measurements")
 
+  # provider id for interactive charts
+  p_id <- NULL
+
   # if parent environment/navigation is provided,
   # use its data manager, chr, start, and end
   if (!is.null(parent)) {
     if (!is(parent, "EpivizEnvironment"))
       stop("Parent must be an EpivizEnvironment or EpivizNavigation")
+
+    if (parent$is_interactive()) {
+      p_id <- parent$epiviz_ds$provider_id
+    }
 
     data_mgr <- parent$get_data_mgr()
 
@@ -58,6 +65,17 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 
     measurements <- ms_obj$get_measurements()
 
+    if (is.null(p_id)) {
+      # non-interactive, json will be used for data
+      ms_data <- data_mgr$get_data(measurements=measurements,
+        chr=chr, start=start, end=end)
+
+    } else {
+      # interactive, measurement will be used
+      # to request data
+      ms_data <- list(measurements=measurements)
+    }
+
     if (is.null(chart))
       chart <- ms_obj$get_default_chart_type()
 
@@ -71,9 +89,6 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     if (is.null(chart))
       stop("You must pass 'chart' type when using measurements")
   }
-
-  ms_data <- data_mgr$get_data(measurements=measurements,
-    chr=chr, start=start, end=end)
 
   # initialization ------------------------------------------------------------
   epiviz_chart <- .initialize_chart(
@@ -158,59 +173,27 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
 #' @param chr The chromosome to filter on, e.g., chr="chr11"
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizPolymer}}
+#' @param interactive (logical) todo
+#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}
 #' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 #'
 #' @examples
 #' epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
-epivizEnv <- function(chr=NULL, start=NULL, end=NULL, ...) {
+epivizEnv <- function(chr=NULL, start=NULL, end=NULL, interactive=FALSE, ...) {
   data_mgr <- EpivizChartDataMgr()
 
-  EpivizEnvironment(chr=chr, start=start, end=end, data_mgr=data_mgr, ...)
-}
+  if (interactive) {
+    epiviz_ds <- EpivizDataSource(
+      provider_type="epiviz.data.WebsocketDataProvider",
+      provider_id=rand_id("epiviz"),
+      provider_url=.constructURL(),
+      data_mgr=data_mgr)
+  } else {
+    epiviz_ds <- NULL
+  }
 
-#' Initialize an \code{\link[epivizrChart]{EpivizDataSource}} object.
-#'
-#' @param type TODO
-#' @param p_id TODO
-#' @param url TODO
-#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizDataSource}}
-#' @return An object of class \code{\link[epivizrChart]{EpivizDataSource}}
-#'
-#' @examples
-#'
-#' @export
-epivizDS <- function(type, p_id, url, ...) {
-  EpivizDataSource(provider_type=type, provider_id=p_id, provider_url=url, ...)
-}
-
-#' Initialize an \code{\link[epivizrChart]{EpivizApp}} app.
-#'
-#' @param register_function
-#' @param ... Additional params to pass to \code{\link[epivizrServerChart]{EpivizServer}}
-#' @return An object of class \code{\link[epivizrChart]{EpivizApp}}
-#'
-#' @examples
-#'
-#' @export
-epiviz <- function(register_function=.register_all_the_epiviz_things, ...) {
-  server <- epivizrServer::createServer(...)
-  data_mgr <- epivizrData::createMgr(server)
-  server$start_server() # move this out
-
-  url <- .constructURL(port=server$.port)
-
-  ds <- EpivizDataSource(
-    provider_type="epiviz.data.WebsocketDataProvider",
-    provider_id=rand_id("EpivizApp"),
-    provider_url=url
-  )
-
-  app <- EpivizApp(server=server, epiviz_data_source=ds, data_mgr=data_mgr)
-
-  register_function(app)
-
-  app
+  EpivizEnvironment(chr=chr, start=start, end=end, data_mgr=data_mgr,
+    interactive=interactive, epiviz_ds=epiviz_ds, ...)
 }

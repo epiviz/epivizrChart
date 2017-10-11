@@ -13,7 +13,7 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizViewComponent",
   fields=list(
-    data="list",
+    data="ListOrNULL",
     colors="CharacterOrNULL",
     settings="ListOrNULL",
     parent="EpivizEnvOrNULL"
@@ -81,12 +81,28 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     get_attributes=function() {
       "Get attributes for rendering component"
-      c(list(data=json_writer(.self$data),
+      if(.self$is_interactive()) {
+        json_data <- NULL
+      } else {
+        json_data <- json_writer(.self$data)
+      }
+
+      c(list(
+        data=json_data,
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
         callSuper())
     },
-    render_component=function() {
+    is_interactive=function() {
+      !is.null(.self$parent) && .self$parent$is_interactive()
+    },
+    get_provider_id=function() {
+      if (.self$is_interactive()) {
+        return(.self$parent$get_provider_id())
+      } else {
+        return(NULL)
+      }
+    },
       "Render to html"
       tag(.self$get_name(), .self$get_attributes())
     },

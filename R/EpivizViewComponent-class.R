@@ -65,30 +65,21 @@ EpivizViewComponent <- setRefClass("EpivizViewComponent",
     },
     get_attributes=function() {
       "Get attributes for rendering chart"
-      list(measurements=json_writer(lapply(.self$measurements, as.list)),
-        chr=.self$chr, start=.self$start, end=.self$end, callSuper())
-    },
-    get_dependencies=function(knitr=FALSE) {
-      polymer_lib <- system.file(package="epivizrChart",
-        "www", "lib/polymer/", "epiviz-charts.html")
+      ms <- lapply(.self$measurements, as.list)
 
-      if(!knitr) {
-        polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
+      if (.self$is_interactive()) {
+        for (i in seq_len(length(ms))) {
+          ms[[i]]$dataprovider <- .self$get_provider_id()
+        }
       }
 
-      list(
-        webcomponents=htmlDependency(
-          name="webcomponents",
-          version="0.7.24",
-          src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
-          script="webcomponents-lite.js"),
-        polymer=htmlDependency(
-          name="epiviz-charts",
-          version="1",
-          head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"),
-          all_files=TRUE)
+      c(list(
+        measurements=json_writer(ms), chr=.self$chr,
+        start=.self$start, end=.self$end
+        ),
+        callSuper()
       )
+    },
     get_dependencies=function(knitr=FALSE) {
       # TODO
       # c(list(EpivizViewComponent=htmlDependency(
