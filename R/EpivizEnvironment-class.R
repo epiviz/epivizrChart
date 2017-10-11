@@ -140,6 +140,17 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
         datasource_name, datasource_obj_name, type, etc}
       }"
       .self$data_mgr$add_measurements(...)
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizEnvironment=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  lapply(.self$charts, function(chart) chart$get_dependencies()),
+      #  callSuper())
+      callSuper(knitr)
     }
   )
 )

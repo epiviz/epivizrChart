@@ -77,6 +77,17 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
             colors=chart$get_colors(), parent=.self)
         }
       }
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizNavigation=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper(knitr))
+      callSuper(knitr)
     }
   )
 )

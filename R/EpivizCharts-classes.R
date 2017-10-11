@@ -36,8 +36,18 @@ EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
         "#cd7058",
         "#d77fb3"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizGenesTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -81,8 +91,18 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
         "#cd7058",
         "#d77fb3"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizBlocksTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -137,8 +157,18 @@ EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
         "#a11d20",
         "#b33893"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizHeatmapPlot=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -205,8 +235,18 @@ EpivizLinePlot <- setRefClass("EpivizLinePlot",
         "#ce6dbd",
         "#de9ed6"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizLinePlot=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -260,8 +300,18 @@ EpivizLineTrack <- setRefClass("EpivizLineTrack",
         "#a11d20",
         "#b33893"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizLineTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -313,8 +363,18 @@ EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
         "#bcbd22",
         "#17becf"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizScatterPlot=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -377,8 +437,18 @@ EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
         "#ce6dbd",
         "#de9ed6"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizStackedLinePlot=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )
 
@@ -428,7 +498,17 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
         "#bcbd22",
         "#17becf"
       )
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizStackedLineTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
-    # get_dependencies=function() {TODO}
   )
 )

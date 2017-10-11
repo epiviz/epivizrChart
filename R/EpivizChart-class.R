@@ -139,6 +139,17 @@ EpivizChart <- setRefClass("EpivizChart",
         .self$get_chart_type())
 
       print(.settings_as_df(chart_defaults$settings))
+    },
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(charts=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper(knitr))
+      callSuper(knitr)
     }
   )
 )

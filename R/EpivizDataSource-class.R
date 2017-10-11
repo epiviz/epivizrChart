@@ -68,36 +68,15 @@ EpivizDataSource <- setRefClass("EpivizDataSource",
       tag(.self$get_name(), .self$get_attributes())
     },
     get_dependencies=function(knitr=FALSE) {
-      # TO DO: remove other dependencies
-      polymer_lib <- system.file(package="epivizrChart",
-        "www", "lib/polymer/", "epiviz-charts.html")
-      polymer_ds_lib <- system.file(package="epivizrChart",
-        "www", "lib/polymer/", "epiviz-data-source.html")
-
-      if(!knitr) {
-        polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
-        polymer_ds_lib <- "lib/epiviz-charts-1/epiviz-data-source.html"
-      }
-
-      list(
-        webcomponents=htmlDependency(
-          name="webcomponents",
-          version="0.7.24",
-          src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
-          script="webcomponents-lite.js"),
-        polymer=htmlDependency(
-          name="epiviz-charts",
-          version="1",
-          head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"),
-          all_files=TRUE),
-        data_source=htmlDependency(
-          name="epiviz-data-source",
-          version="1",
-          head=paste0("<link rel='import' href='",  polymer_ds_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"),
-          all_files=TRUE)
-      )
+      # TODO
+      # c(list(EpivizDataSource=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
    )
   )

@@ -89,6 +89,16 @@ EpivizViewComponent <- setRefClass("EpivizViewComponent",
           src=system.file(package="epivizrChart", "www", "lib/polymer"),
           all_files=TRUE)
       )
+    get_dependencies=function(knitr=FALSE) {
+      # TODO
+      # c(list(EpivizViewComponent=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(knitr)
     }
   )
 )
