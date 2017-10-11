@@ -105,6 +105,53 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
 
       list(measurements=ms_list, data=data)
+    },
+    get_measurements=function() {
+      out <- epivizrData:::.emptyEpivizMeasurement()
+
+      measurements <- list()
+      ids <- ls(.self$.ms_list)
+      if (length(ids) > 0) {
+        for (id in ids) {
+          ms_record <- .self$.ms_list[[id]]
+          ms <- ms_record$obj$get_measurements()
+          for (cur_ms in ms) {
+            out <- epivizrData:::.appendEpivizMeasurement(out, cur_ms)
+          }
+        }
+      }
+
+      as.list(out)
+    },
+    # TODO
+    #get_seqinfo=function() {
+    #seqlengths <- seqlengths(.self$.seqinfo)+1
+    #seqinfo_list <- structure(lapply(seqlengths, function(x) c(1,x)), names=names(seqlengths))
+    #seqinfo_list
+    #},
+    get_rows=function(chr, start, end, metadata, datasource) {
+      if (is.null(chr) || is.null(start) || is.null(end)) {
+        query <- NULL
+      } else {
+        query <- GRanges(chr, ranges=IRanges(start, end))
+      }
+      ms_obj <- .self$.find_datasource(datasource)
+      ms_obj$get_rows(query, metadata)
+    },
+    get_values=function(chr, start, end, datasource, measurement) {
+      if (is.null(chr) || is.null(start) || is.null(end)) {
+        query <- NULL
+      } else {
+        query <- GRanges(chr, ranges=IRanges(start, end))
+      }
+      ms_obj <- .self$.find_datasource(datasource)
+      ms_obj$get_values(query, measurement)
+    },
+    .find_datasource=function(datasource) {
+      if (!exists(datasource, .self$.ms_list, inherits=FALSE)) {
+        stop("cannot find datasource", datasource)
+      }
+      ms_obj <- .self$.ms_list[[datasource]]$obj
     }
   )
 )
