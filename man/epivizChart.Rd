@@ -4,18 +4,18 @@
 \alias{epivizChart}
 \title{Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.}
 \usage{
-epivizChart(data_obj = NULL, datasource_name = NULL, parent = NULL,
-  measurements = NULL, chart = NULL, chr = NULL, start = NULL,
-  end = NULL, settings = NULL, colors = NULL, ...)
+epivizChart(data_obj = NULL, measurements = NULL, datasource_name = NULL,
+  parent = NULL, chart = NULL, chr = NULL, start = NULL, end = NULL,
+  settings = NULL, colors = NULL, ...)
 }
 \arguments{
 \item{data_obj}{A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.}
 
+\item{measurements}{An \code{\link[epivizrData]{EpivizMeasurement}} object.}
+
 \item{datasource_name}{A name for the datasource. For example, "Mean by Sample Type".}
 
 \item{parent}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.}
-
-\item{measurements}{An \code{\link[epivizrData]{EpivizMeasurement}} object.}
 
 \item{chart}{The chart type to be visualized: "BlocksTrack", HeatmapPlot", "LinePlot", "LineTrack", "ScatterPlot", "StackedLinePlot", "StackedLineTrack".}
 

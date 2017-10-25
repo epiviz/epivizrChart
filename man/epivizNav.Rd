@@ -4,8 +4,7 @@
 \alias{epivizNav}
 \title{Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.}
 \usage{
-epivizNav(chr = NULL, start = NULL, end = NULL, gene = NULL,
-  geneInRange = NULL, parent = NULL, ...)
+epivizNav(chr = NULL, start = NULL, end = NULL, parent = NULL, ...)
 }
 \arguments{
 \item{chr}{The chromosome to filter on, e.g., chr="chr11".}
@@ -14,13 +13,9 @@ epivizNav(chr = NULL, start = NULL, end = NULL, gene = NULL,
 
 \item{end}{The end location, e.g., end=130383180.}
 
-\item{gene}{TODO}
-
-\item{geneInRange}{TODO}
-
 \item{parent}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.}
 
-\item{...}{Additional arguments passed to \code{\link[epivizrChart]{EpivizPolymer}}.}
+\item{...}{Additional arguments for initializing navigation, e.g., gene and geneInRange.}
 }
 \value{
 An object of class \code{\link[epivizrChart]{EpivizNavigation}}.

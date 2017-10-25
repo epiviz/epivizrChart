@@ -16,7 +16,7 @@ Imports: epivizrData (>= 1.5.1), htmltools, rjson, methods
 Suggests: testthat, roxygen2, knitr, Biobase, GenomicRanges, S4Vectors,
         IRanges, SummarizedExperiment, antiProfilesData,
         hgu133plus2.db, Mus.musculus, BiocStyle, Homo.sapiens
-Collate: 'EpivizPolymer-class.R' 'EpivizChart-class.R'
+Collate: 'EpivizPolymer-class.R' 'EpivizChart-class.R' 'EpivizCharts-classes.R'
         'EpivizChartDataMgr-class.R' 'EpivizEnvironment-class.R'
         'EpivizNavigation-class.R' 'vignette_data.R' 'utils.R'
         'util-inits.R'

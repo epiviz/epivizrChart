@@ -53,10 +53,6 @@ Data container for an Epiviz chart component.
 
 \item{\code{set_data(data)}}{Set chart data}
 
-\item{\code{set_default_colors(colors)}}{Set default chart colors}
-
-\item{\code{set_default_settings(settings)}}{Set default chart settings}
-
 \item{\code{set_settings(settings)}}{Set chart settings}
 }}
 

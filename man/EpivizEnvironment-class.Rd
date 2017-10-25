@@ -11,21 +11,23 @@ Data container for an Epiviz environment component.
 \section{Fields}{
 
 \describe{
-\item{\code{initializeRegions}}{(ListOrNULL) List of gene names or regions to intialize navigations.}
-
 \item{\code{charts}}{List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.}
 }}
 
 \section{Methods}{
 
 \describe{
+\item{\code{add_data(...)}}{Add data to environment's data manager
+\describe{
+  \item{...}{Arguments for add_measurements and register, e.g., data,
+  datasource_name, datasource_obj_name, type, etc}
+}}
+
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
 \item{\code{get_attributes()}}{Get attributes for rendering chart}
 
 \item{\code{get_charts()}}{Get charts within environment}
-
-\item{\code{get_initializeRegions()}}{Get initializeRegions}
 
 \item{\code{init_region(chr = NULL, start = NULL, end = NULL)}}{Initialize navigation based on a genomic region
 \describe{
@@ -57,7 +59,5 @@ Data container for an Epiviz environment component.
 \item{\code{remove_chart(chart)}}{Remove chart from environment}
 
 \item{\code{renderChart()}}{Render to html}
-
-\item{\code{set_initializeRegions(initReg)}}{Set initializeRegions}
 }}
 
