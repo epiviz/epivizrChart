@@ -1,7 +1,7 @@
 #' Data container for an Epiviz navigation component.
 #'
-#' @field gene (CharacterOrNULL) Gene
-#' @field geneInRange (CharacterOrNULL) Nearest Gene in range.
+#' @field gene (character) Gene
+#' @field geneInRange (character) Nearest Gene in range.
 #' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where navigation is appended.
 #' @import htmltools
 #' @importFrom methods new
@@ -10,7 +10,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
   fields=list(
     gene = "CharacterOrNULL",
     geneInRange = "CharacterOrNULL",
-    parent="ANY"
+    parent="EpivizEnvOrNULL"
   ),
   methods=list(
     initialize = function(gene=NULL, geneInRange=NULL, parent=NULL,
@@ -24,12 +24,10 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
         stop("EpivizNavigation must have a region: chr, start, and end")
       }
 
-      callSuper(...)
+      .self$set_class("charts")
+      .self$set_id(rand_id("EpivizNav"))
 
-      .self$set_name("epiviz-navigation")
-      .self$set_id(rand_id("nav"))
-
-      invisible(.self)
+      callSuper(chr=chr, start=start, end=end,...)
     },
     set_gene = function(gene) {
       "Set gene"
@@ -40,6 +38,10 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       "Set step ratio"
       .self$geneInRange <- gene
       invisible()
+    },
+    get_name = function() {
+      "Get name of Epiviz Web Component"
+      return("epiviz-navigation")
     },
     get_gene = function() {
       "Get gene"

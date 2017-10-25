@@ -31,56 +31,6 @@ json_parser <- rjson::fromJSON
 #' json_writer(1:10)
 json_writer <- rjson::toJSON
 
-#' HTML dependencies of an EpivizChart
-#' @param knitr whether knitr is in progress
-#' @return list of polymer dependencies
-chart_dependencies <- function(knitr=FALSE) {
-  
-  polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
-  
-  if(!knitr) {
-    polymer_lib = "lib/epiviz-charts-1/epiviz-charts.html"
-  }
-  
-  deps <- list(
-    webcomponents <- htmlDependency(
-      name="webcomponents",
-      version="0.7.24",
-      src=system.file(package = "epivizrChart", "www", "lib/webcomponents"),
-      script="webcomponents-lite.js"
-    ),
-    epiviz_charts <- htmlDependency(
-      name="epiviz-charts",
-      version="1",
-      head = paste0("<link rel='import' href='",  polymer_lib, "'>"),
-      src=system.file(package = "epivizrChart", "www", "lib/polymer"),
-      all_files=TRUE
-    )
-  )
-
-  deps
-}
-
-#' Get epiviz chart component name from chart type
-#'
-#' @param chart chart type, e.g., 'HeatmapPlot'
-#' @return epiviz chart component name
-#'
-#' @importFrom methods is
-chart_type_to_tag_name <- function(chart) {
-    switch(chart,
-      GenesTrack = "epiviz-json-genes-track",
-      BlocksTrack = "epiviz-json-blocks-track",
-      HeatmapPlot = "epiviz-json-heatmap-plot",
-      LinePlot = "epiviz-json-line-plot",
-      LineTrack = "epiviz-json-line-track",
-      ScatterPlot = "epiviz-json-scatter-plot",
-      StackedLinePlot = "epiviz-json-stacked-line-plot",
-      StackedLineTrack = "epiviz-json-stacked-line-track",
-      stop(chart, " is not a valid chart type. See documentation for supported chart types")
-    )
-}
-
 #' Get default chart settings and colors
 #' @param json_chart_type chart type
 #' @return list of settings and colors

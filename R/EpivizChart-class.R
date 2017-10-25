@@ -1,8 +1,9 @@
+setClassUnion("EpivizEnvOrNULL", c("EpivizEnvironment", "NULL"))
 #' Data container for an Epiviz chart component.
 #'
 #' @field data (list) Values of an epiviz chart's data attribute.
-#' @field colors (CharacterOrNULL) Epiviz chart's colors attribute.
-#' @field settings (ListOrNULL) Epiviz chart's settings attribute.
+#' @field colors (character) Epiviz chart's colors attribute.
+#' @field settings (list) Epiviz chart's settings attribute.
 #' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.
 #' @import epivizrData
 #' @import htmltools
@@ -13,12 +14,13 @@ EpivizChart <- setRefClass("EpivizChart",
     data="list",
     colors="CharacterOrNULL",
     settings="ListOrNULL",
-    parent="ANY"
+    parent="EpivizEnvOrNULL"
   ),
   methods=list(
     initialize=function(data=NULL, colors=NULL, settings=NULL, parent=NULL, ...) {
       .self$data <- data
-      .self$colors <- colors
+      .self$colors <- .self$get_default_colors()
+      .self$set_colors(colors)
 
       # override default settings
       chart_settings <- .self$get_default_settings()
@@ -30,7 +32,7 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$settings <- chart_settings
       .self$parent <- parent
       .self$set_class("charts")
-      .self$set_id(rand_id("chart"))
+      .self$set_id(rand_id(.self$get_chart_type()))
 
       callSuper(...)
     },
@@ -57,7 +59,7 @@ EpivizChart <- setRefClass("EpivizChart",
     },
     set_colors = function(colors) {
       "Set chart colors"
-      .self$colors <- colors
+      .self$colors[seq_len(length(colors))] <- colors
     },
     set_settings = function(settings) {
       "Set chart settings"
@@ -70,12 +72,11 @@ EpivizChart <- setRefClass("EpivizChart",
       .self$settings <- chart_settings
     },
     get_parent = function() {
-      "Get parent of EpivizChart"
+      "Get parent"
       .self$parent
     },
     get_attributes = function() {
-      "Get attributes for rendering chart. Fields that need to be in JSON
-      will be converted"
+      "Get attributes for rendering chart"
       c(list(data=json_writer(.self$data),
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
@@ -112,6 +113,7 @@ EpivizChart <- setRefClass("EpivizChart",
       invisible(.self)
     },
     get_available_settings = function() {
+      "Get available settings"
       chart_defaults <- chart_default_settings_colors(.self$get_name())
       print(.settings_as_df(chart_defaults$settings))
     }

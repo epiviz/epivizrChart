@@ -23,23 +23,22 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
     measurements="ListOrNULL",
     chr="CharacterOrNULL",
     start="NumericOrNULL",
-    end="NumericOrNULL",
-    dependencies="ANY"
+    end="NumericOrNULL"
   ),
   methods=list(
-    initialize = function(data_mgr=NULL, measurements=NULL,
-      chr=NULL, start=NULL, end=NULL) {
+    initialize = function(data_mgr=EpivizChartDataMgr(),
+      measurements=NULL, chr=NULL, start=NULL, end=NULL) {
       .self$data_mgr <- data_mgr
+      .self$name <- .self$get_name()
       .self$measurements <- measurements
       .self$chr <- chr
       .self$start <- start
       .self$end <- end
-      .self$dependencies <- .self$get_dependencies()
 
       invisible(.self)
     },
     get_data_mgr = function() {
-      "Return EpivizChart Data Manager"
+      "Get data manager"
       .self$data_mgr
     },
     get_name = function() {
@@ -128,8 +127,6 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         # output file
         index_html <- file.path(tmp_dir, "index.html")
 
-        # environement get_deps will have to iterate through all charts and resolve dependencies.
-
         # save file
         save_html(attachDependencies(.self$renderChart(),
           .self$get_dependencies()), file=index_html)
@@ -141,7 +138,7 @@ EpivizPolymer <- setRefClass("EpivizPolymer",
         invisible()
       }
     },
-    get_dependencies=function(knitr=FALSE) {
+    get_dependencies = function(knitr=FALSE) {
       polymer_lib = system.file(package = "epivizrChart", "www", "lib/polymer/", "epiviz-charts.html")
 
       if(!knitr) {

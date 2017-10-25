@@ -10,10 +10,16 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
   ),
   methods=list(
     initialize = function(...) {
-      .self$set_name("epiviz-environment")
       .self$charts <- list()
 
       callSuper(...)
+    },
+    plot = function (...) {
+      "Plot an EpivizChart within the environment
+       \\describe{
+        \\item{...}{Arguments for epivizChart}
+      }"
+      epivizChart(parent=.self, ...)
     },
     append_chart = function(chart) {
       "Append chart or navigation to environment"
@@ -23,10 +29,6 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       .self$charts[[chart$get_id()]] <- chart
 
       invisible(.self)
-    },
-    plot = function (...) {
-      "Plot an EpivizChart within the environment"
-      epivizChart(parent=.self, ...)
     },
     remove_chart = function(chart) {
       "Remove chart from environment"
@@ -48,6 +50,10 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
 
       invisible(.self)
     },
+    get_name = function() {
+      "Get name of Epiviz Web Component"
+      return("epiviz-environment")
+    },
     get_attributes = function() {
       "Get attributes for rendering chart"
       c(callSuper())
@@ -57,6 +63,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       .self$charts
     },
     set_charts = function(charts) {
+      "Set charts of environment"
       .self$charts <- charts
     },
     renderChart = function() {

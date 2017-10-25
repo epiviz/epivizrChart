@@ -132,7 +132,8 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
     data_mgr <- EpivizChartDataMgr()
   }
 
-  epivizNav <- EpivizNavigation(chr=chr, start=start, end=end, parent=parent, data_mgr=data_mgr, ...)
+  epivizNav <- EpivizNavigation(chr=chr, start=start,
+    end=end, parent=parent, data_mgr=data_mgr, ...)
 
   if (!is.null(parent)) parent$append_chart(epivizNav)
 
