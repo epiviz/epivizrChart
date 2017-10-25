@@ -1,6 +1,6 @@
 Package: epivizrChart
 Title: R interface to epiviz web components
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: c( person("Brian", "Gottfried",
         email="briangottfried@me.com", role = c("aut")),
         person("Jayaram", "Kancherla",
