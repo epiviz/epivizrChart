@@ -1,6 +1,7 @@
 context("Initializing Charts within a Navigation")
 
 test_that("initializing charts within a navigation works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   nav <- epivizNav(chr="chr1", start=1, end=100)
@@ -26,6 +27,7 @@ test_that("initializing charts within a navigation works", {
 })
 
 test_that("navigating charts within a navigation works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   nav <- epivizNav(chr="chr1", start=1, end=100)

@@ -1,4 +1,6 @@
 setClassUnion("EpivizEnvOrNULL", c("EpivizEnvironment", "NULL"))
+setClassUnion("CharacterOrNULL", c("character", "NULL"))
+setClassUnion("ListOrNULL", c("list", "NULL"))
 #' Data container for an Epiviz chart component.
 #'
 #' @field data (list) Values of an epiviz chart's data attribute.

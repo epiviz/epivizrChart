@@ -1,6 +1,7 @@
 context("Initializing Charts within an Environment")
 
 test_that("initializing charts within an environment works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   env <- epivizEnv()
@@ -27,6 +28,7 @@ test_that("initializing charts within an environment works", {
 })
 
 test_that("removing charts from an environment works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   env <- epivizEnv()

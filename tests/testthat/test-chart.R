@@ -1,6 +1,7 @@
 context("Initializing Charts")
 
 test_that("initializing charts works with data objects", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   # EpivizBlockData --------------------------------------------------------------
@@ -70,6 +71,7 @@ test_that("initializing charts works with data objects", {
 })
 
 test_that("initializing charts works with measurements", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   env <- epivizEnv()
@@ -86,16 +88,18 @@ test_that("initializing charts works with measurements", {
 })
 
 test_that("revisualizing charts as a different chart type works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   eset_plot <- epivizChart(test_data$eset)
   test_that(eset_plot$get_name(), equals("epiviz-json-scatter-plot"))
 
-  eset_plot$revisualize("HeatmapPlot")
+  eset_plot <- eset_plot$revisualize("HeatmapPlot")
   test_that(eset_plot$get_name(), equals("epiviz-json-heatmap-plot"))
 })
 
 test_that("navigating chart to different region works", {
+  skip_on_bioc()
   test_data <- make_test_data()
 
   blocks_track <- epivizChart(test_data$blocks)
