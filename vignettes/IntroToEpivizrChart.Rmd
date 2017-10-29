@@ -287,3 +287,54 @@ lines_track
 lines_track$set_colors(colors)
 lines_track
 ```
+
+
+# Using Interactive Mode
+
+The interactive mode takes advantage of the websocket protocol to create an active connection between the R-session and the epiviz components visualized in the browser. In interactive mdoe, data is not embedded along with the components, So the charts make data requests to the R-session to get data. 
+
+To use charts in `interactive` mode, first we create an epiviz environment with interactive mode enabled. 
+
+```{r, eval=FALSE}
+
+library(epivizrChart)
+
+# initialize environment with interactive = true. this argument will init. an epiviz-data-source element
+epivizEnv <- epivizEnv(chr="chr11", start=118000000, end=121000000, interactive=TRUE)
+
+```
+
+We then create an instance of an `epivizrServer` to manage websocket connections. The register_all_the_epiviz_things adds listeners and handlers to manage data requests.
+
+```{r, eval=FALSE}
+library(epivizrServer)
+
+library(Homo.sapiens)
+data(tcga_colon_blocks)
+
+# initialize server
+server <- epivizrServer::createServer()
+
+# register all our actions between websocket and components
+epivizrChart:::.register_all_the_epiviz_things(server, epivizEnv)
+
+# start server
+server$start_server()
+```
+
+We now have an epiviz environment and an active websocket connection to the R-session. Adding and managing charts is exactly the same as described in this vignette.
+
+```{r, eval=FALSE}
+# plot charts
+blocks_track <- epivizEnv$plot(tcga_colon_blocks, datasource_name="450kMeth")
+epivizEnv
+
+genes <- epivizEnv$plot(Homo.sapiens)
+epivizEnv
+```
+
+Finally close the server
+
+```{r, eval=FALSE}
+server$stop_server()
+```
