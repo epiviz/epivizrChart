@@ -27,8 +27,6 @@ Data container for an Epiviz chart component.
 
 \item{\code{get_available_settings()}}{Get available settings}
 
-\item{\code{get_chart_type()}}{Get chart type}
-
 \item{\code{get_colors()}}{Get chart colors}
 
 \item{\code{get_data()}}{Get chart data}
