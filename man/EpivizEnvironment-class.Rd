@@ -11,7 +11,11 @@ Data container for an Epiviz environment component.
 \section{Fields}{
 
 \describe{
-\item{\code{charts}}{List of class \code{\link[epivizrChart]{EpivizPolymer}} used to track nested elements.}
+\item{\code{charts}}{List of class \code{\link[epivizrChart]{EpivizViewComponent}} used to track nested elements.}
+
+\item{\code{interactive}}{Logical value of whether componenet is interactive with data source componenet..}
+
+\item{\code{epiviz_ds}}{\code{\link[epivizrChart]{EpivizDataSource}} object for interactive documents.}
 }}
 
 \section{Methods}{
@@ -29,7 +33,13 @@ Data container for an Epiviz environment component.
 
 \item{\code{get_component_type()}}{Get component type for prefix of random id generator}
 
+\item{\code{get_measurements()}}{Get measurements}
+
 \item{\code{get_name()}}{Get name of Epiviz Web Component}
+
+\item{\code{get_rows(...)}}{Get row data from environment's data manager}
+
+\item{\code{get_values(...)}}{Get value data from environment's data manager}
 
 \item{\code{init_region(chr = NULL, start = NULL, end = NULL)}}{Initialize navigation based on a genomic region
 \describe{
@@ -44,6 +54,8 @@ Data container for an Epiviz environment component.
   list(list(chr='chr11', start=99800000, end=103383180))}
 }}
 
+\item{\code{is_interactive()}}{Return whether the environment is interactive with a data source}
+
 \item{\code{navigate(chr = NULL, start = NULL, end = NULL)}}{Navigate environment to genomic location
 \describe{
   \item{chr}{Chromosome}
@@ -53,7 +65,7 @@ Data container for an Epiviz environment component.
 
 \item{\code{order_charts(ordered_charts)}}{Order the charts within an environment
 \describe{
-\item{charts}{An ordered list of EpivizPolymer objects}
+\item{charts}{An ordered list of EpivizViewComponent objects}
 }}
 
 \item{\code{plot(...)}}{Plot an EpivizChart within the environment

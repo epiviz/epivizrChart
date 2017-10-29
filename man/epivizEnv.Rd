@@ -4,7 +4,8 @@
 \alias{epivizEnv}
 \title{Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.}
 \usage{
-epivizEnv(chr = NULL, start = NULL, end = NULL, ...)
+epivizEnv(chr = NULL, start = NULL, end = NULL, interactive = FALSE,
+  ...)
 }
 \arguments{
 \item{chr}{The chromosome to filter on, e.g., chr="chr11"}
@@ -13,7 +14,9 @@ epivizEnv(chr = NULL, start = NULL, end = NULL, ...)
 
 \item{end}{The end location, e.g., end=130383180.}
 
-\item{...}{Additional params to pass to \code{\link[epivizrChart]{EpivizPolymer}}}
+\item{interactive}{(logical) todo}
+
+\item{...}{Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}}
 }
 \value{
 An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
