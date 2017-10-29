@@ -25,9 +25,9 @@ Data container for an Epiviz environment component.
 
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
-\item{\code{get_charts()}}{Get charts within environment}
-
 \item{\code{get_chart_type()}}{Get chart type}
+
+\item{\code{get_charts()}}{Get charts within environment}
 
 \item{\code{get_name()}}{Get name}
 

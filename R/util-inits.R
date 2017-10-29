@@ -170,3 +170,18 @@ epivizEnv <- function(chr=NULL, start=NULL, end=NULL, ...) {
 
   EpivizEnvironment(chr=chr, start=start, end=end, data_mgr=data_mgr, ...)
 }
+
+#' Initialize an \code{\link[epivizrChart]{EpivizDataSource}} object.
+#'
+#' @param type TODO
+#' @param p_id TODO
+#' @param url TODO
+#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizDataSource}}
+#' @return An object of class \code{\link[epivizrChart]{EpivizDataSource}}
+#'
+#' @examples
+#'
+#' @export
+epivizDS <- function(type="", p_id="", url="", ...) {
+  EpivizDataSource(provider_type=type, provider_id=p_id, provider_url=url, ...)
+}
