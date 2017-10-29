@@ -111,13 +111,13 @@ rand_id <- function(prefix="") {
 
   srv$register_action("getSeqInfos", function(request_data) {
     # TODO
-    #app$get_seqinfo()
   })
 
   srv$register_action("setChartSettings", function(request_data) {
-    message("request data: ", request_data)
+    # TODO
   })
-  ## TODO: register action 'search'
+
+  # TODO: register action 'search'
 
   invisible()
 }

@@ -103,6 +103,7 @@ EpivizChart <- setRefClass("EpivizChart",
         return(NULL)
       }
     },
+    render_component=function() {
       "Render to html"
       tag(.self$get_name(), .self$get_attributes())
     },

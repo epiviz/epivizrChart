@@ -39,12 +39,11 @@ Collate:
   'EpivizChartDataMgr-class.R'
   'EpivizWebComponent-class.R' 
   'EpivizViewComponent-class.R'
+  'EpivizDataSource-class.R'
   'EpivizEnvironment-class.R'
   'EpivizChart-class.R'
   'EpivizNavigation-class.R'
   'EpivizCharts-classes.R'
-  'EpivizDataSource-class.R'
-  'EpivizApp-class.R'
   'vignette_data.R'
   'util-inits.R'
 VignetteBuilder: knitr

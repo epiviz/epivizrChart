@@ -75,9 +75,16 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     },
     render_component=function() {
       "Render to html"
-      tagSetChildren(tag=tag(.self$name, .self$get_attributes()),
-        list=lapply(.self$charts, function(chart) chart$render_component())
-      )
+      env <- tag(.self$name, .self$get_attributes())
+
+      tags <- tagSetChildren(tag=env, list=lapply(.self$charts,
+        function(chart) chart$render_component()))
+
+      if (.self$is_interactive()) {
+        tags <- tagList(.self$epiviz_ds$render_component(), tags)
+      }
+
+      tags
     },
     navigate=function(chr=NULL, start=NULL, end=NULL) {
       "Navigate environment to genomic location
@@ -159,6 +166,18 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
     get_values=function(...){
       "Get value data from environment's data manager"
       .self$data_mgr$get_values(...)
+    },
+    get_provider_id=function(){
+      if (.self$is_interactive()) {
+        .self$epiviz_ds$get_provider_id()
+
+      } else {
+        NULL
+      }
+    },
+    is_interactive=function() {
+      "Return whether the environment is interactive with a data source"
+      .self$interactive && !is.null(.self$epiviz_ds)
     },
     get_dependencies=function(knitr=FALSE) {
       # TODO
