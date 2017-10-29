@@ -72,7 +72,7 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
 
           epivizChart(measurements=ms,
             datasource_name=ms[[1]]@name,
-            chart=chart$get_chart_type(),
+            chart=chart$get_component_type(),
             settings=chart$get_settings(),
             colors=chart$get_colors(), parent=.self)
         }

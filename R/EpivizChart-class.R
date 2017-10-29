@@ -45,10 +45,6 @@ EpivizChart <- setRefClass("EpivizChart",
       "Get chart settings"
       .self$settings
     },
-    get_chart_type=function() {
-      "Get chart type"
-      .self$chart_type
-    },
     set_data=function(data) {
       "Set chart data"
       .self$data <- data
@@ -153,7 +149,7 @@ EpivizChart <- setRefClass("EpivizChart",
     get_available_settings=function() {
       "Get available settings"
       chart_defaults <- chart_default_settings_colors(
-        .self$get_chart_type())
+        .self$get_component_type())
 
       print(.settings_as_df(chart_defaults$settings))
     },
