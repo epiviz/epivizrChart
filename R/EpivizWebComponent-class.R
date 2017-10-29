@@ -87,11 +87,10 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
       }
     },
     get_dependencies=function(knitr=FALSE) {
-      shiny::addResourcePath('epivizrChart', system.file(package="epivizrChart", "www/lib/polymer"))
-      # shiny::addResourcePath('epivizrChart', system.file(package="epivizrChart", "www/lib/webcomponents"))
-
-      polymer_lib <- "epivizrChart/epiviz-charts.html"
-      polymer_ds_lib <- "epivizrChart/epiviz-data-source.html"
+      polymer_lib <- system.file(package="epivizrChart",
+        "www", "lib/polymer/", "epiviz-charts.html")
+      polymer_ds_lib <- system.file(package="epivizrChart",
+        "www", "lib/polymer/", "epiviz-data-source.html")
 
       if(!knitr) {
         polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
