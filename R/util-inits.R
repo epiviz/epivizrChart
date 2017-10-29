@@ -65,29 +65,27 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 
     measurements <- ms_obj$get_measurements()
 
-    if (is.null(p_id)) {
-      # non-interactive, json will be used for data
-      ms_data <- data_mgr$get_data(measurements=measurements,
-        chr=chr, start=start, end=end)
-
-    } else {
-      # interactive, measurement will be used
-      # to request data
-      ms_data <- list(measurements=measurements)
-    }
-
     if (is.null(chart))
       chart <- ms_obj$get_default_chart_type()
 
   } else {
     # use measurements to plot data
-    ms_obj <- NULL
-
     if (is.null(parent))
       stop("You must pass a 'parent' when using measurements")
 
     if (is.null(chart))
       stop("You must pass 'chart' type when using measurements")
+  }
+
+  if (is.null(p_id)) {
+    # non-interactive, json will be used for data
+    ms_data <- data_mgr$get_data(measurements=measurements,
+      chr=chr, start=start, end=end)
+
+  } else {
+    # interactive, measurement will be used
+    # to request data from data provider
+    ms_data <- list(measurements=measurements)
   }
 
   # initialization ------------------------------------------------------------
