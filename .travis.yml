@@ -3,3 +3,5 @@ r: bioc-devel
 cache: packages
 env:
   - BBS_HOME=TRUE
+notifications:
+    slack: hcbravolab:5yQ36bfuVUxDLfOvs3YDtDun
