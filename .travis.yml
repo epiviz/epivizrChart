@@ -1,3 +1,5 @@
 language: r
 r: bioc-devel
 cache: packages
+env:
+  - BBS_HOME=TRUE
