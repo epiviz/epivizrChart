@@ -106,6 +106,62 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
   )
 )
 
+#' Data container for an Epiviz Blocks Track.
+#'
+#' @import htmltools
+#' @importFrom methods new
+EpivizStackedBlocksTrack <- setRefClass("EpivizStackedBlocksTrack",
+   contains="EpivizChart",
+   methods=list(
+     initialize=function(...) {
+       callSuper(...)
+     },
+     get_name=function() {
+       "Get name of Epiviz Web Component"
+       "epiviz-stacked-blocks-track"
+     },
+     get_component_type=function() {
+       "Get component type for prefix of random id generator"
+       return("StackedBlocksTrack")
+     },
+     get_default_settings=function() {
+       "Get default settings"
+       list(
+         title="",
+         marginTop=25,
+         marginBottom=23,
+         marginLeft=20,
+         marginRight=10,
+         minBlockDistance=5,
+         blockColorBy="colLabel"
+       )
+     },
+     get_default_colors=function() {
+       "Get default colors"
+       c("#f9a65a",
+         "#599ad3",
+         "#79c36a",
+         "#f1595f",
+         "#727272",
+         "#cd7058",
+         "#d77fb3"
+       )
+     },
+     get_dependencies=function(knitr=FALSE) {
+       # TODO
+       # c(list(EpivizBlocksTrack=htmlDependency(
+       #  name="",
+       #  version=0,
+       #  head="",
+       #  src="",
+       #  all_files=TRUE)),
+       #  callSuper())
+       callSuper(knitr)
+     }
+   )
+)
+
+
 #' Data container for an Epiviz Heatmap Plot.
 #'
 #' @import htmltools
