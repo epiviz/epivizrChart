@@ -84,7 +84,7 @@ EpivizChart <- setRefClass("EpivizChart",
       }
 
       c(list(
-        data=json_data,
+        "json-data"=json_data,
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
         callSuper())

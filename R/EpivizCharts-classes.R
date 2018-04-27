@@ -10,11 +10,7 @@ EpivizGenesTrack <- setRefClass("EpivizGenesTrack",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-genes-track")
-      } else {
-        return("epiviz-json-genes-track")
-      }
+      "epiviz-genes-track"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -67,11 +63,7 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-blocks-track")
-      } else {
-        return("epiviz-json-blocks-track")
-      }
+      "epiviz-blocks-track"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -126,11 +118,7 @@ EpivizHeatmapPlot <- setRefClass("EpivizHeatmapPlot",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-heatmap-plot")
-      } else {
-        return("epiviz-json-heatmap-plot")
-      }
+      "epiviz-heatmap-plot"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -196,11 +184,7 @@ EpivizLinePlot <- setRefClass("EpivizLinePlot",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-line-plot")
-      } else {
-        return("epiviz-json-line-plot")
-      }
+      "epiviz-line-plot"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -278,11 +262,7 @@ EpivizLineTrack <- setRefClass("EpivizLineTrack",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-line-track")
-      } else {
-        return("epiviz-json-line-track")
-      }
+      "epiviz-line-track"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -347,11 +327,7 @@ EpivizScatterPlot <- setRefClass("EpivizScatterPlot",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-scatter-plot")
-      } else {
-        return("epiviz-json-scatter-plot")
-      }
+      "epiviz-scatter-plot"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -414,11 +390,7 @@ EpivizStackedLinePlot <- setRefClass("EpivizStackedLinePlot",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-stacked-line-plot")
-      } else {
-        return("epiviz-json-stacked-line-plot")
-      }
+      "epiviz-stacked-line-plot"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"
@@ -492,11 +464,7 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
     },
     get_name=function() {
       "Get name of Epiviz Web Component"
-      if (.self$is_interactive()) {
-        return("epiviz-stacked-line-track")
-      } else {
-        return("epiviz-json-stacked-line-track")
-      }
+      "epiviz-stacked-line-track"
     },
     get_component_type=function() {
       "Get component type for prefix of random id generator"

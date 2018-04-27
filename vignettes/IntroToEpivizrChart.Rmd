@@ -77,7 +77,7 @@ To create a navigation,
 epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000)
 
 genes_track <- epivizNav$plot(Homo.sapiens)
-blocks_track <- epivizEnv$plot(tcga_colon_blocks, datasource_name="450kMeth")
+blocks_track <- epivizNav$plot(tcga_colon_blocks, datasource_name="450kMeth")
 
 epivizNav
 ```

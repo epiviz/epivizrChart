@@ -17,9 +17,6 @@ test_that("initializing charts works with data objects", {
   blocks_ms_obj <- blocks_mgr$.get_ms_object(blocks_ms@datasourceId)
   expect_that(blocks_ms_obj, is_a("EpivizBlockData"))
 
-  blocks_default <- blocks_ms_obj$get_default_chart_type_html()
-  expect_that(blocks_track$get_name(), equals(blocks_default))
-
   # EpivizBpData --------------------------------------------------------------
   line_track <- epivizChart(test_data$line, type="bp",
     columns="score", chr="chr1")
@@ -34,9 +31,6 @@ test_that("initializing charts works with data objects", {
   line_ms_obj <- line_mgr$.get_ms_object(line_ms@datasourceId)
   expect_that(line_ms_obj, is_a("EpivizBpData"))
 
-  line_default <- line_ms_obj$get_default_chart_type_html()
-  expect_that(line_track$get_name(), equals(line_default))
-
   # ExpressionSet -------------------------------------------------------------
   eset_plot <- epivizChart(test_data$eset)
   expect_that(eset_plot, is_a("EpivizChart"))
@@ -50,9 +44,6 @@ test_that("initializing charts works with data objects", {
   eset_ms_obj <- eset_mgr$.get_ms_object(eset_ms@datasourceId)
   expect_that(eset_ms_obj, is_a("EpivizFeatureData"))
 
-  eset_default <- eset_ms_obj$get_default_chart_type_html()
-  expect_that(eset_plot$get_name(), equals(eset_default))
-
   # SummarizedExperiment ------------------------------------------------------
   se_plot <- epivizChart(test_data$se)
   expect_that(se_plot, is_a("EpivizChart"))
@@ -65,9 +56,6 @@ test_that("initializing charts works with data objects", {
 
   se_ms_obj <- se_mgr$.get_ms_object(se_ms@datasourceId)
   expect_that(se_ms_obj, is_a("EpivizFeatureData"))
-
-  se_default <- se_ms_obj$get_default_chart_type_html()
-  expect_that(se_plot$get_name(), equals(se_default))
 })
 
 test_that("initializing charts works with measurements", {
@@ -84,7 +72,7 @@ test_that("initializing charts works with measurements", {
     parent=env)
 
   expect_that(heatmap_plot, is_a("EpivizChart"))
-  expect_that(heatmap_plot$get_name(), equals("epiviz-json-heatmap-plot"))
+  expect_that(heatmap_plot$get_name(), equals("epiviz-heatmap-plot"))
 })
 
 test_that("revisualizing charts as a different chart type works", {
@@ -92,10 +80,10 @@ test_that("revisualizing charts as a different chart type works", {
   test_data <- make_test_data()
 
   eset_plot <- epivizChart(test_data$eset)
-  test_that(eset_plot$get_name(), equals("epiviz-json-scatter-plot"))
+  test_that(eset_plot$get_name(), equals("epiviz-scatter-plot"))
 
   eset_plot <- eset_plot$revisualize("HeatmapPlot")
-  test_that(eset_plot$get_name(), equals("epiviz-json-heatmap-plot"))
+  test_that(eset_plot$get_name(), equals("epiviz-heatmap-plot"))
 })
 
 test_that("navigating chart to different region works", {

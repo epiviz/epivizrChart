@@ -34,7 +34,7 @@ Polymer({
 
     /**
      * Epiviz Proivder Type.
-     *
+     * 
      * Can be one of the possible values -
      * `epiviz.data.WebServerDataProvider` | `epiviz.data.WebSocketDataProvider`
      *
@@ -301,7 +301,7 @@ Polymer({
       epiviz.Config.SETTINGS.dataProviders = [[this.providerType, this.providerId, this.providerUrl]];
 
       var config = new epiviz.Config(settingsMap);
-
+      
       config.dataProviders = [];
       config.dataProviders.push([this.providerType, this.providerId, this.providerUrl]);
 

@@ -98,21 +98,36 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
       }
 
       list(
+        # jquery=htmlDependency(
+        #   name="jquery",
+        #   version="1.12.4",
+        #   src=system.file(package="epivizrChart", "www", "lib"),
+        #   script="jquery.js"),
+        # jquery_ui=htmlDependency(
+        #   name="jquery-ui",
+        #   version="1.12.1",
+        #   src=system.file(package="epivizrChart", "www", "lib"),
+        #   script="jquery-ui.js"),
+        # jquery_ui_css=htmlDependency(
+        #   name="jquery-ui-css",
+        #   version="1.12.1",
+        #   src=system.file(package="epivizrChart", "www", "lib"),
+        #   stylesheet="jquery-ui.css"),
         webcomponents=htmlDependency(
           name="webcomponents",
           version="0.7.24",
           src=system.file(package="epivizrChart", "www", "lib/webcomponents"),
           script="webcomponents-lite.js"),
+        # data_source=htmlDependency(
+        #   name="epiviz-data-source",
+        #   version="1",
+        #   head=paste0("<link rel='import' href='",  polymer_ds_lib, "'>"),
+        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
+        #   all_files=TRUE),
         polymer=htmlDependency(
           name="epiviz-charts",
           version="1",
           head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"),
-          all_files=TRUE),
-        data_source=htmlDependency(
-          name="epiviz-data-source",
-          version="1",
-          head=paste0("<link rel='import' href='",  polymer_ds_lib, "'>"),
           src=system.file(package="epivizrChart", "www", "lib/polymer"),
           all_files=TRUE)
       )
