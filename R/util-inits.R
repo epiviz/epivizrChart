@@ -142,7 +142,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 #'
 #' @importFrom methods is
 #' @export
-epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
+epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=FALSE, ...) {
   # use parent's data manager
   if (!is.null(parent)) {
     if (!is(parent, "EpivizEnvironment"))
@@ -157,9 +157,19 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, ...) {
   } else {
     data_mgr <- EpivizChartDataMgr()
   }
+  
+  if (interactive) {
+    epiviz_ds <- EpivizDataSource(
+      provider_type="epiviz.data.WebsocketDataProvider",
+      provider_id=rand_id("epiviz"),
+      provider_url=.constructURL(),
+      data_mgr=data_mgr)
+  } else {
+    epiviz_ds <- NULL
+  }
 
   epivizNav <- EpivizNavigation(chr=chr, start=start,
-    end=end, parent=parent, data_mgr=data_mgr, ...)
+    end=end, parent=parent, data_mgr=data_mgr, interactive=interactive, epiviz_ds=epiviz_ds, ...)
 
   if (!is.null(parent)) parent$append_chart(epivizNav)
 
