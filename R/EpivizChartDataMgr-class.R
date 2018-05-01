@@ -190,33 +190,41 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
           result <- list()
           
           metadata <- request_data$metadata
-          
-          if(is.null(metadata)) {
-            metadata <- list()
-          }
-          
+
+          # if(is.null(metadata)) {
+          #   metadata <- NULL
+          # }
+
           values <- .self$get_values(request_data$seqName,
                                          request_data$start,
                                          request_data$end,
                                          request_data$datasource,
                                          request_data$measurement)
-          
+
           resp_values <- list(
             globalStartIndex = values$globalStartIndex,
             values = list()
           )
-          
+
           resp_values$values[[request_data$measurement]] <- values$values;
-          
+
           result["values"] <- json_writer(resp_values)
-          
+
           result["rows"] <- json_writer(.self$get_rows(request_data$seqName,
                                                            request_data$start,
                                                            request_data$end,
                                                            metadata,
                                                            request_data$datasource))
           response["data"] <- json_writer(result)
-          session$sendCustomMessage(type = "epivizapi.callback", response);
+          
+          # data <- .self$get_values(request_data$measurement,
+          #                          request_data$seqName,
+          #                          request_data$start,
+          #                          request_data$end
+          #                         )
+          
+          # response["data"] <- json_writer(data$data)
+          session$sendCustomMessage(type = "epivizapi.callback", response)
         }
         else if(method == "getSeqInfos") {
           response <- list(requestId=rid)

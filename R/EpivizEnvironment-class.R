@@ -197,14 +197,14 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       .self$data_mgr$add_shiny_handler(session) 
       invisible()
     },
-    add_genome=function(genome) {
+    add_genome=function(genome, type="gene_info") {
       "
       Add a genome to the view, and a genes-track.
       \\describe{
         \\item{genome}{annotation object. eg. Homo.sapiens}
       }"
       .self$data_mgr$add_genome(genome)
-      .self$plot(genome)
+      .self$plot(genome, type)
       invisible()
     },
     get_dependencies=function(shiny=FALSE) {

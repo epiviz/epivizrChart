@@ -27,7 +27,7 @@ Data container for an Epiviz environment component.
   datasource_name, datasource_obj_name, type, etc}
 }}
 
-\item{\code{add_genome(genome)}}{Add a genome to the view, and a genes-track.
+\item{\code{add_genome(genome, type = "gene_info")}}{Add a genome to the view, and a genes-track.
 \describe{
   \item{genome}{annotation object. eg. Homo.sapiens}
 }}

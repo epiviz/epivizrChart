@@ -62,3 +62,8 @@
 #' @source TCGA project: \url{https://tcga-data.nci.nih.gov/tcga/}
 #' @return A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object.
 "tcga_colon_expression"
+
+
+#' Example SummarizedExperiment for epivizr vignette
+#' @return A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object.
+"sumexp"
