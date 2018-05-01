@@ -27,6 +27,16 @@ Data container for an Epiviz environment component.
   datasource_name, datasource_obj_name, type, etc}
 }}
 
+\item{\code{add_genome(genome)}}{Add a genome to the view, and a genes-track.
+\describe{
+  \item{genome}{annotation object. eg. Homo.sapiens}
+}}
+
+\item{\code{add_shiny_handler(session)}}{Enable components to interact with Shiny session.
+\describe{
+  \item{session}{Shiny session object}
+}}
+
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
 \item{\code{get_charts()}}{Get charts within environment}
@@ -77,7 +87,10 @@ Data container for an Epiviz environment component.
 
 \item{\code{remove_chart(chart)}}{Remove chart from environment}
 
-\item{\code{render_component()}}{Render to html}
+\item{\code{render_component(shiny = FALSE)}}{Render to html
+\describe{
+  \item{shiny}{ if rendering component in a shiny environment}
+}}
 
 \item{\code{set_charts(charts)}}{Set charts of environment}
 }}

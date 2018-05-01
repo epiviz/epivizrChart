@@ -33,7 +33,7 @@ Data container for an Epiviz Data Source component.
 
 \item{\code{get_provider_url()}}{Get provider url}
 
-\item{\code{render_component()}}{Render to html}
+\item{\code{render_component(shiny = FALSE)}}{Render to html}
 
 \item{\code{set_provder_url(url)}}{Set provider url}
 

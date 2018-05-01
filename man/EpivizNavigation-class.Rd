@@ -38,6 +38,11 @@ navigation's data manager }}}
 
 \item{\code{get_name()}}{Get name of Epiviz Web Component}
 
+\item{\code{render_component(shiny = FALSE)}}{Render to html
+\describe{
+  \item{shiny}{ if rendering component in a shiny environment}
+}}
+
 \item{\code{set_gene(gene)}}{Set gene}
 
 \item{\code{set_geneInRange(gene)}}{Set step ratio}

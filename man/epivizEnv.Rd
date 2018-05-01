@@ -14,7 +14,7 @@ epivizEnv(chr = NULL, start = NULL, end = NULL, interactive = FALSE,
 
 \item{end}{The end location, e.g., end=130383180.}
 
-\item{interactive}{(logical) todo}
+\item{interactive}{(logical) enable if running a websocket/shiny server}
 
 \item{...}{Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}}
 }

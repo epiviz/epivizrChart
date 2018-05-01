@@ -19,8 +19,20 @@ Class providing data manager for epiviz charts.
 \section{Methods}{
 
 \describe{
+\item{\code{add_genome(genome)}}{Add genome to data manager (for seqInfo)
+\describe{
+  \item{chr}{Chromosome}
+  \item{start}{Start location}
+  \item{end}{End location}
+}}
+
 \item{\code{add_measurements(obj, datasource_name = NULL,
   datasource_obj_name = deparse(substitute(obj)), ...)}}{Register measurements in data manager}
+
+\item{\code{add_shiny_handler(session)}}{Handlers to enable interactions with Shiny session.
+\describe{
+  \item{session}{Shiny session object}
+}}
 
 \item{\code{get_data(measurements, chr = NULL, start = NULL, end = NULL)}}{Get data from data mgr based on measurements, chr, start, and end
 \describe{
