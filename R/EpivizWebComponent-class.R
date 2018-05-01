@@ -64,9 +64,7 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
     },
     show=function() {
       if (isTRUE(getOption('knitr.in.progress'))) {
-        knitr::knit_print(attachDependencies(.self$render_component(),
-          .self$get_dependencies(knitr=TRUE)))
-
+        knitr::knit_print(.self$render_component()) 
       } else {
         # temporary directory for output
         tmp_dir <- tempfile(pattern=rand_id("epiviz"))
@@ -76,8 +74,7 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
         index_html <- file.path(tmp_dir, "index.html")
 
         # save file
-        save_html(attachDependencies(.self$render_component(),
-          .self$get_dependencies()), file=index_html)
+        save_html(.self$render_component(), file=index_html) 
 
         # view
         viewer <- getOption("viewer", utils::browseURL)
@@ -86,16 +83,21 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
         invisible()
       }
     },
-    get_dependencies=function(knitr=FALSE) {
-      polymer_lib <- system.file(package="epivizrChart",
-        "www", "lib/polymer/", "epiviz-charts.html")
-      polymer_ds_lib <- system.file(package="epivizrChart",
-        "www", "lib/polymer/", "epiviz-data-source.html")
-
-      if(!knitr) {
-        polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html"
-        polymer_ds_lib <- "lib/epiviz-charts-1/epiviz-data-source.html"
-      }
+    get_dependencies=function(shiny=FALSE) {
+      if (isTRUE(getOption('knitr.in.progress'))) { 
+        polymer_lib <- system.file(package="epivizrChart", 
+                                   "www", "lib/polymer/", "epiviz-charts.html") 
+        polymer_ds_lib <- system.file(package="epivizrChart", 
+                                      "www", "lib/polymer/", "epiviz-data-source.html") 
+      } else if (shiny) { 
+        shiny::addResourcePath('epiviz', 
+                               system.file(package="epivizrChart", "www/lib/polymer")) 
+        polymer_lib <- "epiviz/epiviz-charts.html" 
+        polymer_ds_lib <- "epiviz/epiviz-data-source.html" 
+      } else { 
+        polymer_lib <- "lib/epiviz-charts-1/epiviz-charts.html" 
+        polymer_ds_lib <- "lib/epiviz-charts-1/epiviz-data-source.html" 
+      } 
 
       list(
         # jquery=htmlDependency(

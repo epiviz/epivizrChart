@@ -9,7 +9,8 @@
 EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
   fields=list(
     .ms_list="environment",
-    .ms_idCounter="integer"
+    .ms_idCounter="integer",
+    .genome="ANY"
   ),
   methods=list(
     initialize=function() {
@@ -123,12 +124,17 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
 
       as.list(out)
     },
-    # TODO
-    #get_seqinfo=function() {
-    #seqlengths <- seqlengths(.self$.seqinfo)+1
-    #seqinfo_list <- structure(lapply(seqlengths, function(x) c(1,x)), names=names(seqlengths))
-    #seqinfo_list
-    #},
+    get_seqinfo=function() {
+      if(!is.null(.self$.genome)) {
+        seqinfo <- seqinfo(.self$.genome)
+        seqlengths <- seqlengths(seqinfo)+1
+        # seqinfo_list <- structure(lapply(seqlengths, function(x) c(1,x)), names=names(seqlengths))
+        seqinfo_list <- mapply(function(seqname, seqlength) list(seqname, 1, seqlength),
+                               names(seqlengths), seqlengths,
+                               SIMPLIFY=FALSE, USE.NAMES=FALSE)
+        seqinfo_list
+      }
+    },
     get_rows=function(chr, start, end, metadata, datasource) {
       if (is.null(chr) || is.null(start) || is.null(end)) {
         query <- NULL
@@ -152,6 +158,83 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
         stop("cannot find datasource", datasource)
       }
       ms_obj <- .self$.ms_list[[datasource]]$obj
+    },
+    add_shiny_handler=function(session) {
+      "
+      Handlers to enable interactions with Shiny session.
+      \\describe{
+        \\item{session}{Shiny session object}
+      }"
+      observeEvent(session$input[['epivizapi']], {
+        params <- session$input[['epivizapi']]
+        rid <- params[["_reqid"]]
+        request_data <- params[["_args"]]
+        method <- request_data$action
+        
+        if(method == "getMeasurements") {
+          response <- list(requestId=rid)
+          response["data"] <- json_writer(.self$get_measurements())
+          session$sendCustomMessage(type = "epivizapi.callback", response);
+        }
+        else if (method == "getRows") {
+          response <- list(requestId=rid)
+          response["data"] <- json_writer(.self$get_rows(request_data$seqName,
+                                                             request_data$start,
+                                                             request_data$end,
+                                                             request_data$metadata,
+                                                             request_data$datasource))
+          session$sendCustomMessage(type = "epivizapi.callback", response);
+        }
+        else if(method == "getValues") {
+          response <- list(requestId=rid, "jsonType"="epivizr")
+          result <- list()
+          
+          metadata <- request_data$metadata
+          
+          if(is.null(metadata)) {
+            metadata <- list()
+          }
+          
+          values <- .self$get_values(request_data$seqName,
+                                         request_data$start,
+                                         request_data$end,
+                                         request_data$datasource,
+                                         request_data$measurement)
+          
+          resp_values <- list(
+            globalStartIndex = values$globalStartIndex,
+            values = list()
+          )
+          
+          resp_values$values[[request_data$measurement]] <- values$values;
+          
+          result["values"] <- json_writer(resp_values)
+          
+          result["rows"] <- json_writer(.self$get_rows(request_data$seqName,
+                                                           request_data$start,
+                                                           request_data$end,
+                                                           metadata,
+                                                           request_data$datasource))
+          response["data"] <- json_writer(result)
+          session$sendCustomMessage(type = "epivizapi.callback", response);
+        }
+        else if(method == "getSeqInfos") {
+          response <- list(requestId=rid)
+          seqinfo_list <- .self$get_seqinfo()
+          response[["data"]] <- json_writer(list("hg19"=seqinfo_list))
+          session$sendCustomMessage(type = "epivizapi.callback", response);
+        }
+      })
+    },
+    add_genome=function(genome) {
+      "
+      Add genome to data manager (for seqInfo)
+      \\describe{
+        \\item{chr}{Chromosome}
+        \\item{start}{Start location}
+        \\item{end}{End location}
+      }"
+      .self$.genome <- genome
     }
   )
 )

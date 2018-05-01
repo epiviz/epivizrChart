@@ -80,7 +80,7 @@ EpivizViewComponent <- setRefClass("EpivizViewComponent",
         callSuper()
       )
     },
-    get_dependencies=function(knitr=FALSE) {
+    get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizViewComponent=htmlDependency(
       #  name="",
@@ -89,7 +89,7 @@ EpivizViewComponent <- setRefClass("EpivizViewComponent",
       #  src="",
       #  all_files=TRUE)),
       #  callSuper())
-      callSuper(knitr)
+      callSuper(shiny)
     }
   )
 )

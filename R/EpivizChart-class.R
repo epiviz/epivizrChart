@@ -99,9 +99,12 @@ EpivizChart <- setRefClass("EpivizChart",
         return(NULL)
       }
     },
-    render_component=function() {
+    render_component=function(shiny=FALSE) {
       "Render to html"
-      tag(.self$get_name(), .self$get_attributes())
+      chart <- tag(.self$get_name(), .self$get_attributes())
+      
+      htmltools::attachDependencies(chart,
+                      .self$get_dependencies(shiny))
     },
      revisualize=function(chart_type) {
        "Revisualize chart as the given chart type
@@ -153,7 +156,7 @@ EpivizChart <- setRefClass("EpivizChart",
 
       print(.settings_as_df(chart_defaults$settings))
     },
-    get_dependencies=function(knitr=FALSE) {
+    get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(charts=htmlDependency(
       #  name="",
@@ -161,8 +164,8 @@ EpivizChart <- setRefClass("EpivizChart",
       #  head="",
       #  src="",
       #  all_files=TRUE)),
-      #  callSuper(knitr))
-      callSuper(knitr)
+      #  callSuper(shiny))
+      callSuper(shiny)
     }
   )
 )

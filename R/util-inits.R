@@ -134,6 +134,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
 #' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
+#' @param interactive (logical) enable if running a websocket/shiny server
 #' @param ... Additional arguments for initializing navigation, e.g., gene and geneInRange.
 #' @return An object of class \code{\link[epivizrChart]{EpivizNavigation}}.
 #'
@@ -160,7 +161,7 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
   
   if (interactive) {
     epiviz_ds <- EpivizDataSource(
-      provider_type="epiviz.data.WebsocketDataProvider",
+      provider_type="epiviz.data.ShinyDataProvider",
       provider_id=rand_id("epiviz"),
       provider_url=.constructURL(),
       data_mgr=data_mgr)
@@ -182,7 +183,7 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
 #' @param chr The chromosome to filter on, e.g., chr="chr11"
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param interactive (logical) todo
+#' @param interactive (logical) enable if running a websocket/shiny server
 #' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}
 #' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
 #'
@@ -195,7 +196,7 @@ epivizEnv <- function(chr=NULL, start=NULL, end=NULL, interactive=FALSE, ...) {
 
   if (interactive) {
     epiviz_ds <- EpivizDataSource(
-      provider_type="epiviz.data.WebsocketDataProvider",
+      provider_type="epiviz.data.ShinyDataProvider",
       provider_id=rand_id("epiviz"),
       provider_url=.constructURL(),
       data_mgr=data_mgr)

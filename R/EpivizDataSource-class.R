@@ -63,11 +63,12 @@ EpivizDataSource <- setRefClass("EpivizDataSource",
         "provider-url"=.self$provider_url),
         callSuper())
     },
-    render_component=function() {
+    render_component=function(shiny=FALSE) {
       "Render to html"
-      tag(.self$get_name(), .self$get_attributes())
+      ds <- tag(.self$get_name(), .self$get_attributes())
+      htmltools::attachDependencies(ds, .self$get_dependencies(shiny))
     },
-    get_dependencies=function(knitr=FALSE) {
+    get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizDataSource=htmlDependency(
       #  name="",
@@ -76,7 +77,7 @@ EpivizDataSource <- setRefClass("EpivizDataSource",
       #  src="",
       #  all_files=TRUE)),
       #  callSuper())
-      callSuper(knitr)
+      callSuper(shiny)
     }
    )
   )

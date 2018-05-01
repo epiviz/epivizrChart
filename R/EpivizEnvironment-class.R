@@ -73,18 +73,27 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Set charts of environment"
       .self$charts <- charts
     },
-    render_component=function() {
-      "Render to html"
+    render_component=function(shiny=FALSE) {
+      "Render to html
+      \\describe{
+        \\item{shiny}{ if rendering component in a shiny environment}
+      }"
       env <- tag(.self$name, .self$get_attributes())
-
+      env <- htmltools::attachDependencies(env, .self$get_dependencies(shiny))
+      
       tags <- tagSetChildren(tag=env, list=lapply(.self$charts,
-        function(chart) chart$render_component()))
-
+                                                  function(chart) chart$render_component(shiny)))
+      
       if (.self$is_interactive()) {
-        tags <- tagList(.self$epiviz_ds$render_component(), tags)
+        tags <- tagList(.self$epiviz_ds$render_component(shiny), tags)
       }
-
-      tags
+      
+      deps <- htmltools::htmlDependencies(tags)
+      # This will remove redundant dependencies
+      # (e.g., when an environment has multiple similar chart types)
+      deps <- htmltools::resolveDependencies(deps)
+      
+      htmltools::attachDependencies(tags, deps)
     },
     navigate=function(chr=NULL, start=NULL, end=NULL) {
       "Navigate environment to genomic location
@@ -179,7 +188,26 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Return whether the environment is interactive with a data source"
       .self$interactive && !is.null(.self$epiviz_ds)
     },
-    get_dependencies=function(knitr=FALSE) {
+    add_shiny_handler=function(session) {
+      "
+      Enable components to interact with Shiny session.
+      \\describe{
+        \\item{session}{Shiny session object}
+      }"
+      .self$data_mgr$add_shiny_handler(session) 
+      invisible()
+    },
+    add_genome=function(genome) {
+      "
+      Add a genome to the view, and a genes-track.
+      \\describe{
+        \\item{genome}{annotation object. eg. Homo.sapiens}
+      }"
+      .self$data_mgr$add_genome(genome)
+      .self$plot(genome)
+      invisible()
+    },
+    get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizEnvironment=htmlDependency(
       #  name="",
@@ -189,7 +217,7 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       #  all_files=TRUE)),
       #  lapply(.self$charts, function(chart) chart$get_dependencies()),
       #  callSuper())
-      callSuper(knitr)
+      callSuper(shiny)
     }
   )
 )

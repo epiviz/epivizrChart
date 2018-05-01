@@ -78,7 +78,26 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
         }
       }
     },
-    get_dependencies=function(knitr=FALSE) {
+    render_component=function(shiny=FALSE) {
+      "Render to html"
+      env <- tag(.self$name, .self$get_attributes())
+      env <- htmltools::attachDependencies(env, .self$get_dependencies(shiny))
+      
+      tags <- tagSetChildren(tag=env, list=lapply(.self$charts,
+                                                  function(chart) chart$render_component(shiny)))
+      
+      if (.self$is_interactive()) {
+        tags <- tagList(.self$epiviz_ds$render_component(shiny), tags)
+      }
+      
+      deps <- htmltools::htmlDependencies(tags)
+      # This will remove redundant dependencies
+      # (e.g., when an environment has multiple similar chart types)
+      deps <- htmltools::resolveDependencies(deps)
+      
+      htmltools::attachDependencies(tags, deps)
+    },
+    get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizNavigation=htmlDependency(
       #  name="",
@@ -86,8 +105,8 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       #  head="",
       #  src="",
       #  all_files=TRUE)),
-      #  callSuper(knitr))
-      callSuper(knitr)
+      #  callSuper(shiny))
+      callSuper(shiny)
     }
   )
 )
