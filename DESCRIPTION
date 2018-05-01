@@ -33,7 +33,8 @@ Suggests:
     hgu133plus2.db,
     Mus.musculus,
     BiocStyle,
-    Homo.sapiens
+    Homo.sapiens,
+    RColorBrewer
 Collate:
   'utils.R'
   'EpivizChartDataMgr-class.R'

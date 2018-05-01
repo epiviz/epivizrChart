@@ -41252,7 +41252,78 @@ epiviz.workspaces.WorkspaceManager.prototype._registerChartMarginsChanged=functi
 epiviz.workspaces.WorkspaceManager.prototype._registerComputedMeasurementAdded=function(){var a=this;this._measurementsManager.onComputedMeasurementsAdded().addListener(new epiviz.events.EventListener(function(b){a._activeWorkspaceChanging||a._activeWorkspace&&a._activeWorkspace.computedMeasurementsAdded(b)}))};
 epiviz.workspaces.WorkspaceManager.prototype._registerComputedMeasurementRemoved=function(){var a=this;this._measurementsManager.onComputedMeasurementsRemoved().addListener(new epiviz.events.EventListener(function(b){a._activeWorkspaceChanging||a._activeWorkspace&&a._activeWorkspace.computedMeasurementsRemoved(b)}))};epiviz.workspaces.UserManager=function(a){this._config=a};epiviz.workspaces.UserManager.USER_STATUS=epiviz.workspaces.UserManager.USER_STATUS||{loggedIn:!1,userData:null,oauthProvider:null};epiviz.workspaces.UserManager.prototype.toggleLogin=function(){epiviz.workspaces.UserManager.USER_STATUS.loggedIn?this._logout():this._login()};
 epiviz.workspaces.UserManager.prototype._login=function(){var a=window.location.toString();0<a.length&&(a=encodeURIComponent(a));window.location=this._config.dataServerLocation+"login.php?location="+a};epiviz.workspaces.UserManager.prototype._logout=function(){var a=window.location.toString();0<a.length&&(a=encodeURIComponent(a));window.location=this._config.dataServerLocation+"logout.php?logout&location="+a};epiviz.main=function(){var a=new epiviz.Config(epiviz.Config.SETTINGS),b=new epiviz.ui.LocationManager(a),c=new epiviz.measurements.MeasurementsManager,d=new epiviz.ui.charts.ChartFactory(a),e=new epiviz.ui.charts.ChartManager(a),f=new epiviz.ui.ControlManager(a,d,e,c,b),g=new epiviz.data.DataProviderFactory(a),g=new epiviz.data.DataManager(a,g),h;"false"==a.useCookie?(h=new epiviz.localstorage.LocalStorageManager(epiviz.localstorage.LocalStorageManager.MODE.INCOGNITO_MODE),h.clearWorkspace(),a.defaultWorkspaceSettings.content.charts=
-null):h=new epiviz.localstorage.LocalStorageManager(epiviz.localstorage.LocalStorageManager.MODE.COOKIE_MODE);var l=new epiviz.workspaces.WorkspaceManager(a,b,c,e,d),m=new epiviz.workspaces.UserManager(a),n=new epiviz.ui.WebArgsManager(b,l),b=new epiviz.EpiViz(a,b,c,f,g,d,e,l,m,n,h);epiviz.ui.charts.transform.clustering.ClusteringAlgorithmFactory.initialize(a);b.start()};goog.exportSymbol("epiviz",epiviz);
+null):h=new epiviz.localstorage.LocalStorageManager(epiviz.localstorage.LocalStorageManager.MODE.COOKIE_MODE);var l=new epiviz.workspaces.WorkspaceManager(a,b,c,e,d),m=new epiviz.workspaces.UserManager(a),n=new epiviz.ui.WebArgsManager(b,l),b=new epiviz.EpiViz(a,b,c,f,g,d,e,l,m,n,h);epiviz.ui.charts.transform.clustering.ClusteringAlgorithmFactory.initialize(a);b.start()};
+epiviz.data.ShinyDataProvider = function(id) {
+  epiviz.data.DataProvider.call(this, id || epiviz.Config.DEFAULT_DATA_PROVIDER_ID);
+
+  this._callbacks = {};
+  this._requestQueue = [];
+  this._requestInProgress = false;
+  // this._initialize();
+  Shiny.addCustomMessageHandler('epivizapi.callback', this.callbackHandler.bind(this));
+};
+
+epiviz.data.ShinyDataProvider.prototype._initialize = function() {
+  Shiny.addCustomMessageHandler('epivizapi.callback', this.callbackHandler.bind(this));
+  // Shiny.addCustomMessageHandler('epivizapi.failureCallback', this.failureCallbackHandler);
+};
+
+/**
+ * Copy methods from upper class
+ */
+epiviz.data.ShinyDataProvider.prototype = epiviz.utils.mapCopy(epiviz.data.DataProvider.prototype);
+epiviz.data.ShinyDataProvider.constructor = epiviz.data.ShinyDataProvider;
+
+/**
+ * @param {epiviz.data.Request} request
+ * @param {function(epiviz.data.Response.<*>)} callback
+ */
+epiviz.data.ShinyDataProvider.prototype.getData = function(request, callback) {
+  if (request.isEmpty()) { return; }
+    if(Object.keys(this._callbacks).length == 0) {
+      var id = request.id();
+      this._callbacks[id] = callback;
+      var params = {};
+      params["_method"] = request._args.action;
+      params["_reqid"] = id;
+      params["_args"] = request._args;
+      Shiny.onInputChange('epivizapi', params); 
+    }
+    else {
+      this._requestQueue.push([request, callback]);
+    }
+};
+
+epiviz.data.ShinyDataProvider.prototype.callbackHandler = function(response) {
+  response.data = JSON.parse(response.data);
+  
+  if(response.jsonType == "epivizr") {
+    response.data.values = JSON.parse(response.data.values);
+    response.data.rows = JSON.parse(response.data.rows);
+    
+    if(response.data.rows.values.metadata == null) {
+      response.data.rows.values.metadata = {};
+    }
+  }
+  
+  var respObj = epiviz.data.Response.fromRawObject(response);
+  // console.log(respObj);
+  // console.log(this);
+  // console.log(this._callbacks);
+  var id = respObj.id();
+
+     var callback = this._callbacks[id];
+  delete this._callbacks[id];
+  callback(respObj);
+    
+  if(this._requestQueue.length > 0) {
+    var req = this._requestQueue.shift();
+    this.getData(req[0], req[1]);
+  }
+};
+
+
+goog.exportSymbol("epiviz",epiviz);
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
@@ -60851,7 +60922,7 @@ It will also ensure that focus remains in the dialog.
             /**
              * Callback triggered when measurement selections are made on the measurement browser.
              */
-            _chartSelectionChangedepiviz-charts - bioc: function(event) {
+            _chartSelectionChanged: function(event) {
                 var self = this;
                 var envElement = self._parentContainer;
 
