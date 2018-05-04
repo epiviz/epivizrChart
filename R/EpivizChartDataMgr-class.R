@@ -16,6 +16,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
     initialize=function() {
       .self$.ms_list <- new.env(parent=emptyenv())
       .self$.ms_idCounter <- 0L
+      .self$.genome <- NULL
     },
     add_measurements=function(obj, datasource_name=NULL,
       datasource_obj_name=deparse(substitute(obj)), ...) {
@@ -159,7 +160,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }
       ms_obj <- .self$.ms_list[[datasource]]$obj
     },
-    add_shiny_handler=function(session) {
+    register_shiny_handler=function(session) {
       "
       Handlers to enable interactions with Shiny session.
       \\describe{
@@ -224,6 +225,59 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
           #                         )
           
           # response["data"] <- json_writer(data$data)
+          session$sendCustomMessage(type = "epivizapi.callback", response)
+        }
+        else if(method == "getCombined") {
+          response <- list(requestId=rid, "jsonType"="epivizr")
+          result <- list()
+          
+          metadata <- request_data$metadata
+          
+          # if(is.null(metadata)) {
+          #   metadata <- NULL
+          # }
+          
+          globalStartIndex <- NULL
+          resp <- list()
+          
+          for(i in request_data$measurements) {
+            ms <- i
+            message(ms)
+            res <- .self$get_values(NULL,
+                                    NULL,
+                                    NULL,
+                                    request_data$datasource,
+                                    ms)
+            globalStartIndex <- res$globalStartIndex
+            resp[[ms]] <- res$values
+            res
+          }
+          
+          # m_result <- lapply(request_data$measurements, function(ms) {
+          #   message(ms)
+          #   res <- .self$get_values(NULL,
+          #                    NULL,
+          #                    NULL,
+          #                    request_data$datasource,
+          #                    ms)
+          #   globalStartIndex <- res$globalStartIndex
+          #   resp[[ms]] <- res$values
+          #   res
+          # })
+          # message(m_result)
+          
+          resp_values <- list(
+            globalStartIndex = globalStartIndex,
+            values = resp
+          )
+      
+          result["values"] <- json_writer(resp_values)
+          result["rows"] <- json_writer(.self$get_rows(NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       metadata,
+                                                       request_data$datasource))
+          response["data"] <- json_writer(result)
           session$sendCustomMessage(type = "epivizapi.callback", response)
         }
         else if(method == "getSeqInfos") {
