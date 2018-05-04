@@ -160,11 +160,17 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
   }
   
   if (interactive) {
-    epiviz_ds <- EpivizDataSource(
-      provider_type="epiviz.data.ShinyDataProvider",
-      provider_id=rand_id("epiviz"),
-      provider_url=.constructURL(),
-      data_mgr=data_mgr)
+    
+    if(!is.null(parent)) {
+      epiviz_ds <- parent$epiviz_ds
+    }
+    else {
+      epiviz_ds <- EpivizDataSource(
+        provider_type="epiviz.data.ShinyDataProvider",
+        provider_id=rand_id("epiviz"),
+        provider_url=.constructURL(),
+        data_mgr=data_mgr) 
+    }
   } else {
     epiviz_ds <- NULL
   }
