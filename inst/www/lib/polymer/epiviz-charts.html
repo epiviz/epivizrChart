@@ -41287,6 +41287,7 @@ epiviz.data.ShinyDataProvider.prototype.getData = function(request, callback) {
       params["_method"] = request._args.action;
       params["_reqid"] = id;
       params["_args"] = request._args;
+      params[".nounce"] = Math.random();
       Shiny.onInputChange('epivizapi', params); 
     }
     else {
@@ -73134,7 +73135,10 @@ event and do your own custom submission:
                         if (currentChild == undefined || currentChild.plotId == undefined) { return; }
                         currentChild.range = self.range;
                         // self._updateChart(currentChild.plotId);  
-                        self._getElementData(currentChild, self, self.measurements);
+                        if (!currentChild.jsonData) {
+                            self._getElementData(node, self, measurements);
+                        }
+                        // self._getElementData(currentChild, self, self.measurements);
                     }
                 }
             },
@@ -73173,7 +73177,7 @@ event and do your own custom submission:
                         info.addedNodes.forEach(function (node) {
                             // self._updateChart(node.plotId);
                             node._parentContainer = self;
-							node.range = self.range;
+							              //node.range = self.range;
                             if (node.nodeName === "EPIVIZ-NAVIGATION") {
                                 self._getElementSeqInfo(node, Polymer.dom(self));
 
@@ -73183,6 +73187,7 @@ event and do your own custom submission:
                                 var navChildren = node.getEffectiveChildren().length;
                                 for (var nindex = 0; nindex < navChildren; nindex++) {
                                     var currentNavChild = node.getEffectiveChildren()[nindex];
+                                    currentNavChild.range = node.range;
                                     currentNavChild._parentContainer = self;
                                     if (!currentNavChild.data) {
                                         self._getElementData(currentNavChild, self, self.measurements);
@@ -73190,7 +73195,7 @@ event and do your own custom submission:
                                 }
                             }
                             else {
-                                if (!node.data) {
+                                if (!node.jsonData) {
                                     self._getElementData(node, self, self.measurements);
                                 }
                             }
