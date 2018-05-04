@@ -97,6 +97,15 @@ EpivizNavigation <- setRefClass("EpivizNavigation",
       
       htmltools::attachDependencies(tags, deps)
     },
+    add_genome=function(genome, type="gene_info", datasource_name = NULL) {
+      "
+      Add a genome to the view, and a genes-track.
+      \\describe{
+        \\item{genome}{annotation object. eg. Homo.sapiens}
+      }"
+      .self$plot(genome, type)
+      callSuper(genome, type, datasource_name)
+    },
     get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizNavigation=htmlDependency(

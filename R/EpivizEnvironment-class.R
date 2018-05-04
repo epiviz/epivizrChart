@@ -188,23 +188,23 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       "Return whether the environment is interactive with a data source"
       .self$interactive && !is.null(.self$epiviz_ds)
     },
-    add_shiny_handler=function(session) {
+    register_shiny_handler=function(session) {
       "
       Enable components to interact with Shiny session.
       \\describe{
         \\item{session}{Shiny session object}
       }"
-      .self$data_mgr$add_shiny_handler(session) 
+      .self$data_mgr$register_shiny_handler(session) 
       invisible()
     },
-    add_genome=function(genome, type="gene_info") {
+    add_genome=function(genome, type="gene_info", datasource_name = NULL) {
       "
       Add a genome to the view, and a genes-track.
       \\describe{
         \\item{genome}{annotation object. eg. Homo.sapiens}
       }"
+      # .self$data_mgr$add_measurements(genome, datasource_name)
       .self$data_mgr$add_genome(genome)
-      .self$plot(genome, type)
       invisible()
     },
     get_dependencies=function(shiny=FALSE) {
