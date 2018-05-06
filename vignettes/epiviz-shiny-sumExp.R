@@ -4,11 +4,11 @@ library(Homo.sapiens)
 
 data(sumexp)
 
-epivizEnv <- epivizEnv()
+epivizEnv <- epivizEnv(interactive = TRUE)
 scatterplot <- epivizEnv$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
 
 # add a navigational browser
-epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, parent=epivizEnv)
+epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, parent=epivizEnv, interactive = TRUE)
 
 genes_track <- epivizNav$add_genome(Homo.sapiens, datasource_name="genes")
 region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))

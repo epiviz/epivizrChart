@@ -9,7 +9,7 @@ data(sumexp)
 epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, interactive=TRUE)
 genes_track <- epivizNav$add_genome(Homo.sapiens)
 blocks_track <- epivizNav$plot(tcga_colon_blocks, datasource_name="450kMeth")
-# means_track <- epivizNav$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"))
+means_track <- epivizNav$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"))
 region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
 
 app <- shinyApp(
