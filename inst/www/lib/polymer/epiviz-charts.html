@@ -41256,15 +41256,22 @@ null):h=new epiviz.localstorage.LocalStorageManager(epiviz.localstorage.LocalSto
 epiviz.data.ShinyDataProvider = function(id) {
   epiviz.data.DataProvider.call(this, id || epiviz.Config.DEFAULT_DATA_PROVIDER_ID);
 
-  this._callbacks = {};
+  this._shinycallbacks = {};
   this._requestQueue = [];
   this._requestInProgress = false;
+  this._registered = false;
   // this._initialize();
-  Shiny.addCustomMessageHandler('epivizapi.callback', this.callbackHandler.bind(this));
+  Shiny.onInputChange('registerProvider', {
+    "id": this.id(),
+    ".nounce": Math.random() 
+  }); 
+  Shiny.addCustomMessageHandler(this.id() + '.callback', this.callbackHandler.bind(this));
+  Shiny.addCustomMessageHandler(this.id() + '.registration', this.registrationHandler.bind(this));
 };
 
 epiviz.data.ShinyDataProvider.prototype._initialize = function() {
-  Shiny.addCustomMessageHandler('epivizapi.callback', this.callbackHandler.bind(this));
+  Shiny.addCustomMessageHandler(this.id() + '.callback', this.callbackHandler.bind(this));
+  Shiny.addCustomMessageHandler(this.id() + '.registration', this.registrationHandler.bind(this));
   // Shiny.addCustomMessageHandler('epivizapi.failureCallback', this.failureCallbackHandler);
 };
 
@@ -41280,20 +41287,34 @@ epiviz.data.ShinyDataProvider.constructor = epiviz.data.ShinyDataProvider;
  */
 epiviz.data.ShinyDataProvider.prototype.getData = function(request, callback) {
   if (request.isEmpty()) { return; }
-    if(Object.keys(this._callbacks).length == 0) {
+    if(Object.keys(this._shinycallbacks).length == 0 && this._registered) {
+      var time = Date.now();
       var id = request.id();
-      this._callbacks[id] = callback;
+      //var id = time;
+      this._shinycallbacks[time] = [callback, id];
       var params = {};
       params["_method"] = request._args.action;
-      params["_reqid"] = id;
+      params["_reqid"] = time;
       params["_args"] = request._args;
       params[".nounce"] = Math.random();
-      Shiny.onInputChange('epivizapi', params); 
+      Shiny.onInputChange(this.id(), params); 
     }
     else {
       this._requestQueue.push([request, callback]);
     }
 };
+
+epiviz.data.ShinyDataProvider.prototype.registrationHandler = function(response) {
+  if(response.success) {
+    
+    this._registered = true;
+    
+    if(this._requestQueue.length > 0) {
+      var req = this._requestQueue.shift();
+      this.getData(req[0], req[1]);
+    }
+  }
+}
 
 epiviz.data.ShinyDataProvider.prototype.callbackHandler = function(response) {
   response.data = JSON.parse(response.data);
@@ -41308,19 +41329,18 @@ epiviz.data.ShinyDataProvider.prototype.callbackHandler = function(response) {
   }
   
   var respObj = epiviz.data.Response.fromRawObject(response);
-  // console.log(respObj);
-  // console.log(this);
-  // console.log(this._callbacks);
   var id = respObj.id();
 
-     var callback = this._callbacks[id];
-  delete this._callbacks[id];
-  callback(respObj);
+     var callback = this._shinycallbacks[id][0];
+     respObj._id = this._shinycallbacks[id][1];
+  delete this._shinycallbacks[id];
     
   if(this._requestQueue.length > 0) {
     var req = this._requestQueue.shift();
     this.getData(req[0], req[1]);
   }
+  
+    callback(respObj);
 };
 
 
@@ -50017,6 +50037,11 @@ Polymer({
       type: Object,
       notify: true
     },
+    
+    settingsMap: {
+      type: Object,
+      notify: true
+    },
 
     dataManager: {
         type: Object,
@@ -50026,8 +50051,11 @@ Polymer({
 
     /* callback function after the element is initialized */
     ready: function() {
+      console.log("SATA SRC ELEM");
+      
+      if(!window.shinyDatasourceProvider) {
 
-      var settingsMap = {
+      this.settingsMap = {
 
         configType: 'default',
 
@@ -50231,7 +50259,7 @@ Polymer({
 
       epiviz.Config.SETTINGS.dataProviders = [[this.providerType, this.providerId, this.providerUrl]];
 
-      var config = new epiviz.Config(settingsMap);
+      var config = new epiviz.Config(this.settingsMap);
       
       config.dataProviders = [];
       config.dataProviders.push([this.providerType, this.providerId, this.providerUrl]);
@@ -50245,6 +50273,8 @@ Polymer({
       this.config = config;
       this.dataProviderFactory = dataProviderFactory;
       this.dataManager = dataManager;
+      
+      window.shinyDatasourceProvider = dataManager;
 
       var self = this;
 
@@ -50256,6 +50286,7 @@ Polymer({
       this.dataManager.getSeqInfos(function(result) {
         self.seqInfos = result;
       });
+      }
     }
   });
 </script>
@@ -52162,11 +52193,34 @@ Polymer({
         /** lifecycle callback called when the behavior is created. */
         created: function () {
             var self = this;
+            console.log("CHART DATA BEH");
+            console.log(this);
             var dataManagerElem = document.querySelector('epiviz-data-source');
             if (dataManagerElem) {
-                this.dataManager = new epiviz.data.DataManager(dataManagerElem.config, dataManagerElem.dataProviderFactory);
-                this.dataManager.getMeasurements(function (result) {
-                    self.measurementSet = result;
+              //console.log(dataManagerElem);
+              //console.log(dataManagerElem.settingsMap);
+              
+              //dataManagerElem.settingsMap.dataProviders = [];
+              //var config = new epiviz.Config(dataManagerElem.settingsMap);
+              
+              //console.log(self.plotId);
+              //console.log(self._generatePlotId());
+      
+              //config.dataProviders = [];
+              //config.dataProviders.push([dataManagerElem.providerType, self._generatePlotId(), dataManagerElem.providerUrl]);
+
+              /** @type {epiviz.data.DataProviderFactory} */
+              //var dataProviderFactory = ;
+        
+              /** @type {epiviz.data.DataManager} */
+              //this.dataManager = new epiviz.data.DataManager(config, new epiviz.data.DataProviderFactory(config));
+        
+              // this.dataProviderFactory = dataProviderFactory;
+              //this.dataManager = dataManager;
+              this.dataManager = window.shinyDatasourceProvider;
+              //this.dataManager = new epiviz.data.DataManager(dataManagerElem.config, dataManagerElem.dataProviderFactory);
+                //this.dataManager.getMeasurements(function (result) {
+                //    self.measurementSet = result;
 
                     // if(self.measurementSet && self.nodeName == "EPIVIZ-NAVIGATION") {
                     //     var genesTrack = document.createElement("epiviz-genes-track");
@@ -52179,12 +52233,12 @@ Polymer({
                     // }
 
 
-                }, function (jqXHR, textStatus, errorThrown) {
-                    var toast = document.createElement("paper-toast");
-                    toast.setAttribute("text", textStatus + " - " + errorThrown);
-                    Polymer.dom(self.root).appendChild(toast);
-                    toast.show();
-                });
+                //}, function (jqXHR, textStatus, errorThrown) {
+                //    var toast = document.createElement("paper-toast");
+                //    toast.setAttribute("text", textStatus + " - " + errorThrown);
+                //    Polymer.dom(self.root).appendChild(toast);
+                //    toast.show();
+                //});
             }
         },
 
@@ -52383,7 +52437,7 @@ Polymer({
          */
         _getElementData: function (currentChild, pDom, measurements) {
             var self = this;
-
+            
             if (self.dataManager != null) {
                 var dims = currentChild.dimS || currentChild.getAttribute("dim-s");
 
@@ -52440,14 +52494,13 @@ Polymer({
                 var id = currentChild.plotId;
                 if (tMeasurements.length != 0) {
                     currentChild.range = currentChild.range || self.range || pDom.range;
+                    
                     if (!currentChild.measurements) {
                         currentChild.measurements = tMeasurements;
                     }
                     var chartMeasMap = {};
                     chartMeasMap[id] = mSet;
-
                     self.dataManager.getData(currentChild.range, chartMeasMap, function (id, data) {
-
                         var nItems = data.firstSeries().globalEndIndex() - data.firstSeries().globalStartIndex();
 
                         if (nItems == 0) {
@@ -73135,10 +73188,10 @@ event and do your own custom submission:
                         if (currentChild == undefined || currentChild.plotId == undefined) { return; }
                         currentChild.range = self.range;
                         // self._updateChart(currentChild.plotId);  
-                        if (!currentChild.jsonData) {
-                            self._getElementData(node, self, measurements);
-                        }
-                        // self._getElementData(currentChild, self, self.measurements);
+                        //if (!currentChild.jsonData) {
+                            //self._getElementData(node, self, measurements);
+                        //}
+                        self._getElementData(currentChild, self, self.measurements);
                     }
                 }
             },
@@ -73189,15 +73242,15 @@ event and do your own custom submission:
                                     var currentNavChild = node.getEffectiveChildren()[nindex];
                                     currentNavChild.range = node.range;
                                     currentNavChild._parentContainer = self;
-                                    if (!currentNavChild.data) {
+                                    //if (!currentNavChild.data) {
                                         self._getElementData(currentNavChild, self, self.measurements);
-                                    }
+                                    //}
                                 }
                             }
                             else {
-                                if (!node.jsonData) {
+                                //if (!node.jsonData) {
                                     self._getElementData(node, self, self.measurements);
-                                }
+                                //}
                             }
                             self.set('_isEmpty', true);
                         });
@@ -73209,9 +73262,10 @@ event and do your own custom submission:
                 self.$.addChart._parentContainer = self;
             },
 
-            // created: function() {
-            //     var self = this;
-            // },
+            //created: function() {
+            //  var self = this;
+            //  self.plotId = self.plotId || self._generatePlotId();
+            //},
 
             /* callback function after the element is initialized & attached */
             ready: function () {
@@ -75348,9 +75402,9 @@ event and do your own custom submission:
                                     if (self._parentContainer) {
                                         measurements = self._parentContainer.measurements;
                                     }
-                                    if (!node.data) {
+                                    //if (!node.data) {
                                         self._getElementData(node, self, measurements);
-                                    }
+                                    //}
                                 }
                             });
                             self.saveWorkspace();
@@ -75733,6 +75787,7 @@ event and do your own custom submission:
             created: function () {
                 var self = this;
                 self._getElementSeqInfo(self, self);
+                //self.plotId = self.plotId || self._generatePlotId();
             },
 
             /* lifecycle callback function after the element is attached to the DOM */
