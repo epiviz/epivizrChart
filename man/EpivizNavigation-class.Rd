@@ -21,6 +21,11 @@ Data container for an Epiviz navigation component.
 \section{Methods}{
 
 \describe{
+\item{\code{add_genome(genome, type = "gene_info", datasource_name = NULL)}}{Add a genome to the view, and a genes-track.
+\describe{
+  \item{genome}{annotation object. eg. Homo.sapiens}
+}}
+
 \item{\code{clone_charts(charts)}}{Clone EpivizCharts and append to navigation. Each chart must already
 exist in the navigation's data manager, otherwise an error will occur
 when attempting to intialize using their measurements
