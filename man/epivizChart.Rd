@@ -6,7 +6,8 @@
 \usage{
 epivizChart(data_obj = NULL, measurements = NULL, datasource_name = NULL,
   parent = NULL, chart = NULL, chr = NULL, start = NULL, end = NULL,
-  settings = NULL, colors = NULL, ...)
+  settings = NULL, colors = NULL, file = NULL, file_type = NULL,
+  file_format = NULL, ...)
 }
 \arguments{
 \item{data_obj}{A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.}
@@ -28,6 +29,12 @@ epivizChart(data_obj = NULL, measurements = NULL, datasource_name = NULL,
 \item{settings}{List of settings, e.g., list(title="Blocks Chart").}
 
 \item{colors}{List of colors. When chart is rendered to html this will be converted to a string encoded as JSON}
+
+\item{file}{location of file to visualize data from. This creates a IGV track. Either file or data_obj must be defined.}
+
+\item{file_type}{file_type can be one of 'annotation', 'wig', 'alignment' ,'variant', 'seg'. Also check file_format for supported file format.}
+
+\item{file_format}{Supported file Types are  annotation (bed, gff, gff3, gtf), wig(wig, bigWig, bedGraph), alignment(bam), variant(vcf), seg(seg)'}
 
 \item{...}{Additional arguments passed to \code{\link[epivizrData]{register}}, e.g., type="bp", columns=c("normal, cancer").}
 }

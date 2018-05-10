@@ -568,3 +568,85 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
     }
   )
 )
+
+
+#' Data container for an Epiviz Genes Track.
+#'
+#' @import htmltools
+#' @importFrom methods new
+EpivizIGVTrack <- setRefClass("EpivizIGVTrack",
+  contains="EpivizChart",
+  fields=list(
+    file="character",
+    file_type="character",
+    file_format="character",
+    file_name="CharacterOrNULL"
+  ),
+  methods=list(
+    initialize=function(file, file_type, file_format, file_name, ...) {
+      
+      .self$file <- file
+      .self$file_type <- file_type
+      .self$file_format <- file_format
+      .self$file_name <- file_name
+      
+      callSuper(...)
+    },
+    get_name=function() {
+      "Get name of Epiviz Web Component"
+      "epiviz-igv-track"
+    },
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
+      return("IGVTrack")
+    },
+    get_default_settings=function() {
+      "Get default settings"
+      list(
+        title="",
+        marginTop=25,
+        marginBottom=23,
+        marginLeft=20,
+        marginRight=10
+      )
+    },
+    get_default_colors=function() {
+      "Get default colors"
+      c("#f9a65a",
+        "#599ad3",
+        "#79c36a",
+        "#f1595f",
+        "#727272",
+        "#cd7058",
+        "#d77fb3"
+      )
+    },
+    get_attributes=function() {
+      "Get attributes for rendering component"
+      
+      tracks <- list(list(name= "Genes", type= "annotation", format= "bed",
+                    sourceType= "file",
+                    url= "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz",
+                    indexURL= "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz.tbi"),
+               list(name=.self$file_name, type=.self$file_type, format=.self$file_format, sourceType="file",
+                    url=.self$file))
+      
+      c(list(
+        tracks=json_writer(tracks),
+        colors=json_writer(.self$colors),
+        settings=json_writer(.self$settings)),
+        callSuper())
+    },
+    get_dependencies=function(shiny=FALSE) {
+      # TODO
+      # c(list(EpivizGenesTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(shiny)
+    }
+  )
+)

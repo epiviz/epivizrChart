@@ -1,6 +1,9 @@
 #' Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.
 #'
 #' @param data_obj A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.
+#' @param file location of file to visualize data from. This creates a IGV track. Either file or data_obj must be defined.
+#' @param file_type file_type can be one of 'annotation', 'wig', 'alignment' ,'variant', 'seg'. Also check file_format for supported file format.
+#' @param file_format Supported file Types are  annotation (bed, gff, gff3, gtf), wig(wig, bigWig, bedGraph), alignment(bam), variant(vcf), seg(seg)'
 #' @param measurements An \code{\link[epivizrData]{EpivizMeasurement}} object.
 #' @param datasource_name A name for the datasource. For example, "Mean by Sample Type".
 #' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
@@ -24,11 +27,11 @@
 #' @export
 epivizChart <- function(data_obj=NULL, measurements=NULL,
   datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,
-  start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
+  start=NULL, end=NULL, settings=NULL, colors=NULL, file=NULL, file_type = NULL, file_format=NULL, ...) {
 
-  if (is.null(data_obj) && is.null(measurements))
-    stop("You must pass either data or measurements")
-
+  if (is.null(data_obj) && is.null(measurements) && is.null(file))
+    stop("You must pass either data or measurements or file location")
+  
   # provider id for interactive charts
   p_id <- NULL
 
@@ -68,7 +71,22 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     if (is.null(chart))
       chart <- ms_obj$get_default_chart_type()
 
-  } else {
+  } 
+  else if (!is.null(file)) {
+    if(is.null(file_format)) {
+      stop("You must pass 'file_format' type when using file. Supported file Types are  annotation (bed, gff, gff3, gtf), 
+            wig(wig, bigWig, bedGraph), alignment(bam), variant(vcf), seg(seg)'")
+      # file_format <- tools::file_ext(file)
+    }
+    
+    if(is.null(file_type)) {
+      stop("You must pass 'file_type' type when using file. file_type can be one of 'annotation', 
+           'wig', 'alignment' ,'variant', 'seg'. Also check file_format for supported file format.")
+    }
+    
+    chart <- "IGVTrack"
+  }
+  else {
     # use measurements to plot data
     if (is.null(parent))
       stop("You must pass a 'parent' when using measurements")
@@ -87,23 +105,40 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     # to request data from data provider
     ms_data <- list(measurements=measurements)
   }
-
-  # initialization ------------------------------------------------------------
-  epiviz_chart <- .initialize_chart(
-    chart_type=chart,
-    data_mgr=data_mgr,
-    measurements=ms_data$measurements,
-    data=ms_data$data,
-    chr=chr,
-    start=start,
-    end=end,
-    settings=settings,
-    colors=colors,
-    parent=parent)
-
+  
+  if(is.null(file)) {
+    # initialization ------------------------------------------------------------
+    epiviz_chart <- .initialize_chart(
+      chart_type=chart,
+      data_mgr=data_mgr,
+      measurements=ms_data$measurements,
+      data=ms_data$data,
+      chr=chr,
+      start=start,
+      end=end,
+      settings=settings,
+      colors=colors,
+      parent=parent)
+  }
+  else {
+    epiviz_chart <- .initialize_chart(
+      chart_type=chart,
+      data_mgr=data_mgr,
+      file=file,
+      file_type=file_type,
+      file_format=file_format,
+      file_name=datasource_name,
+      chr=chr,
+      start=start,
+      end=end,
+      settings=settings,
+      colors=colors,
+      parent=parent)
+  }
+  
   if (!is.null(parent)) parent$append_chart(epiviz_chart)
-
-  epiviz_chart
+  
+  return(epiviz_chart)
 }
 
 #' Initialize Epiviz Chart based on chart type
@@ -120,6 +155,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     ScatterPlot=EpivizScatterPlot,
     StackedLinePlot=EpivizStackedLinePlot,
     StackedLineTrack=EpivizStackedLineTrack,
+    IGVTrack=EpivizIGVTrack,
     stop(chart_type,  " is not a valid chart type.",
       " See documentation for supported chart types")
   )
