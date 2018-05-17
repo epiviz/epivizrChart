@@ -1,9 +1,6 @@
 #' Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.
 #'
 #' @param data_obj A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.
-#' @param file location of file to visualize data from. This creates a IGV track. Either file or data_obj must be defined.
-#' @param file_type file_type can be one of 'annotation', 'wig', 'alignment' ,'variant', 'seg'. Also check file_format for supported file format.
-#' @param file_format Supported file Types are  annotation (bed, gff, gff3, gtf), wig(wig, bigWig, bedGraph), alignment(bam), variant(vcf), seg(seg)'
 #' @param measurements An \code{\link[epivizrData]{EpivizMeasurement}} object.
 #' @param datasource_name A name for the datasource. For example, "Mean by Sample Type".
 #' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
@@ -27,92 +24,39 @@
 #' @export
 epivizChart <- function(data_obj=NULL, measurements=NULL,
   datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,
-  start=NULL, end=NULL, settings=NULL, colors=NULL, file=NULL, file_type = NULL, file_format=NULL, ...) {
-
-  if (is.null(data_obj) && is.null(measurements) && is.null(file))
-    stop("You must pass either data or measurements or file location")
+  start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
   
-  # provider id for interactive charts
-  p_id <- NULL
+  if(class(data_obj) %in% c("BamFile", "BigWigFile", "BEDFile")) {
+    
+    chart <- "IGVTrack" 
+    
+    file_type <- switch(class(data_obj),
+                        "BamFile"="alignment",
+                        "BigWigFile"="wig",
+                        "BEDFile"="annotation",
+         stop(class(data_obj),  " is not a supported file object.",
+              " See IGV documentation for supported file formats and types")
+        )
+    
+    file_format <- switch(class(data_obj),
+                        "BamFile"="bam",
+                        "BigWigFile"="bigWig",
+                        "BEDFile"="bed",
+                        stop(class(data_obj),  " is not a supported file object.",
+                             " See IGV documentation for supported file formats and types")
+    )
+    
+    file_loc <- path(data_obj)
 
-  # if parent environment/navigation is provided,
-  # use its data manager, chr, start, and end
-  if (!is.null(parent)) {
-    if (!is(parent, "EpivizEnvironment"))
-      stop("Parent must be an EpivizEnvironment or EpivizNavigation")
-
-    if (parent$is_interactive()) {
-      p_id <- parent$epiviz_ds$provider_id
-    }
-
-    data_mgr <- parent$get_data_mgr()
-
-    parent_chr <- parent$get_chr()
-    if (!is.null(parent_chr)) chr <- parent_chr
-
-    parent_st <- parent$get_start()
-    if (!is.null(parent_st)) start <- parent_st
-
-    parent_end <- parent$get_end()
-    if (!is.null(parent_end)) end <- parent_end
-  } else {
     data_mgr <- EpivizChartDataMgr()
-  }
-
-  # register data -------------------------------------------------------------
-  if (!is.null(data_obj)) {
-    ms_obj <- data_mgr$add_measurements(data_obj,
-      datasource_name=datasource_name,
-      datasource_obj_name=deparse(substitute(data_obj)),
-      ...)
-
-    measurements <- ms_obj$get_measurements()
-
-    if (is.null(chart))
-      chart <- ms_obj$get_default_chart_type()
-
-  } 
-  else if (!is.null(file)) {
-    if(is.null(file_format)) {
-      stop("You must pass 'file_format' type when using file. Supported file Types are  annotation (bed, gff, gff3, gtf), 
-            wig(wig, bigWig, bedGraph), alignment(bam), variant(vcf), seg(seg)'")
-      # file_format <- tools::file_ext(file)
-    }
     
-    if(is.null(file_type)) {
-      stop("You must pass 'file_type' type when using file. file_type can be one of 'annotation', 
-           'wig', 'alignment' ,'variant', 'seg'. Also check file_format for supported file format.")
-    }
-    
-    chart <- "IGVTrack"
-  }
-  else {
-    # use measurements to plot data
-    if (is.null(parent))
-      stop("You must pass a 'parent' when using measurements")
-
-    if (is.null(chart))
-      stop("You must pass 'chart' type when using measurements")
-  }
-
-  if (is.null(p_id)) {
-    # non-interactive, json will be used for data
-    ms_data <- data_mgr$get_data(measurements=measurements,
-      chr=chr, start=start, end=end)
-
-  } else {
-    # interactive, measurement will be used
-    # to request data from data provider
-    ms_data <- list(measurements=measurements)
-  }
-  
-  if(is.null(file)) {
-    # initialization ------------------------------------------------------------
     epiviz_chart <- .initialize_chart(
       chart_type=chart,
       data_mgr=data_mgr,
-      measurements=ms_data$measurements,
-      data=ms_data$data,
+      file=file_loc,
+      file_type=file_type,
+      file_format=file_format,
+      file_name=datasource_name,
       chr=chr,
       start=start,
       end=end,
@@ -121,13 +65,74 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
       parent=parent)
   }
   else {
+    if (is.null(data_obj) && is.null(measurements) && is.null(file))
+      stop("You must pass either data or measurements or file location")
+    
+    # provider id for interactive charts
+    p_id <- NULL
+    
+    # if parent environment/navigation is provided,
+    # use its data manager, chr, start, and end
+    if (!is.null(parent)) {
+      if (!is(parent, "EpivizEnvironment"))
+        stop("Parent must be an EpivizEnvironment or EpivizNavigation")
+      
+      if (parent$is_interactive()) {
+        p_id <- parent$epiviz_ds$provider_id
+      }
+      
+      data_mgr <- parent$get_data_mgr()
+      
+      parent_chr <- parent$get_chr()
+      if (!is.null(parent_chr)) chr <- parent_chr
+      
+      parent_st <- parent$get_start()
+      if (!is.null(parent_st)) start <- parent_st
+      
+      parent_end <- parent$get_end()
+      if (!is.null(parent_end)) end <- parent_end
+    } else {
+      data_mgr <- EpivizChartDataMgr()
+    }
+    
+    # register data -------------------------------------------------------------
+    if (!is.null(data_obj)) {
+      ms_obj <- data_mgr$add_measurements(data_obj,
+                                          datasource_name=datasource_name,
+                                          datasource_obj_name=deparse(substitute(data_obj)),
+                                          ...)
+      
+      measurements <- ms_obj$get_measurements()
+      
+      if (is.null(chart))
+        chart <- ms_obj$get_default_chart_type()
+    } 
+    else {
+      # use measurements to plot data
+      if (is.null(parent))
+        stop("You must pass a 'parent' when using measurements")
+      
+      if (is.null(chart))
+        stop("You must pass 'chart' type when using measurements")
+    }
+    
+    if (is.null(p_id)) {
+      # non-interactive, json will be used for data
+      ms_data <- data_mgr$get_data(measurements=measurements,
+                                   chr=chr, start=start, end=end)
+      
+    } else {
+      # interactive, measurement will be used
+      # to request data from data provider
+      ms_data <- list(measurements=measurements)
+    }
+
+    # initialization ------------------------------------------------------------
     epiviz_chart <- .initialize_chart(
       chart_type=chart,
       data_mgr=data_mgr,
-      file=file,
-      file_type=file_type,
-      file_format=file_format,
-      file_name=datasource_name,
+      measurements=ms_data$measurements,
+      data=ms_data$data,
       chr=chr,
       start=start,
       end=end,

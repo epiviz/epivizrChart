@@ -1,0 +1,63 @@
+---
+title: "Visualizing `RangeSummarizedExperiment` objects Shiny Apps using epivizrChart"
+author: "Jayaram Kancherla, Hector Corrada Bravo"
+date: "`r Sys.Date()`"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Visualizing `RangeSummarizedExperiment` objects Shiny Apps using epivizrChart}
+  %\usepackage[UTF-8]{inputenc}
+---
+
+In this vignette, we will build a shiny app to visualize `RangeSummarizedExperiment` using epivizrChart. Since epivizrChart package uses the web components framework, it can be integrated with most frameworks that support HTML. 
+
+```{r setup, eval=TRUE, include=FALSE}
+library(epivizrChart)
+library(shiny)
+library(Homo.sapiens)
+```
+
+Sample data sets to use for the vignette.
+
+```{r}
+data(sumexp)
+```
+
+We create an Environment element which visualizes genome wide data. We then visualize `cancer` and `normal` valuues from the summarized experiment object.
+
+```{r}
+epivizEnv <- epivizEnv(interactive = TRUE)
+scatterplot <- epivizEnv$plot(sumexp, datasource_name="sumExp", columns=c("cancer", "normal"))
+```
+
+After looking at the genomic wide data, if you are interested in further exploring a specific region of the genome, We can create a navigation element linked to that genomic location. We can plot additional annotation/data charts to understand the data in this region. 
+
+```{r}
+epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, parent=epivizEnv, interactive = TRUE)
+
+genes_track <- epivizNav$add_genome(Homo.sapiens, datasource_name="genes")
+region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
+```
+
+Finally, we can embed these components in a Shiny App.
+
+```{r}
+
+app <- shinyApp(
+  ui=fluidPage(
+    uiOutput("epivizChart")
+  ),
+  server=function(input, output, session) {
+    
+    output$epivizChart <- renderUI({
+      epivizEnv$render_component(shiny=TRUE)
+    })
+    
+    epivizEnv$register_shiny_handler(session)
+  }
+)
+
+app
+
+```
