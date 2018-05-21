@@ -10,7 +10,7 @@ vignette: >
   %\usepackage[UTF-8]{inputenc}
 ---
 
-This vignette demonstrates one of the new components we added to epivizrChart, the Epiviz-IGV-Track. it is a web component implementing igv.js. 
+This vignette demonstrates one of the new components added to epivizrChart, Epiviz-IGV-Track. This element uses IGV.js (https://github.com/igvteam/igv.js) to visualize tracks from files (local and remote).
 
 ```{r setup, eval=TRUE, include=FALSE}
 library(epivizrChart)
@@ -23,7 +23,7 @@ Sample dataset to use for the vignette.
 data(tcga_colon_blocks)
 ```
 
-Lets initialize an environment element to the following chromosome location and add a gene annotation track and a blacks track from the example datasets. 
+Lets initialize an environment element to a specific genomic location. We can add additional annotation tracks (Homo.sapiens) and a blocks track from the example datasets.
 
 ```{r}
 
@@ -32,7 +32,7 @@ genes_track <- epiviz_env$plot(Homo.sapiens)
 blocks_track <- epiviz_env$plot(tcga_colon_blocks, datasource_name="450kMeth")
 ```
 
-We will create an R/BioConductor file object for the file we would like to visualize. We currently support BedFiles, BamFiles and BigWigFiles
+We will create an R/BioConductor file object for the file we would like to visualize. We currently support BedFiles, BamFiles and BigWigFiles.
 
 ```{r}
 file1 <- Rsamtools::BamFile("http://1000genomes.s3.amazonaws.com/phase3/data/HG01879/alignment/HG01879.mapped.ILLUMINA.bwa.ACB.low_coverage.20120522.bam")
@@ -41,7 +41,7 @@ file2 <- rtracklayer::BEDFile("https://s3.amazonaws.com/igv.broadinstitute.org/a
 
 Finally, we will plot the file object and when we render the environment element we will now see an IGV Track on the markdown document.
 
-Note: IGV.js has issues with the web browser embedded in R-Studio. Please open the markdown document in the webrowser from the system to visualize the data in igv.
+Note: IGV.js has issues with the web browser embedded in R-Studio. Please open the markdown document in the firefox/chrome to visualize the tracks.
 
 ```{r}
 

@@ -10,7 +10,7 @@ vignette: >
   %\usepackage[UTF-8]{inputenc}
 ---
   
-In this vignette, we will build a shiny app to visualize genomic data using epivizrChart. Since epivizrChart package uses the web components framework, it can be integrated with most frameworks that support HTML. 
+In this vignette, we will build a shiny app to visualize genomic data using epivizrChart. Since epiviz visualization library is built upon the web components framework, it can be integrated with most frameworks that support HTML. 
 
 ```{r setup, eval=TRUE, include=FALSE}
 library(epivizrChart)
@@ -26,7 +26,7 @@ data(tcga_colon_curves)
 data(sumexp)
 ```
 
-First we will create an epiviz Navigation component to render a visualization in the following genomic region. We will set `interactive=TRUE` so that the components can communicate with the shiny server to get data for the plots. We will then plot the data objects we loaded earlier. 
+First we will create an epiviz Navigation component to render a visualization in a specific genomic region. We will set `interactive=TRUE` so that the components can communicate with the shiny server to get data for the plots/tracks. We will then visualize the data objects we loaded earlier. 
 
 ```{r}
 epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, interactive=TRUE)
@@ -36,7 +36,7 @@ means_track <- epivizNav$plot(tcga_colon_curves, datasource_name="450kMeth", typ
 region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
 ```
 
-A Simple shiny app would be to render the visualization components. For this we will create a container on the io that will contain the epiviz components. On the server function, we will then call the render function on the navigation component to generate the HTML. We will also include `shiny=TRUE` and call the `register_shiny_handler` function to observe for events so that the components can communicate back and forth with the R-session.
+A basic shiny app would be to render the visualization components inside a container. For this we will create a `div` on the ui that will contain the epiviz components. On the server function, we will use the render function to generate the HTML. Navigation elements implement the usual genome browser interactions (pan, zoom, location input and gene name search) and these interactions generate data requests that are sent to the shiny server. We include `shiny=TRUE` so that the components can send data requests to the shiny sever and call the `register_shiny_handler` function to add callbacks and observe for session events.
 
 ```{r}
 app <- shinyApp(
@@ -58,7 +58,8 @@ app
 
 ```
 
-In this example. we will include an additional genomic region text box and as we update the text box, this will re render the epiviz components for the new location.
+
+In this example. we will include an additional genomic region text box. If the user updates the location in this text box, it triggers an event that will revisualize the epiviz components to the new genomic region.
 
 ```{r}
 app <- shinyApp(
