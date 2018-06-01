@@ -34,6 +34,8 @@ Data container for an Epiviz environment component.
 
 \item{\code{append_chart(chart)}}{Append chart or navigation to environment}
 
+\item{\code{append_region(chr = NULL, start = NULL, end = NULL, ...)}}{Add a child Navigation element to the given genomic region}
+
 \item{\code{get_charts()}}{Get charts within environment}
 
 \item{\code{get_component_type()}}{Get component type for prefix of random id generator}

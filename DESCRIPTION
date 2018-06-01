@@ -38,7 +38,8 @@ Suggests:
     minfi,
     Rsamtools,
     rtracklayer,
-    RColorBrewer
+    RColorBrewer,
+    magrittr
 Collate:
   'utils.R'
   'EpivizChartDataMgr-class.R'
@@ -51,6 +52,7 @@ Collate:
   'EpivizCharts-classes.R'
   'vignette_data.R'
   'util-inits.R'
+  'generics.R'
 VignetteBuilder: knitr
 Depends: R (>= 3.4.0)
 License: Artistic-2.0

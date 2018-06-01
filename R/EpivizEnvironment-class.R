@@ -164,6 +164,11 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
       }"
       .self$data_mgr$add_measurements(...)
     },
+    append_region=function(chr=NULL, start=NULL, end=NULL, ...){
+      "Add a child Navigation element to the given genomic region"
+      nav <- epivizNav(chr=chr, start=start, end=end, parent=.self)
+      return(nav)
+    },
     get_measurements=function(){
       "Get measurements from environment's data manager"
       .self$data_mgr$get_measurements()

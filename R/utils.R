@@ -8,6 +8,7 @@
 #' @param file file to read json_Str from
 #' @param method method used to parse json
 #' @param unexpected.escape handling escape characters, one of error, skip, keep
+#' @param simplify if TRUE, convert json-encoded lists to vectors
 #' @return a JSON object
 #'
 #' @seealso \code{\link{fromJSON}}

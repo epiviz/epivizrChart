@@ -4,7 +4,8 @@
 \alias{json_parser}
 \title{JSON parser used by this package}
 \usage{
-json_parser(json_str, file, method = "C", unexpected.escape = "error")
+json_parser(json_str, file, method = "C", unexpected.escape = "error",
+  simplify = TRUE)
 }
 \arguments{
 \item{json_str}{json string to parse}
@@ -14,6 +15,8 @@ json_parser(json_str, file, method = "C", unexpected.escape = "error")
 \item{method}{method used to parse json}
 
 \item{unexpected.escape}{handling escape characters, one of error, skip, keep}
+
+\item{simplify}{if TRUE, convert json-encoded lists to vectors}
 }
 \value{
 a JSON object
