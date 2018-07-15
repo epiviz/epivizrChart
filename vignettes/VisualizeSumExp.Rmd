@@ -37,12 +37,13 @@ After looking at the genomic wide data, if you are interested in further explori
 epivizNav <- epivizNav(chr="chr11", start=118000000, end=121000000, parent=epivizEnv, interactive = TRUE)
 
 genes_track <- epivizNav$add_genome(Homo.sapiens, datasource_name="genes")
-region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
+# region_scatterplot <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c( "cancer", "normal"))
+region_linetrack <- epivizNav$plot(sumexp, datasource_name="sumExp", columns=c( "cancer", "normal"), chart="LineTrack")
 ```
 
 Finally, we can embed these components in a Shiny App.
 
-```{r}
+```{r, eval=FALSE}
 
 app <- shinyApp(
   ui=fluidPage(

@@ -18,6 +18,8 @@ library(antiProfilesData)
 library(SummarizedExperiment)
 library(RColorBrewer)
 library(Homo.sapiens)
+library(AnnotationHub)
+library(GenomicRanges)
 ```
 
 Sample data sets we will be using for the vignette.
@@ -111,7 +113,7 @@ blocks_track
 
 You can now render the `epivizEnv` object and see that both the charts are linked to each other. Brushing is now enabled across charts.
 
-```{r}
+```{r, eval=FALSE}
 epivizEnv
 ```
 
@@ -184,7 +186,7 @@ heatmap_plot
 
 If we want to change the ordering of the charts within the `EpivizEnvironment`, we can use `order_charts`. Let's reorder the environment and move the `HeatmapPlot` to the top.
 
-```{r}
+```{r, eval=FALSE}
 order <- list(
   heatmap_plot,
   genes_track,
@@ -207,7 +209,7 @@ epivizEnv
 
 We can navigate to another location on the genome using the `navigate` method. This will update the data for all the charts in the environment.
 
-```{r}
+```{r, eval=FALSE}
 epivizEnv$navigate(chr="chr11", start=110800000, end=130383180)
 epivizEnv
 ```
@@ -216,7 +218,7 @@ epivizEnv
 
 Epiviz Navigation elements are useful to visualize data from a particular genomic region. For example, we can create an environment that shows data for an entire chromosome. But a navigation element can then show data for a genomic region. In an interactive session, Navigation elements also provide functionality to search by gene/probe and navigate along the genome(move left/right). 
 
-```{r}
+```{r, eval=FALSE}
 # create an environment to show data from entire chromosome 11
 epivizEnv <- epivizEnv(chr="chr11")
 
@@ -237,7 +239,7 @@ epivizEnv
 
 If we'd like a navigation element to include all of the current environment's charts at a particular genomic region, we can use the environment's `init_region`.
 
-```{r}
+```{r, eval=FALSE}
 epivizEnv <- epivizEnv(chr="chr11")
 
 # add a blocks track to the evironment
@@ -255,13 +257,13 @@ epivizEnv
 
 To remove all the charts from an environment or navigation element, we can use the `remove_all_charts` methods.
 
-```{r}
+```{r , eval=FALSE}
 epivizEnv$remove_all_charts()
 ```
 
 ### Create Charts with Settings and Colors
 
-```{r}
+```{r , eval=FALSE}
 colors <- brewer.pal(3, "Dark2")
 
 blocks_track <- epivizChart(tcga_colon_blocks, chr="chr11", start=99800000, end=103383180, colors=colors)
@@ -338,3 +340,23 @@ Finally close the server
 ```{r, eval=FALSE}
 server$stop_server()
 ```
+
+## Visualizing data from `data.frame`
+
+We can visualize genomic data stored in `data.frame` use epivizrChart. If the `data.frame` does not contain genomic location columns like `chr`, `start` or `end`, linking between charts is by row_number.
+
+For this example, we will use rna-seq data from `AnnotationHub`.
+
+```{r}
+ah <- AnnotationHub()
+epi <- query(ah, c("roadmap"))
+df <- epi[["AH49015"]]
+```
+
+now we'll create a scatter plot to visualize samples "E006" & "E114" from the `data.frame`
+
+```{r}
+rna_plot <- epivizChart(df, datasource_name="RNASeq", columns=c("E006","E114"), chart="ScatterPlot")
+rna_plot
+```
+
