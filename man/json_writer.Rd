@@ -4,7 +4,7 @@
 \alias{json_writer}
 \title{JSON writer used by this package}
 \usage{
-json_writer(x, method = "C")
+json_writer(x, indent = 0, method = "C")
 }
 \arguments{
 \item{x}{object to write to json}
