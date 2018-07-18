@@ -27,14 +27,153 @@ setMethod("plot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...)
   x
 })
 
-#' Generic method to  add navigation regions
+GenericAddChart <- function(x, y, chart, ...) {
+  
+  # if x is environment or navigation
+  if(class(x) %in% c("EpivizEnvironment", "EpivizNavigation")) {
+    x$plot(y, chart=chart, ...)
+    return(x)
+  }
+  
+  # if x is other bioconductor data objects
+  if(class(x) %in% get_registered_data_types()) {
+    chart <- epivizChart(x, y, chart=chart, ...)
+    return(chart)
+  }
+  
+  stop("object is not a registered data type.")
+}
+
+GenericBlocksTrack <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="BlocksTrack", ...)
+}
+
+GenericStackedBlocksTrack <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="StackedBlocksTrack", ...)
+}
+
+GenericScatterPlot <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="ScatterPlot", ...)
+}
+
+GenericHeatmapPlot <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="HeatmapPlot", ...)
+}
+
+GenericLinePlot <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="LinePlot", ...)
+}
+
+GenericStackedLinePlot <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="StackedLinePlot", ...)
+}
+
+GenericLineTrack <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="LineTrack", ...)
+}
+
+GenericStackedLineTrack <- function(x, y, ...) {
+  GenericAddChart(x, y, chart="StackedLineTrack", ...)
+}
+
+setGeneric("BlocksTrack", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("BlocksTrack") })
+
+#' Method to add Blocks Track
 #' 
-#' @param x an object of type \code{\link{EpivizEnvironment}}
-#' @param ... other parameters - genomic locations -  chr, start and end.
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
 #' @export
 #' 
+setMethod("BlocksTrack", signature = c("ANY", "ANY"), GenericBlocksTrack)
+
+setGeneric("StackedBlocksTrack", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("StackedBlocksTrack") })
+
+#' Method to add Stacked Blocks Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("StackedBlocksTrack", signature = c("ANY", "ANY"), GenericStackedBlocksTrack)
+
+setGeneric("ScatterPlot", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("ScatterPlot") })
+
+#' Method to add Scatter Plot
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("ScatterPlot", signature = c("ANY", "ANY"), GenericScatterPlot)
+
+setGeneric("HeatmapPlot", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("HeatmapPlot") })
+
+#' Method to add Heatmap Plot
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("HeatmapPlot", signature = c("ANY", "ANY"), GenericHeatmapPlot)
+
+setGeneric("LinePlot", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("LinePlot") })
+
+#' Method to add Line Plot
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("LinePlot", signature = c("ANY", "ANY"), GenericLinePlot)
+
+setGeneric("StackedLinePlot", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("StackedLinePlot") })
+
+#' Method to add Stacked Line Plot
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("StackedLinePlot", signature = c("ANY", "ANY"), GenericStackedLinePlot)
+
+setGeneric("LineTrack", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("LineTrack") })
+
+#' Method to add Line Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("LineTrack", signature = c("ANY", "ANY"), GenericLineTrack)
+
+setGeneric("StackedLineTrack", signature = c("x", "y"), 
+           function(x, y, ...) { standardGeneric("StackedLineTrack") })
+
+#' Method to add Stacked Line Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @export
+#' 
+setMethod("StackedLineTrack", signature = c("ANY", "ANY"), GenericStackedLineTrack)
+
 setGeneric("append_region", signature = "x", 
-          function(x, ...) standardGeneric("append_region")) 
+           function(x, ...) standardGeneric("append_region")) 
 
 #' Generic method to  add navigation regions
 #' 
@@ -48,9 +187,9 @@ setGeneric("append_region", signature = "x",
 setMethod("append_region", 
           signature = "EpivizEnvironment",
           function(x, chr, start, end, return_parent=FALSE) {
-  child <- x$append_region(chr, start, end)
-  if(return_parent) {
-    return(x)
-  }
-  child
-})
+            child <- x$append_region(chr, start, end)
+            if(return_parent) {
+              return(x)
+            }
+            child
+          })

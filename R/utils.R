@@ -39,12 +39,12 @@ json_writer <- rjson::toJSON
 chart_default_settings_colors <- function(chart_type) {
   chart_settings_json <- json_parser(
     file=system.file("chart_defaults.JSON", package="epivizrChart"))
-
+  
   if(!(chart_type %in% names(chart_settings_json))) {
     stop(chart_type,
          " is not a valid chart type. See documentation for supported chart types")
   }
-
+  
   chart_settings <- chart_settings_json[[chart_type]]
   chart_settings
 }
@@ -93,32 +93,50 @@ rand_id <- function(prefix="") {
   srv$register_action("getMeasurements", function(request_data) {
     app$get_measurements()
   })
-
+  
   srv$register_action("getRows", function(request_data) {
     app$get_rows(request_data$seqName,
-      request_data$start,
-      request_data$end,
-      request_data$metadata,
-      request_data$datasource)
+                 request_data$start,
+                 request_data$end,
+                 request_data$metadata,
+                 request_data$datasource)
   })
-
+  
   srv$register_action("getValues", function(request_data) {
     app$get_values(request_data$seqName,
-      request_data$start,
-      request_data$end,
-      request_data$datasource,
-      request_data$measurement)
+                   request_data$start,
+                   request_data$end,
+                   request_data$datasource,
+                   request_data$measurement)
   })
-
+  
   srv$register_action("getSeqInfos", function(request_data) {
     # TODO
   })
-
+  
   srv$register_action("setChartSettings", function(request_data) {
     # TODO
   })
-
+  
   # TODO: register action 'search'
-
+  
   invisible()
+}
+
+#' Get Available Chart Types
+#' @export
+get_available_chart_types <- function() {
+  return(c("BlocksTrack", "HeatmapPlot", 
+           "LinePlot", "LineTrack", 
+           "ScatterPlot", "StackedLinePlot", 
+           "StackedLineTrack", "StackedBlocksTrack"))
+}
+
+#' Get Registered BioConductor Objects
+#' @export
+get_registered_data_types <- function() {
+  return(c("GenomicRanges", "GRanges", "RangedSummarizedExperiment", 
+           "ExpressionSet", "OrganismDb", 
+           "TxDb", "EnsDb", 
+           "data.frame"))
 }
