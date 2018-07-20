@@ -29,12 +29,6 @@ setMethod("plot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...)
 
 GenericAddChart <- function(x, y, chart, ...) {
   
-  # if x is environment or navigation
-  if(class(x) %in% c("EpivizEnvironment", "EpivizNavigation")) {
-    x$plot(y, chart=chart, ...)
-    return(x)
-  }
-  
   # if x is other bioconductor data objects
   if(class(x) %in% get_registered_data_types()) {
     chart <- epivizChart(x, y, chart=chart, ...)
@@ -42,6 +36,47 @@ GenericAddChart <- function(x, y, chart, ...) {
   }
   
   stop("object is not a registered data type.")
+}
+
+GenericEnvAddChart <- function(x, y, chart, ...) {
+  
+  # if x is environment or navigation
+  if(class(x) %in% c("EpivizEnvironment", "EpivizNavigation")) {
+    x$plot(y, chart=chart, ...)
+    return(x)
+  }
+}
+
+GenericEnvBlocksTrack <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="BlocksTrack", ...)
+}
+
+GenericEnvStackedBlocksTrack <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="StackedBlocksTrack", ...)
+}
+
+GenericEnvScatterPlot <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="ScatterPlot", ...)
+}
+
+GenericEnvHeatmapPlot <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="HeatmapPlot", ...)
+}
+
+GenericEnvLinePlot <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="LinePlot", ...)
+}
+
+GenericEnvStackedLinePlot <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="StackedLinePlot", ...)
+}
+
+GenericEnvLineTrack <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="LineTrack", ...)
+}
+
+GenericEnvStackedLineTrack <- function(x, y, ...) {
+  GenericEnvAddChart(x, y, chart="StackedLineTrack", ...)
 }
 
 GenericBlocksTrack <- function(x, y, ...) {
@@ -86,7 +121,8 @@ setGeneric("BlocksTrack", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("BlocksTrack", signature = c("ANY", "ANY"), GenericBlocksTrack)
+setMethod("BlocksTrack", signature = c("EpivizEnvironment", "ANY"), GenericEnvBlocksTrack)
+setMethod("BlocksTrack", signature = c("ANY", "missing"), GenericBlocksTrack)
 
 setGeneric("StackedBlocksTrack", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("StackedBlocksTrack") })
@@ -110,7 +146,9 @@ setGeneric("ScatterPlot", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("ScatterPlot", signature = c("ANY", "ANY"), GenericScatterPlot)
+setMethod("ScatterPlot", signature = c("EpivizEnvironment", "ANY"), GenericEnvScatterPlot)
+setMethod("ScatterPlot", signature = c("ANY", "missing"), GenericScatterPlot)
+
 
 setGeneric("HeatmapPlot", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("HeatmapPlot") })
@@ -122,7 +160,8 @@ setGeneric("HeatmapPlot", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("HeatmapPlot", signature = c("ANY", "ANY"), GenericHeatmapPlot)
+setMethod("HeatmapPlot", signature = c("EpivizEnvironment", "ANY"), GenericEnvHeatmapPlot)
+setMethod("HeatmapPlot", signature = c("ANY", "missing"), GenericHeatmapPlot)
 
 setGeneric("LinePlot", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("LinePlot") })
@@ -134,7 +173,8 @@ setGeneric("LinePlot", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("LinePlot", signature = c("ANY", "ANY"), GenericLinePlot)
+setMethod("LinePlot", signature = c("EpivizEnvironment", "ANY"), GenericEnvLinePlot)
+setMethod("LinePlot", signature = c("ANY", "missing"), GenericLinePlot)
 
 setGeneric("StackedLinePlot", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("StackedLinePlot") })
@@ -146,7 +186,8 @@ setGeneric("StackedLinePlot", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("StackedLinePlot", signature = c("ANY", "ANY"), GenericStackedLinePlot)
+setMethod("StackedLinePlot", signature = c("EpivizEnvironment", "ANY"), GenericEnvStackedLinePlot)
+setMethod("StackedLinePlot", signature = c("ANY", "missing"), GenericStackedLinePlot)
 
 setGeneric("LineTrack", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("LineTrack") })
@@ -158,7 +199,8 @@ setGeneric("LineTrack", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("LineTrack", signature = c("ANY", "ANY"), GenericLineTrack)
+setMethod("LineTrack", signature = c("EpivizEnvironment", "ANY"), GenericEnvLineTrack)
+setMethod("LineTrack", signature = c("ANY", "missing"), GenericLineTrack)
 
 setGeneric("StackedLineTrack", signature = c("x", "y"), 
            function(x, y, ...) { standardGeneric("StackedLineTrack") })
@@ -170,7 +212,8 @@ setGeneric("StackedLineTrack", signature = c("x", "y"),
 #' @param ... other parameters for the plot method
 #' @export
 #' 
-setMethod("StackedLineTrack", signature = c("ANY", "ANY"), GenericStackedLineTrack)
+setMethod("StackedLineTrack", signature = c("EpivizEnvironment", "ANY"), GenericEnvStackedLineTrack)
+setMethod("StackedLineTrack", signature = c("ANY", "missing"), GenericStackedLineTrack)
 
 setGeneric("append_region", signature = "x", 
            function(x, ...) standardGeneric("append_region")) 
