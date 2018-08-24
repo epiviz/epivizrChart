@@ -16,7 +16,8 @@ In this vignette, we will build a shiny app to visualize genomic data using epiv
 library(epivizrChart)
 library(shiny)
 library(Homo.sapiens)
-library(epivizWorkshop)
+library(Rsamtools)
+library(rtracklayer)
 ```
 
 Sample data sets to use for the vignette.

@@ -67,3 +67,18 @@
 #' Example SummarizedExperiment for epivizr vignette
 #' @return A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object.
 "sumexp"
+
+
+#' Example expression data from the Gene Expression barcode project
+#'
+#' See vignette `data_preprocessing` for code to build this object.
+#'
+#' @format An \code{\link[Biobase]{ExpressionSet}} object
+#' @return A \code{\link[Biobase]{ExpressionSet}} object with gene expression barcode data
+"bcode_eset"
+
+#' Locations of CpG Islands
+#'
+#' @format A \code{\link[GenomicRanges]{GRanges}} object
+#' @return A \code{\link[GenomicRanges]{GRanges}} object with locations of CpG Islands
+"cgi_gr"
