@@ -147,8 +147,8 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 }
 
 #' Initialize Epiviz Chart based on chart type
-#' @field chart_type Chart type.
-#' @field ... Arguments for \code{\link[epivizrChart]{EpivizChart}} objects.
+#' @param chart_type Chart type.
+#' @param ... Arguments for \code{\link[epivizrChart]{EpivizChart}} objects.
 .initialize_chart <- function(chart_type, ...) {
   epiviz_chart <- switch(chart_type,
     GenesTrack=EpivizGenesTrack,

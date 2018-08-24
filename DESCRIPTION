@@ -39,7 +39,8 @@ Suggests:
     Rsamtools,
     rtracklayer,
     RColorBrewer,
-    magrittr
+    magrittr,
+    AnnotationHub
 Collate:
   'utils.R'
   'EpivizChartDataMgr-class.R'
@@ -59,4 +60,4 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 biocViews: Visualization, GUI
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

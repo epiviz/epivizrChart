@@ -24,6 +24,7 @@ json_parser <- rjson::fromJSON
 #' @export
 #'
 #' @param x object to write to json
+#' @param indent integer specifying how much indentation to use when formatting the JSON object; if 0, no pretty-formatting is used
 #' @param method method used to write json
 #' @return a string with JSON encoding of object
 #'
@@ -39,12 +40,12 @@ json_writer <- rjson::toJSON
 chart_default_settings_colors <- function(chart_type) {
   chart_settings_json <- json_parser(
     file=system.file("chart_defaults.JSON", package="epivizrChart"))
-
+  
   if(!(chart_type %in% names(chart_settings_json))) {
     stop(chart_type,
          " is not a valid chart type. See documentation for supported chart types")
   }
-
+  
   chart_settings <- chart_settings_json[[chart_type]]
   chart_settings
 }
@@ -87,38 +88,57 @@ rand_id <- function(prefix="") {
 }
 
 #' (taken from epivizr) register epiviz actions
-#'
+#' @param srv epivizrServer object
+#' @param app EpivizApp object
 .register_all_the_epiviz_things <- function(srv, app) {
   # register actions requested from epiviz app
   srv$register_action("getMeasurements", function(request_data) {
     app$get_measurements()
   })
-
+  
   srv$register_action("getRows", function(request_data) {
     app$get_rows(request_data$seqName,
-      request_data$start,
-      request_data$end,
-      request_data$metadata,
-      request_data$datasource)
+                 request_data$start,
+                 request_data$end,
+                 request_data$metadata,
+                 request_data$datasource)
   })
-
+  
   srv$register_action("getValues", function(request_data) {
     app$get_values(request_data$seqName,
-      request_data$start,
-      request_data$end,
-      request_data$datasource,
-      request_data$measurement)
+                   request_data$start,
+                   request_data$end,
+                   request_data$datasource,
+                   request_data$measurement)
   })
-
+  
   srv$register_action("getSeqInfos", function(request_data) {
     # TODO
   })
-
+  
   srv$register_action("setChartSettings", function(request_data) {
     # TODO
   })
-
+  
   # TODO: register action 'search'
-
+  
   invisible()
+}
+
+#' Construct URL for Websocket connection between R and UI
+#' @return url
+get_available_chart_types <- function() {
+  return(c("BlocksTrack", "HeatmapPlot", 
+           "LinePlot", "LineTrack", 
+           "ScatterPlot", "StackedLinePlot", 
+           "StackedLineTrack", "StackedBlocksTrack"))
+}
+
+#' Construct URL for Websocket connection between R and UI
+#' @return url
+get_registered_data_types <- function() {
+  return(c("BlocksTrack", "HeatmapPlot", 
+           "LinePlot", "LineTrack", 
+           "ScatterPlot", "StackedLinePlot", 
+           "StackedLineTrack", "StackedBlocksTrack"))
 }
