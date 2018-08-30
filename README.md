@@ -6,8 +6,9 @@ Add interactive charts and dashboards for genomic data visualization into RMarkd
 
 ```{r}
 # using Bioconductor
-source("http://bioconductor.org/biocLite.R")
-biocLite("epiviz/epivizrChart")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("epiviz/epivizrChart")
 
 # or using devtools
 library(devtools)
