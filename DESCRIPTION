@@ -19,7 +19,8 @@ Imports:
     epivizrServer,
     htmltools,
     rjson,
-    methods
+    methods,
+    BiocGenerics
 Suggests:
     testthat,
     roxygen2,

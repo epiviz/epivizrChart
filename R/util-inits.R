@@ -21,6 +21,7 @@
 #' # See package vignette for more examples.
 #'
 #' @importFrom methods is
+#' @importFrom BiocGenerics path
 #' @export
 epivizChart <- function(data_obj=NULL, measurements=NULL,
   datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,

@@ -6,6 +6,12 @@
 \usage{
 .settings_as_df(chart_settings)
 }
+\arguments{
+\item{chart_settings}{chart settings}
+}
+\value{
+chart settings as data frame
+}
 \description{
 (taken from epivizr) print settings in a readable format
 }

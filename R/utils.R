@@ -59,6 +59,8 @@ rand_id <- function(prefix="") {
 }
 
 #' (taken from epivizr) print settings in a readable format
+#' @param chart_settings chart settings
+#' @return chart settings as data frame
 #'
 .settings_as_df <- function(chart_settings) {
   ids <- sapply(chart_settings, function(x) x$id)

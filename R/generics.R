@@ -27,23 +27,21 @@ setMethod("plot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...)
   x
 })
 
-setGeneric("BlocksTrack", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("BlocksTrack") })
-
 #' Method to add Blocks Track
 #' 
 #' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname BlocksTrack-methods
+setGeneric("BlocksTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("BlocksTrack") })
+
+#' @rdname BlocksTrack-methods
 setMethod("BlocksTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="BlocksTrack", ...)
   x
 })
-
-setGeneric("StackedBlocksTrack", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("StackedBlocksTrack") })
 
 #' Method to add Stacked Blocks Track
 #' 
@@ -51,14 +49,15 @@ setGeneric("StackedBlocksTrack", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname StackedBlocksTrack-methods
+setGeneric("StackedBlocksTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("StackedBlocksTrack") })
+
+#' @rdname StackedBlocksTrack-methods
 setMethod("StackedBlocksTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="StackedBlocksTrack", ...)
   x
 })
-
-setGeneric("ScatterPlot", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("ScatterPlot") })
 
 #' Method to add Scatter Plot
 #' 
@@ -66,14 +65,15 @@ setGeneric("ScatterPlot", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname ScatterPlot-methods
+setGeneric("ScatterPlot", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("ScatterPlot") })
+
+#' @rdname ScatterPlot-methods
 setMethod("ScatterPlot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="ScatterPlot", ...)
   x
 })
-
-setGeneric("HeatmapPlot", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("HeatmapPlot") })
 
 #' Method to add Heatmap Plot
 #' 
@@ -81,14 +81,15 @@ setGeneric("HeatmapPlot", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname HeatmapPlot-methods
+setGeneric("HeatmapPlot", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("HeatmapPlot") })
+
+#' @rdname HeatmapPlot-methods
 setMethod("HeatmapPlot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="HeatmapPlot", ...)
   x
 })
-
-setGeneric("LinePlot", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("LinePlot") })
 
 #' Method to add Line Plot
 #' 
@@ -96,14 +97,15 @@ setGeneric("LinePlot", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname LinePlot-methods
+setGeneric("LinePlot", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("LinePlot") })
+
+#' @rdname LinePlot-methods
 setMethod("LinePlot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="LinePlot", ...)
   x
 })
-
-setGeneric("StackedLinePlot", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("StackedLinePlot") })
 
 #' Method to add Stacked Line Plot
 #' 
@@ -111,14 +113,15 @@ setGeneric("StackedLinePlot", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname StackedLinePlot-methods
+setGeneric("StackedLinePlot", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("StackedLinePlot") })
+
+#' @rdname StackedLinePlot-methods
 setMethod("StackedLinePlot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="StackedLinePlot", ...)
   x
 })
-
-setGeneric("LineTrack", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("LineTrack") })
 
 #' Method to add Line Track
 #' 
@@ -126,39 +129,46 @@ setGeneric("LineTrack", signature = c("x", "x"),
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
 #' @export
-#' 
+#' @rdname LineTrack-methods
+setGeneric("LineTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("LineTrack") })
+
+#' @rdname LineTrack-methods
 setMethod("LineTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="LineTrack", ...)
   x
 })
-
-setGeneric("StackedLineTrack", signature = c("x", "x"), 
-           function(x, y, ...) { standardGeneric("StackedLineTrack") })
 
 #' Method to add Stacked Line Track
 #' 
 #' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
 #' @param y a genomic data object
 #' @param ... other parameters for the plot method
+#' @rdname StackedLineTrack-methods
 #' @export
-#' 
+setGeneric("StackedLineTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("StackedLineTrack") })
+
+#' @rdname StackedLineTrack-methods
 setMethod("StackedLineTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, chart="StackedLineTrack", ...)
   x
 })
 
-setGeneric("append_region", signature = "x", 
-           function(x, ...) standardGeneric("append_region")) 
-
-#' Generic method to  add navigation regions
+#' Generic method to add navigation regions
 #' 
 #' @param x an object of type \code{\link{EpivizEnvironment}}
 #' @param chr chromosome id. ex. "chr11"
 #' @param start genomic region start
 #' @param end genomic region end
+#' @param ... other parameters
 #' @param return_parent To return the parent or the new navigation element. Defaults to FALSE
+#' @rdname append_region-methods
 #' @export
-#' 
+setGeneric("append_region", signature = "x", 
+           function(x, ...) standardGeneric("append_region")) 
+
+#' @rdname append_region-methods
 setMethod("append_region", 
           signature = "EpivizEnvironment",
           function(x, chr, start, end, return_parent=FALSE) {

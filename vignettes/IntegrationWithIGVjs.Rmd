@@ -41,7 +41,7 @@ file2 <- rtracklayer::BEDFile("https://s3.amazonaws.com/igv.broadinstitute.org/a
 
 Finally, we will plot the file object and when we render the environment element we will now see an IGV Track on the markdown document.
 
-Note: IGV.js has issues with the web browser embedded in R-Studio. Please open the markdown document in the firefox/chrome to visualize the tracks.
+Note: IGV.js has issues with the web browser embedded in R-Studio. Please open the markdown document in firefox/chrome to visualize the tracks.
 
 ```{r}
 
