@@ -18,6 +18,7 @@
 Generic methods to plot charts and add navigation regions
 }
 \examples{
+\dontrun{
 library(epivizrChart)
 library(Homo.sapiens)
 require(magrittr)
@@ -33,4 +34,5 @@ plot(sumexp, datasource_name="sumExp", columns=c("cancer", "normal")) \%>\%
 append_region(chr="chr11", start=118000000, end=121000000) \%>\% 
 plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
 epivizEnv
+}
 }

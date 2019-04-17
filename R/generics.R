@@ -6,6 +6,7 @@
 #' @export
 #' 
 #' @examples
+#' \dontrun{
 #' library(epivizrChart)
 #' library(Homo.sapiens)
 #' require(magrittr)
@@ -21,6 +22,7 @@
 #' append_region(chr="chr11", start=118000000, end=121000000) %>% 
 #' plot(sumexp, datasource_name="sumExp", columns=c("normal", "cancer"))
 #' epivizEnv
+#' }
 
 setMethod("plot", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
   x$plot(y, ...)
