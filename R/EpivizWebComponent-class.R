@@ -1,13 +1,14 @@
 setClassUnion("CharacterOrNULL", c("character", "NULL"))
 #' Data container for an Epiviz Web component.
 #'
-#' @field data_mgr \code{\link[epivizrChart]{EpivizChartDataMgr}}
+#' @field data_mgr [`EpivizChartDataMgr`]
 #' @field name (character) Epiviz chart type (tag name).
 #' @field class (CharacterOrNULL) Epiviz chart's class attribute.
 #' @field id (character) Epiviz chart's id attribute.
 #'
 #' @import htmltools
 #' @importFrom methods new
+#' @md
 EpivizWebComponent <- setRefClass("EpivizWebComponent",
   contains="VIRTUAL",
   fields=list(

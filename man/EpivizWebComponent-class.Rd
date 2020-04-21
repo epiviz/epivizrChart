@@ -11,7 +11,7 @@ Data container for an Epiviz Web component.
 \section{Fields}{
 
 \describe{
-\item{\code{data_mgr}}{\code{\link[epivizrChart]{EpivizChartDataMgr}}}
+\item{\code{data_mgr}}{\code{\link{EpivizChartDataMgr}}}
 
 \item{\code{name}}{(character) Epiviz chart type (tag name).}
 

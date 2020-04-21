@@ -15,7 +15,7 @@ Data container for an Epiviz navigation component.
 
 \item{\code{geneInRange}}{(character) Nearest Gene in range.}
 
-\item{\code{parent}}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where navigation is appended.}
+\item{\code{parent}}{An object of class \code{\link{EpivizEnvironment}} where navigation is appended.}
 }}
 
 \section{Methods}{

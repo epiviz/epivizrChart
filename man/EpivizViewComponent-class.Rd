@@ -17,7 +17,7 @@ Data container for an Epiviz web component.
 
 \item{\code{end}}{(NumericOrNULL) End location.}
 
-\item{\code{measurements}}{(ListOrNULL) list of measurements of class \code{\link[epivizrData]{EpivizMeasurement}}.}
+\item{\code{measurements}}{(ListOrNULL) list of measurements of class \code{\link{EpivizMeasurement}}.}
 }}
 
 \section{Methods}{

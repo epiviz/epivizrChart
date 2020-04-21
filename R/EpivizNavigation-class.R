@@ -2,9 +2,10 @@
 #'
 #' @field gene (character) Gene
 #' @field geneInRange (character) Nearest Gene in range.
-#' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where navigation is appended.
+#' @field parent An object of class [`EpivizEnvironment`] where navigation is appended.
 #' @import htmltools
 #' @importFrom methods new
+#' @md
 EpivizNavigation <- setRefClass("EpivizNavigation",
   contains="EpivizEnvironment",
   fields=list(

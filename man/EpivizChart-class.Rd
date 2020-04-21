@@ -17,7 +17,7 @@ Data container for an Epiviz chart component.
 
 \item{\code{settings}}{(list) Epiviz chart's settings attribute.}
 
-\item{\code{parent}}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.}
+\item{\code{parent}}{An object of class \code{\link{EpivizEnvironment}} where chart is appended.}
 }}
 
 \section{Methods}{

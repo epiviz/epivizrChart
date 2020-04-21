@@ -11,11 +11,11 @@ Data container for an Epiviz environment component.
 \section{Fields}{
 
 \describe{
-\item{\code{charts}}{List of class \code{\link[epivizrChart]{EpivizViewComponent}} used to track nested elements.}
+\item{\code{charts}}{List of class \code{\link{EpivizViewComponent}} used to track nested elements.}
 
 \item{\code{interactive}}{Logical value of whether componenet is interactive with data source componenet..}
 
-\item{\code{epiviz_ds}}{\code{\link[epivizrChart]{EpivizDataSource}} object for interactive documents.}
+\item{\code{epiviz_ds}}{\code{\link{EpivizDataSource}} object for interactive documents.}
 }}
 
 \section{Methods}{

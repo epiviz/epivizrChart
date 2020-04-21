@@ -1,11 +1,12 @@
 setClassUnion("EpivizDSorNULL", c("EpivizDataSource", "NULL"))
 #' Data container for an Epiviz environment component.
 #'
-#' @field charts List of class \code{\link[epivizrChart]{EpivizViewComponent}} used to track nested elements.
+#' @field charts List of class [`EpivizViewComponent`] used to track nested elements.
 #' @field interactive Logical value of whether componenet is interactive with data source componenet..
-#' @field epiviz_ds  \code{\link[epivizrChart]{EpivizDataSource}} object for interactive documents.
+#' @field epiviz_ds  [`EpivizDataSource`] object for interactive documents.
 #' @import htmltools
 #' @importFrom methods new
+#' @md
 EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizViewComponent",
   fields=list(

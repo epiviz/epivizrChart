@@ -5,9 +5,10 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #' @field chr (CharacterOrNULL) Chromosome location.
 #' @field start (NumericOrNULL) Start location.
 #' @field end (NumericOrNULL) End location.
-#' @field measurements (ListOrNULL) list of measurements of class \code{\link[epivizrData]{EpivizMeasurement}}.
+#' @field measurements (ListOrNULL) list of measurements of class [`EpivizMeasurement`].
 #' @import htmltools
 #' @importFrom methods new
+#' @md
 EpivizViewComponent <- setRefClass("EpivizViewComponent",
   contains="EpivizWebComponent",
   fields=list(

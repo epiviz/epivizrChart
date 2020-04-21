@@ -6,10 +6,11 @@ setClassUnion("ListOrNULL", c("list", "NULL"))
 #' @field data (list) Values of an epiviz chart's data attribute.
 #' @field colors (character) Epiviz chart's colors attribute.
 #' @field settings (list) Epiviz chart's settings attribute.
-#' @field parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} where chart is appended.
+#' @field parent An object of class [`EpivizEnvironment`] where chart is appended.
 #' @import epivizrData
 #' @import htmltools
 #' @importFrom methods new
+#' @md
 EpivizChart <- setRefClass("EpivizChart",
   contains="EpivizViewComponent",
   fields=list(
