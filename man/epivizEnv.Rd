@@ -4,8 +4,7 @@
 \alias{epivizEnv}
 \title{Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.}
 \usage{
-epivizEnv(chr = NULL, start = NULL, end = NULL,
-  interactive = FALSE, ...)
+epivizEnv(chr = NULL, start = NULL, end = NULL, interactive = FALSE, ...)
 }
 \arguments{
 \item{chr}{The chromosome to filter on, e.g., chr="chr11"}

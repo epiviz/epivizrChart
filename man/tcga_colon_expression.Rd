@@ -4,12 +4,14 @@
 \name{tcga_colon_expression}
 \alias{tcga_colon_expression}
 \title{Example exon-level RNAseq data from TCGA project for epivizr vignette.}
-\format{A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object with 12,800 rows (exons) and 40 samples.
+\format{
+A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object with 12,800 rows (exons) and 40 samples.
  \describe{
    \item{\code{assay(tcga_colon_expression)}}{exon-level count matrix}
    \item{\code{colData(tcga_colon_expression)}}{a \code{DataFrame} containing sample information.
      Normal/Tumor status is given in column \code{sample_type}}
- }}
+ }
+}
 \source{
 TCGA project: \url{https://tcga-data.nci.nih.gov/tcga/}
 }

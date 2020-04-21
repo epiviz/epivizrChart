@@ -4,8 +4,13 @@
 \alias{json_parser}
 \title{JSON parser used by this package}
 \usage{
-json_parser(json_str, file, method = "C", unexpected.escape = "error",
-  simplify = TRUE)
+json_parser(
+  json_str,
+  file,
+  method = "C",
+  unexpected.escape = "error",
+  simplify = TRUE
+)
 }
 \arguments{
 \item{json_str}{json string to parse}

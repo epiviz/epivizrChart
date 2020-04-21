@@ -4,7 +4,8 @@
 \name{tcga_colon_blocks}
 \alias{tcga_colon_blocks}
 \title{Example methylation data (blocks) for epivizr vignette.}
-\format{A \code{\link[GenomicRanges]{GRanges}} object with 129 and \code{mcols}:
+\format{
+A \code{\link[GenomicRanges]{GRanges}} object with 129 and \code{mcols}:
 
 \describe{
  \item{\code{value}}{average smooth methylation difference within block}
@@ -18,7 +19,8 @@
  \item{\code{fwer}}{family-wise error rate estimate based on difference conditioned on length}
  \item{\code{p.valueArea}}{permutation p.value based on area}
  \item{\code{fwerArea}}{family-wise error rate estimate based on area}
-}}
+}
+}
 \source{
 TCGA project: \url{https://tcga-data.nci.nih.gov/tcga/}
 }

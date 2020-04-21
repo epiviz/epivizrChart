@@ -4,7 +4,9 @@
 \name{bcode_eset}
 \alias{bcode_eset}
 \title{Example expression data from the Gene Expression barcode project}
-\format{An \code{\link[Biobase]{ExpressionSet}} object}
+\format{
+An \code{\link[Biobase]{ExpressionSet}} object
+}
 \usage{
 bcode_eset
 }

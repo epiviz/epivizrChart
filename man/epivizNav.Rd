@@ -4,8 +4,14 @@
 \alias{epivizNav}
 \title{Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.}
 \usage{
-epivizNav(chr = NULL, start = NULL, end = NULL, parent = NULL,
-  interactive = FALSE, ...)
+epivizNav(
+  chr = NULL,
+  start = NULL,
+  end = NULL,
+  parent = NULL,
+  interactive = FALSE,
+  ...
+)
 }
 \arguments{
 \item{chr}{The chromosome to filter on, e.g., chr="chr11".}

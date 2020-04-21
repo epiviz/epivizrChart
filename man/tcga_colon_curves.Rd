@@ -4,7 +4,8 @@
 \name{tcga_colon_curves}
 \alias{tcga_colon_curves}
 \title{Example methylation data (smoothed methylation levels) for epivizr vignette}
-\format{A \code{\link[GenomicRanges]{GRanges}} object with 7135 ranges and \code{mcols}:
+\format{
+A \code{\link[GenomicRanges]{GRanges}} object with 7135 ranges and \code{mcols}:
 
 \describe{
  \item{\code{id}}{probe cluster id}
@@ -14,7 +15,8 @@
  \item{\code{smooth}}{smooth methylation percentage difference between normal and tumor}
  \item{\code{normalMean}}{mean methylation estimate for normal samples}
  \item{\code{cancerMean}}{mean methylation estimate for cancer samples}
-}}
+}
+}
 \source{
 TCGA project: \url{https://tcga-data.nci.nih.gov/tcga/}
 }

@@ -4,7 +4,9 @@
 \name{sumexp}
 \alias{sumexp}
 \title{Example SummarizedExperiment for epivizr vignette}
-\format{An object of class \code{RangedSummarizedExperiment} with 12800 rows and 2 columns.}
+\format{
+An object of class \code{RangedSummarizedExperiment} with 12800 rows and 2 columns.
+}
 \usage{
 sumexp
 }
