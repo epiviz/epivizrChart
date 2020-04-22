@@ -2,7 +2,7 @@
 % Please edit documentation in R/util-inits.R
 \name{epivizChart}
 \alias{epivizChart}
-\title{Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.}
+\title{Initialize an \code{\link{EpivizChart}} object to visualize in viewer or knit to HTML.}
 \usage{
 epivizChart(
   data_obj = NULL,
@@ -19,13 +19,13 @@ epivizChart(
 )
 }
 \arguments{
-\item{data_obj}{A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.}
+\item{data_obj}{A data object that will register to an \code{\link{EpivizData}} object.}
 
-\item{measurements}{An \code{\link[epivizrData]{EpivizMeasurement}} object.}
+\item{measurements}{An \code{\link{EpivizMeasurement}} object.}
 
 \item{datasource_name}{A name for the datasource. For example, "Mean by Sample Type".}
 
-\item{parent}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.}
+\item{parent}{An object of class \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}} to append the chart within.}
 
 \item{chart}{The chart type to be visualized: "BlocksTrack", HeatmapPlot", "LinePlot", "LineTrack", "ScatterPlot", "StackedLinePlot", "StackedLineTrack".}
 
@@ -39,13 +39,13 @@ epivizChart(
 
 \item{colors}{List of colors. When chart is rendered to html this will be converted to a string encoded as JSON}
 
-\item{...}{Additional arguments passed to \code{\link[epivizrData]{register}}, e.g., type="bp", columns=c("normal, cancer").}
+\item{...}{Additional arguments passed to \code{\link[epivizrData:register]{epivizrData::register}}, e.g., \code{type="bp"}, \code{columns=c("normal, cancer")}.}
 }
 \value{
-An object of class \code{\link[epivizrChart]{EpivizChart}}.
+An object of class \code{\link{EpivizChart}}.
 }
 \description{
-Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.
+Initialize an \code{\link{EpivizChart}} object to visualize in viewer or knit to HTML.
 }
 \examples{
 data(tcga_colon_blocks)

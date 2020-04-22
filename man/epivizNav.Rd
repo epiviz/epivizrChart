@@ -2,7 +2,7 @@
 % Please edit documentation in R/util-inits.R
 \name{epivizNav}
 \alias{epivizNav}
-\title{Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.}
+\title{Initialize an \code{\link{EpivizNavigation}} object to visualize in viewer or knit to HTML.}
 \usage{
 epivizNav(
   chr = NULL,
@@ -20,17 +20,17 @@ epivizNav(
 
 \item{end}{The end location, e.g., end=130383180.}
 
-\item{parent}{An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.}
+\item{parent}{An object of class \verb{[EpivizEnvironment}] or \code{\link{EpivizNavigation}} to append the chart within.}
 
 \item{interactive}{(logical) enable if running a websocket/shiny server}
 
 \item{...}{Additional arguments for initializing navigation, e.g., gene and geneInRange.}
 }
 \value{
-An object of class \code{\link[epivizrChart]{EpivizNavigation}}.
+An object of class \code{\link{EpivizNavigation}}.
 }
 \description{
-Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.
+Initialize an \code{\link{EpivizNavigation}} object to visualize in viewer or knit to HTML.
 }
 \examples{
 epiviz <- epivizNav(chr="chr11", start=99800000, end=103383180)

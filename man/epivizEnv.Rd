@@ -2,26 +2,26 @@
 % Please edit documentation in R/util-inits.R
 \name{epivizEnv}
 \alias{epivizEnv}
-\title{Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.}
+\title{Initialize an \code{\link{EpivizEnvironment}} object.}
 \usage{
 epivizEnv(chr = NULL, start = NULL, end = NULL, interactive = FALSE, ...)
 }
 \arguments{
-\item{chr}{The chromosome to filter on, e.g., chr="chr11"}
+\item{chr}{The chromosome to filter on, e.g., \code{chr="chr11"}}
 
-\item{start}{The start location, e.g., start=99800000.}
+\item{start}{The start location, e.g., \code{start=99800000}.}
 
-\item{end}{The end location, e.g., end=130383180.}
+\item{end}{The end location, e.g., \code{end=130383180}.}
 
 \item{interactive}{(logical) enable if running a websocket/shiny server}
 
-\item{...}{Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}}
+\item{...}{Additional params to pass to \code{\link{EpivizWebComponent}}}
 }
 \value{
-An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
+An object of class \code{\link{EpivizEnvironment}}
 }
 \description{
-Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.
+Initialize an \code{\link{EpivizEnvironment}} object.
 }
 \examples{
 epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)

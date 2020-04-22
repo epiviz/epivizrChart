@@ -5,15 +5,11 @@
 \alias{cgi_gr}
 \title{Locations of CpG Islands}
 \format{
-A \code{\link[GenomicRanges]{GRanges}} object
+A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}}` object with locations of CpG Islands in hg19
 }
 \usage{
-cgi_gr
-}
-\value{
-A \code{\link[GenomicRanges]{GRanges}} object with locations of CpG Islands
+data(cgi_gr)
 }
 \description{
 Locations of CpG Islands
 }
-\keyword{datasets}

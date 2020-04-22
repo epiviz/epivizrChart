@@ -5,30 +5,26 @@
 \alias{tcga_colon_curves}
 \title{Example methylation data (smoothed methylation levels) for epivizr vignette}
 \format{
-A \code{\link[GenomicRanges]{GRanges}} object with 7135 ranges and \code{mcols}:
+A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object with 7135 ranges and \code{mcols}:
 
 \describe{
- \item{\code{id}}{probe cluster id}
- \item{\code{type}}{probe cluster type}
- \item{\code{blockgroup}}{probe cluster block group}
- \item{\code{diff}}{raw methylation percentage difference between normal and tumor}
- \item{\code{smooth}}{smooth methylation percentage difference between normal and tumor}
- \item{\code{normalMean}}{mean methylation estimate for normal samples}
- \item{\code{cancerMean}}{mean methylation estimate for cancer samples}
+\item{\code{id}}{probe cluster id}
+\item{\code{type}}{probe cluster type}
+\item{\code{blockgroup}}{probe cluster block group}
+\item{\code{diff}}{raw methylation percentage difference between normal and tumor}
+\item{\code{smooth}}{smooth methylation percentage difference between normal and tumor}
+\item{\code{normalMean}}{mean methylation estimate for normal samples}
+\item{\code{cancerMean}}{mean methylation estimate for cancer samples}
 }
 }
 \source{
 TCGA project: \url{https://tcga-data.nci.nih.gov/tcga/}
 }
 \usage{
-tcga_colon_curves
-}
-\value{
-A \code{\link[GenomicRanges]{GRanges}} object.
+data(tcga_colon_curves)
 }
 \description{
-Example results from methylation analysis of human chromosome 11 using the \code{\link[minfi]{minfi-package}} package
+Example results from methylation analysis of human chromosome 11 using the \code{minfi} package
 of TCGA 450k beadarray samples. This object contains probe cluster level methylation estimates from
-\code{\link[minfi]{blockFinder}}.
+\code{\link[minfi:blockFinder]{minfi::blockFinder()}}.
 }
-\keyword{datasets}

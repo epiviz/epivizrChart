@@ -5,15 +5,11 @@
 \alias{bcode_eset}
 \title{Example expression data from the Gene Expression barcode project}
 \format{
-An \code{\link[Biobase]{ExpressionSet}} object
+An \code{\link[Biobase:ExpressionSet]{Biobase::ExpressionSet}} object
 }
 \usage{
-bcode_eset
-}
-\value{
-A \code{\link[Biobase]{ExpressionSet}} object with gene expression barcode data
+data(bcode_set)
 }
 \description{
-See vignette `data_preprocessing` for code to build this object.
+See vignette \code{data_preprocessing} for code to build this object.
 }
-\keyword{datasets}

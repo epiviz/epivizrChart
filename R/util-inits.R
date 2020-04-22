@@ -1,17 +1,17 @@
-#' Initialize an \code{\link[epivizrChart]{EpivizChart}} object to visualize in viewer or knit to HTML.
+#' Initialize an [`EpivizChart`] object to visualize in viewer or knit to HTML.
 #'
-#' @param data_obj A data object that will register to an \code{\link[epivizrData]{EpivizData}} object.
-#' @param measurements An \code{\link[epivizrData]{EpivizMeasurement}} object.
+#' @param data_obj A data object that will register to an [`EpivizData`] object.
+#' @param measurements An [`EpivizMeasurement`] object.
 #' @param datasource_name A name for the datasource. For example, "Mean by Sample Type".
-#' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
+#' @param parent An object of class [`EpivizEnvironment`] or [`EpivizNavigation`] to append the chart within.
 #' @param chart The chart type to be visualized: "BlocksTrack", HeatmapPlot", "LinePlot", "LineTrack", "ScatterPlot", "StackedLinePlot", "StackedLineTrack".
 #' @param chr The chromosome to filter on, e.g., chr="chr11".
 #' @param start The start location, e.g., start=110800000.
 #' @param end The end location, e.g., end=130383180.
 #' @param settings List of settings, e.g., list(title="Blocks Chart").
 #' @param colors List of colors. When chart is rendered to html this will be converted to a string encoded as JSON
-#' @param ... Additional arguments passed to \code{\link[epivizrData]{register}}, e.g., type="bp", columns=c("normal, cancer").
-#' @return An object of class \code{\link[epivizrChart]{EpivizChart}}.
+#' @param ... Additional arguments passed to [`epivizrData::register`], e.g., `type="bp"`, `columns=c("normal, cancer")`.
+#' @return An object of class [`EpivizChart`].
 #'
 #' @examples
 #' data(tcga_colon_blocks)
@@ -23,6 +23,7 @@
 #' @importFrom methods is
 #' @importFrom BiocGenerics path
 #' @export
+#' @md
 epivizChart <- function(data_obj=NULL, measurements=NULL,
   datasource_name=NULL, parent=NULL, chart=NULL, chr=NULL,
   start=NULL, end=NULL, settings=NULL, colors=NULL, ...) {
@@ -149,7 +150,8 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 
 #' Initialize Epiviz Chart based on chart type
 #' @param chart_type Chart type.
-#' @param ... Arguments for \code{\link[epivizrChart]{EpivizChart}} objects.
+#' @param ... Arguments for [`EpivizChart`] objects.
+#' @md
 .initialize_chart <- function(chart_type, ...) {
   epiviz_chart <- switch(chart_type,
     GenesTrack=EpivizGenesTrack,
@@ -170,21 +172,22 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 }
 
 
-#' Initialize an \code{\link[epivizrChart]{EpivizNavigation}} object to visualize in viewer or knit to HTML.
+#' Initialize an [`EpivizNavigation`] object to visualize in viewer or knit to HTML.
 #'
 #' @param chr The chromosome to filter on, e.g., chr="chr11".
 #' @param start The start location, e.g., start=99800000.
 #' @param end The end location, e.g., end=130383180.
-#' @param parent An object of class \code{\link[epivizrChart]{EpivizEnvironment}} or \code{\link[epivizrChart]{EpivizNavigation}} to append the chart within.
+#' @param parent An object of class `[EpivizEnvironment`] or [`EpivizNavigation`] to append the chart within.
 #' @param interactive (logical) enable if running a websocket/shiny server
 #' @param ... Additional arguments for initializing navigation, e.g., gene and geneInRange.
-#' @return An object of class \code{\link[epivizrChart]{EpivizNavigation}}.
+#' @return An object of class [`EpivizNavigation`].
 #'
 #' @examples
 #' epiviz <- epivizNav(chr="chr11", start=99800000, end=103383180)
 #'
 #' @importFrom methods is
 #' @export
+#' @md
 epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=FALSE, ...) {
   # use parent's data manager
   if (!is.null(parent)) {
@@ -226,19 +229,20 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
 }
 
 
-#' Initialize an \code{\link[epivizrChart]{EpivizEnvironment}} object.
+#' Initialize an [`EpivizEnvironment`] object.
 #'
-#' @param chr The chromosome to filter on, e.g., chr="chr11"
-#' @param start The start location, e.g., start=99800000.
-#' @param end The end location, e.g., end=130383180.
+#' @param chr The chromosome to filter on, e.g., `chr="chr11"`
+#' @param start The start location, e.g., `start=99800000`.
+#' @param end The end location, e.g., `end=130383180`.
 #' @param interactive (logical) enable if running a websocket/shiny server
-#' @param ... Additional params to pass to \code{\link[epivizrChart]{EpivizWebComponent}}
-#' @return An object of class \code{\link[epivizrChart]{EpivizEnvironment}}
+#' @param ... Additional params to pass to [`EpivizWebComponent`]
+#' @return An object of class [`EpivizEnvironment`]
 #'
 #' @examples
 #' epiviz <- epivizEnv(chr="chr11", start=99800000, end=103383180)
 #'
 #' @export
+#' @md
 epivizEnv <- function(chr=NULL, start=NULL, end=NULL, interactive=FALSE, ...) {
   data_mgr <- EpivizChartDataMgr()
 

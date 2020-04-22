@@ -9,7 +9,7 @@
 \arguments{
 \item{chart_type}{Chart type.}
 
-\item{...}{Arguments for \code{\link[epivizrChart]{EpivizChart}} objects.}
+\item{...}{Arguments for \code{\link{EpivizChart}} objects.}
 }
 \description{
 Initialize Epiviz Chart based on chart type
