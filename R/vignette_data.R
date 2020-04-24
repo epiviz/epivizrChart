@@ -4,7 +4,7 @@
 #' of TCGA 450k beadarray samples. This object contains large regions of methylation difference between tumor
 #' and normal samples obtained from [`minfi::blockFinder()`].
 #'
-#' @format A [`GenomicRanges::GRanges`] object with 129 and \code{mcols}:
+#' @format A `GenomicRanges::GRanges` object with 129 and \code{mcols}:
 #'
 #' \describe{
 #'  \item{\code{value}}{average smooth methylation difference within block}
@@ -32,7 +32,7 @@ NULL
 #' of TCGA 450k beadarray samples. This object contains probe cluster level methylation estimates from
 #' [`minfi::blockFinder()`].
 #'
-#' @format A [`GenomicRanges::GRanges`] object with 7135 ranges and \code{mcols}:
+#' @format A `GenomicRanges::GRanges` object with 7135 ranges and \code{mcols}:
 #'
 #' \describe{
 #'  \item{\code{id}}{probe cluster id}
@@ -53,11 +53,11 @@ NULL
 
 #' Example exon-level RNAseq data from TCGA project for epivizr vignette.
 #'
-#' A [`SummarizedExperiment::RangedSummarizedExperiment`] object containing exon-level
+#' A `SummarizedExperiment::RangedSummarizedExperiment` object containing exon-level
 #' counts from RNAseq data for colon tumor and normal tissue from the TCGA project.
 #' Only exons in human chromosome 11 are included.
 #'
-#' @format A [`SummarizedExperiment::RangedSummarizedExperiment`] object with 12,800 rows (exons) and 40 samples.
+#' @format A `SummarizedExperiment::RangedSummarizedExperiment` object with 12,800 rows (exons) and 40 samples.
 #'  \describe{
 #'    \item{\code{assay(tcga_colon_expression)}}{exon-level count matrix}
 #'    \item{\code{colData(tcga_colon_expression)}}{a \code{DataFrame} containing sample information.
@@ -73,7 +73,7 @@ NULL
 
 
 #' Example SummarizedExperiment for epivizr vignette
-#' @format A [`SummarizedExperiment::RangedSummarizedExperiment`] object.
+#' @format A `SummarizedExperiment::RangedSummarizedExperiment` object.
 #' @docType data
 #' @usage data(sumexp)
 #' @name sumexp
@@ -84,7 +84,7 @@ NULL
 #'
 #' See vignette `data_preprocessing` for code to build this object.
 #'
-#' @format An [`Biobase::ExpressionSet`] object
+#' @format An `Biobase::ExpressionSet` object
 #' @docType data
 #' @usage data(bcode_eset)
 #' @name bcode_eset
@@ -93,7 +93,7 @@ NULL
 
 #' Locations of CpG Islands
 #'
-#' @format A [`GenomicRanges::GRanges`]` object with locations of CpG Islands in hg19
+#' @format A `GenomicRanges::GRanges` object with locations of CpG Islands in hg19
 #' @docType data
 #' @usage data(cgi_gr)
 #' @name cgi_gr

@@ -5,7 +5,7 @@
 \alias{tcga_colon_curves}
 \title{Example methylation data (smoothed methylation levels) for epivizr vignette}
 \format{
-A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object with 7135 ranges and \code{mcols}:
+A \code{GenomicRanges::GRanges} object with 7135 ranges and \code{mcols}:
 
 \describe{
 \item{\code{id}}{probe cluster id}

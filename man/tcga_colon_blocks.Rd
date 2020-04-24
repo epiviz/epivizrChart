@@ -5,7 +5,7 @@
 \alias{tcga_colon_blocks}
 \title{Example methylation data (blocks) for epivizr vignette.}
 \format{
-A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object with 129 and \code{mcols}:
+A \code{GenomicRanges::GRanges} object with 129 and \code{mcols}:
 
 \describe{
 \item{\code{value}}{average smooth methylation difference within block}

@@ -5,7 +5,7 @@
 \alias{sumexp}
 \title{Example SummarizedExperiment for epivizr vignette}
 \format{
-A \code{\link[SummarizedExperiment:RangedSummarizedExperiment]{SummarizedExperiment::RangedSummarizedExperiment}} object.
+A \code{SummarizedExperiment::RangedSummarizedExperiment} object.
 }
 \usage{
 data(sumexp)
