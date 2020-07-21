@@ -188,7 +188,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
 #' @importFrom methods is
 #' @export
 #' @md
-epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=FALSE, ...) {
+epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=FALSE, shiny=FALSE, ...) {
   # use parent's data manager
   if (!is.null(parent)) {
     if (!is(parent, "EpivizEnvironment"))
@@ -210,11 +210,21 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
       epiviz_ds <- parent$epiviz_ds
     }
     else {
-      epiviz_ds <- EpivizDataSource(
-        provider_type="epiviz.data.ShinyDataProvider",
-        provider_id=rand_id("epiviz"),
-        provider_url=.constructURL(),
-        data_mgr=data_mgr) 
+      if (shiny) {
+        epiviz_ds <- EpivizDataSource(
+          provider_type="epiviz.data.ShinyDataProvider",
+          provider_id=rand_id("epiviz"),
+          provider_url=.constructURL(),
+          data_mgr=data_mgr) 
+      }
+      else {
+        epiviz_ds <- EpivizDataSource(
+          provider_type="epiviz.data.WebsocketDataProvider",
+          provider_id=rand_id("epiviz"),
+          provider_url=.constructURL(),
+          data_mgr=data_mgr) 
+      }
+
     }
   } else {
     epiviz_ds <- NULL
@@ -243,15 +253,25 @@ epivizNav <- function(chr=NULL, start=NULL, end=NULL, parent=NULL, interactive=F
 #'
 #' @export
 #' @md
-epivizEnv <- function(chr=NULL, start=NULL, end=NULL, interactive=FALSE, ...) {
+epivizEnv <- function(chr=NULL, start=NULL, end=NULL, interactive=FALSE, shiny=FALSE, ...) {
   data_mgr <- EpivizChartDataMgr()
 
   if (interactive) {
-    epiviz_ds <- EpivizDataSource(
-      provider_type="epiviz.data.ShinyDataProvider",
-      provider_id=rand_id("epiviz"),
-      provider_url=.constructURL(),
-      data_mgr=data_mgr)
+    cat(shiny)
+    if (shiny) {
+      epiviz_ds <- EpivizDataSource(
+        provider_type="epiviz.data.ShinyDataProvider",
+        provider_id=rand_id("epiviz"),
+        provider_url=.constructURL(),
+        data_mgr=data_mgr) 
+    }
+    else {
+      epiviz_ds <- EpivizDataSource(
+        provider_type="epiviz.data.WebsocketDataProvider",
+        provider_id=rand_id("epiviz"),
+        provider_url=.constructURL(),
+        data_mgr=data_mgr) 
+    }
   } else {
     epiviz_ds <- NULL
   }

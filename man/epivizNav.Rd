@@ -10,6 +10,7 @@ epivizNav(
   end = NULL,
   parent = NULL,
   interactive = FALSE,
+  shiny = FALSE,
   ...
 )
 }
