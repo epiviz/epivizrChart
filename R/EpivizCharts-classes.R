@@ -569,6 +569,71 @@ EpivizStackedLineTrack <- setRefClass("EpivizStackedLineTrack",
   )
 )
 
+#' Data container for an Epiviz Multi Stacked Line Track.
+#'
+#' @import htmltools
+#' @importFrom methods new
+EpivizMultiStackedLineTrack <- setRefClass("EpivizMultiStackedLineTrack",
+  contains="EpivizChart",
+  methods=list(
+    initialize=function(...) {
+      callSuper(...)
+    },
+    get_name=function() {
+      "Get name of Epiviz Web Component"
+      "epiviz-multistacked-line-track"
+    },
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
+      return("MultiStackedLineTrack")
+    },
+    get_default_settings=function() {
+      "Get default settings"
+      list(
+        title="",
+        marginTop=25,
+        marginBottom=20,
+        marginLeft=20,
+        marginRight=10,
+        measurementGroupsAggregator="mean-stdev",
+        step=1,
+        offset="zero",
+        interpolation="basis",
+        abLine="default",
+        showTracks="default",
+        showYAxis=TRUE,
+        autoScale=TRUE,
+        showFill=TRUE
+      )
+    },
+    get_default_colors=function() {
+      "Get default colors"
+      c("#1f77b4",
+        "#ff7f0e",
+        "#2ca02c",
+        "#d62728",
+        "#9467bd",
+        "#8c564b",
+        "#e377c2",
+        "#7f7f7f",
+        "#bcbd22",
+        "#17becf"
+      )
+    },
+    get_dependencies=function(shiny=FALSE) {
+      # TODO
+      # c(list(EpivizMultiStackedLineTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(shiny)
+    }
+  )
+)
+
 
 #' Data container for an Epiviz Genes Track.
 #'

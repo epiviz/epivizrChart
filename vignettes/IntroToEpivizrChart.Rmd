@@ -120,7 +120,7 @@ epivizEnv
 Similarly let's add a line track using the `tcga_colon_curves` data object. We can specify what columns to visualize from the data object.
 
 ```{r}
-means_track <- epivizEnv$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"))
+means_track <- epivizEnv$plot(tcga_colon_curves, datasource_name="450kMeth", type="bp", columns=c("cancerMean","normalMean"), chart="MultiStackedLineTrack")
 means_track
 ```
 

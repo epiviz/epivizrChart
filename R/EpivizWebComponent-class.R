@@ -115,21 +115,28 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
           version="1.12.1",
           src=system.file(package="epivizrChart", "www", "lib", "jquery-ui"),
           script="jquery-ui.js"),
+        webcomponents=htmlDependency(
+          name="webcomponents",
+          version="0.7.24",
+          src=system.file(package="epivizrChart", "www", "lib/webcomponentsjs"),
+          script="webcomponents-lite.js"),
         rqueues=htmlDependency(
           name="renderingQueues",
           version="1.12.1",
           src=system.file(package="epivizrChart", "www", "lib", "renderingQueues"),
+          # head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
           script="renderingQueue.js"),
         # jquery_ui_css=htmlDependency(
         #   name="jquery-ui-css",
         #   version="1.12.1",
         #   src=system.file(package="epivizrChart", "www", "lib"),
         #   stylesheet="jquery-ui.css"),
-        webcomponents=htmlDependency(
-          name="webcomponents",
-          version="0.7.24",
-          src=system.file(package="epivizrChart", "www", "lib/webcomponentsjs"),
-          script="webcomponents-lite.js"),
+        # webcomponents=htmlDependency(
+        #   name="webcomponents",
+        #   version="0.7.24",
+        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
+        #   head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
+        #   script="webcomponents-lite.js")
         # data_source=htmlDependency(
         #   name="epiviz-data-source",
         #   version="1",
@@ -141,13 +148,17 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
           version="1",
           head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
           src=system.file(package="epivizrChart", "www", "lib/polymer"),
-          all_files=TRUE),
-        chart_css=htmlDependency(
-          name="chart-css",
-          version="1",
-          head=paste0("<link rel='import' href='",  css_lib, "'>"),
-          src=system.file(package="epivizrChart", "www", "lib/polymer"),
           all_files=TRUE)
+        # chart_css=htmlDependency(
+        #   name="chart-css",
+        #   version="1",
+        #   head=paste0("<link rel='import' href='",  css_lib, "'>"),
+        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
+        #   all_files=TRUE)
+        # polymer_cdn=htmlDependency(
+        #   version="1.0",
+        #   name="epiviz-cdn"
+        # )
       )
     }
   )
