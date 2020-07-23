@@ -88,7 +88,6 @@ EpivizChart <- setRefClass("EpivizChart",
         "json-data"=json_data,
         colors=json_writer(.self$colors),
         settings=json_writer(.self$settings)),
-        slot="charts",
         callSuper())
     },
     is_interactive=function() {

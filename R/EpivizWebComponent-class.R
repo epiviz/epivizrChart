@@ -61,7 +61,7 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
     },
     get_attributes=function() {
       "Get attributes for rendering web component"
-      list(class=.self$class, id=.self$id)
+      list(class=.self$class, id=.self$id, slot="charts")
     },
     show=function() {
       if (isTRUE(getOption('knitr.in.progress'))) {
