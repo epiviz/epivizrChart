@@ -10,9 +10,8 @@ if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
 BiocManager::install("epiviz/epivizrChart")
 
-# or using devtools
-library(devtools)
-install_github("epiviz/epivizrChart")
+# or using remotes
+remotes::install_github("epiviz/epivizrChart")
 ```
 
 ## Generating interactive Markdown Documents
