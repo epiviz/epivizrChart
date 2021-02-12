@@ -153,20 +153,20 @@ rand_id <- function(prefix="") {
   invisible()
 }
 
-#' Construct URL for Websocket connection between R and UI
+#' Get Available Chart Types
 #' @return url
 get_available_chart_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", "TranscriptTrack"))
 }
 
-#' Construct URL for Websocket connection between R and UI
+#' Get Registered Chart Types
 #' @return url
 get_registered_data_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", "TranscriptTrack"))
 }
