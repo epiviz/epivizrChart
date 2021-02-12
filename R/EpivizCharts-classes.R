@@ -106,7 +106,7 @@ EpivizBlocksTrack <- setRefClass("EpivizBlocksTrack",
   )
 )
 
-#' Data container for an Epiviz Blocks Track.
+#' Data container for an Epiviz Stacked Blocks Track.
 #'
 #' @import htmltools
 #' @importFrom methods new
@@ -705,6 +705,59 @@ EpivizIGVTrack <- setRefClass("EpivizIGVTrack",
     get_dependencies=function(shiny=FALSE) {
       # TODO
       # c(list(EpivizGenesTrack=htmlDependency(
+      #  name="",
+      #  version=0,
+      #  head="",
+      #  src="",
+      #  all_files=TRUE)),
+      #  callSuper())
+      callSuper(shiny)
+    }
+  )
+)
+
+#' Data container for an Epiviz Transcript Track.
+#'
+#' @import htmltools
+#' @importFrom methods new
+EpivizTranscriptTrack <- setRefClass("EpivizTranscriptTrack",
+  contains="EpivizChart",
+  methods=list(
+    initialize=function(...) {
+      callSuper(...)
+    },
+    get_name=function() {
+      "Get name of Epiviz Web Component"
+      "epiviz-transcript-track"
+    },
+    get_component_type=function() {
+      "Get component type for prefix of random id generator"
+      return("TranscriptTrack")
+    },
+    get_default_settings=function() {
+      "Get default settings"
+      list(
+        title="",
+        marginTop=25,
+        marginBottom=23,
+        marginLeft=20,
+        marginRight=10
+      )
+    },
+    get_default_colors=function() {
+      "Get default colors"
+      c("#f9a65a",
+        "#599ad3",
+        "#79c36a",
+        "#f1595f",
+        "#727272",
+        "#cd7058",
+        "#d77fb3"
+      )
+    },
+    get_dependencies=function(shiny=FALSE) {
+      # TODO
+      # c(list(EpivizTranscriptTrack=htmlDependency(
       #  name="",
       #  version=0,
       #  head="",
