@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_available_chart_types}
 \alias{get_available_chart_types}
-\title{Construct URL for Websocket connection between R and UI}
+\title{Get Available Chart Types}
 \usage{
 get_available_chart_types()
 }
@@ -10,5 +10,5 @@ get_available_chart_types()
 url
 }
 \description{
-Construct URL for Websocket connection between R and UI
+Get Available Chart Types
 }
