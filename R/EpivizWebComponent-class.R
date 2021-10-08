@@ -103,8 +103,8 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
         css_lib <- "lib/epiviz-charts-1/chart-shared-css.html"
         # polymer_ds_lib <- "lib/epiviz-charts-1/epiviz-data-source.html" 
       } 
-
-      list(
+      
+      jquery <- list(
         jquery=htmlDependency(
           name="jquery",
           version="1.12.4",
@@ -114,7 +114,10 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
           name="jquery-ui",
           version="1.12.1",
           src=system.file(package="epivizrChart", "www", "lib", "jquery-ui"),
-          script="jquery-ui.js"),
+          script="jquery-ui.js")
+      )
+      
+      rest <- list(
         webcomponents=htmlDependency(
           name="webcomponents",
           version="0.7.24",
@@ -126,40 +129,20 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
           src=system.file(package="epivizrChart", "www", "lib", "renderingQueues"),
           # head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
           script="renderingQueue.js"),
-        # jquery_ui_css=htmlDependency(
-        #   name="jquery-ui-css",
-        #   version="1.12.1",
-        #   src=system.file(package="epivizrChart", "www", "lib"),
-        #   stylesheet="jquery-ui.css"),
-        # webcomponents=htmlDependency(
-        #   name="webcomponents",
-        #   version="0.7.24",
-        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
-        #   head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
-        #   script="webcomponents-lite.js")
-        # data_source=htmlDependency(
-        #   name="epiviz-data-source",
-        #   version="1",
-        #   head=paste0("<link rel='import' href='",  polymer_ds_lib, "'>"),
-        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
-        #   all_files=TRUE),
         polymer=htmlDependency(
           name="epiviz-charts",
           version="1",
           head=paste0("<link rel='import' href='",  polymer_lib, "'>"),
           src=system.file(package="epivizrChart", "www", "lib/polymer"),
           all_files=TRUE)
-        # chart_css=htmlDependency(
-        #   name="chart-css",
-        #   version="1",
-        #   head=paste0("<link rel='import' href='",  css_lib, "'>"),
-        #   src=system.file(package="epivizrChart", "www", "lib/polymer"),
-        #   all_files=TRUE)
-        # polymer_cdn=htmlDependency(
-        #   version="1.0",
-        #   name="epiviz-cdn"
-        # )
       )
+      
+      if (shiny) {
+        return(rest)
+      } else {
+        return(c(jquery, rest))
+      }
+      
     }
   )
 )
