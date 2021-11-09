@@ -11,13 +11,15 @@ EpivizEnvironment <- setRefClass("EpivizEnvironment",
   contains="EpivizViewComponent",
   fields=list(
     charts="list",
+    shiny="logical",
     interactive="logical",
     epiviz_ds='EpivizDSorNULL'
   ),
   methods=list(
-    initialize=function(interactive=FALSE, epiviz_ds=NULL, ...) {
+    initialize=function(interactive=FALSE, shiny=FALSE, epiviz_ds=NULL, ...) {
       .self$charts <- list()
       .self$interactive <- interactive
+      .self$shiny <- shiny
       .self$epiviz_ds <- epiviz_ds
 
       callSuper(...)

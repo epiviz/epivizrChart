@@ -1,6 +1,6 @@
 Package: epivizrChart
 Title: R interface to epiviz web components
-Version: 1.15.0
+Version: 1.16.1
 Authors@R: c( person("Brian", "Gottfried",
                       email="briangottfried@me.com",
                       role = c("aut")),
@@ -61,4 +61,4 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 biocViews: Visualization, GUI
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2

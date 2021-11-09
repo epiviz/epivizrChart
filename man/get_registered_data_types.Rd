@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_registered_data_types}
 \alias{get_registered_data_types}
-\title{Construct URL for Websocket connection between R and UI}
+\title{Get Registered Chart Types}
 \usage{
 get_registered_data_types()
 }
@@ -10,5 +10,5 @@ get_registered_data_types()
 url
 }
 \description{
-Construct URL for Websocket connection between R and UI
+Get Registered Chart Types
 }

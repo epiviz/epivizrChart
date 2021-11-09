@@ -4,9 +4,9 @@
 \name{EpivizStackedBlocksTrack-class}
 \alias{EpivizStackedBlocksTrack-class}
 \alias{EpivizStackedBlocksTrack}
-\title{Data container for an Epiviz Blocks Track.}
+\title{Data container for an Epiviz Stacked Blocks Track.}
 \description{
-Data container for an Epiviz Blocks Track.
+Data container for an Epiviz Stacked Blocks Track.
 }
 \section{Methods}{
 

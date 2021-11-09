@@ -157,6 +157,55 @@ setMethod("StackedLineTrack", signature = c("EpivizEnvironment", "ANY"), functio
   x
 })
 
+#' Method to add Multi Stacked Line Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @rdname MultiStackedLineTrack-methods
+#' @export
+setGeneric("MultiStackedLineTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("MultiStackedLineTrack") })
+
+#' @rdname MultiStackedLineTrack-methods
+setMethod("MultiStackedLineTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
+  x$plot(y, chart="MultiStackedLineTrack", ...)
+  x
+})
+
+#' Method to add Transcript Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @rdname TranscriptTrack-methods
+#' @export
+setGeneric("TranscriptTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("TranscriptTrack") })
+
+#' @rdname TranscriptTrack-methods
+setMethod("TranscriptTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
+  x$plot(y, chart="TranscriptTrack", ...)
+  x
+})
+
+#' Method to add Guide Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @rdname GuideTrack-methods
+#' @export
+setGeneric("GuideTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("GuideTrack") })
+
+#' @rdname GuideTrack-methods
+setMethod("GuideTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
+  x$plot(y, chart="GuideTrack", ...)
+  x
+})
+
+
 #' Generic method to add navigation regions
 #' 
 #' @param x an object of type \code{\link{EpivizEnvironment}}

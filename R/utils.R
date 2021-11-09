@@ -116,6 +116,32 @@ rand_id <- function(prefix="") {
   
   srv$register_action("getSeqInfos", function(request_data) {
     # TODO
+    return(list("hg19" = list(
+      list("chr1", 1, 248956422),
+      list("chr2", 1, 242193529),
+      list("chr3", 1, 198295559),
+      list("chr4", 1, 190214555),
+      list("chr5", 1, 181538259),
+      list("chr6", 1, 170805979),
+      list("chr7", 1, 159345973),
+      list("chr8", 1, 145138636),
+      list("chr9", 1, 138394717),
+      list("chr10", 1, 133797422),
+      list("chr11", 1, 135086622),
+      list("chr12", 1, 133275309),
+      list("chr13", 1, 114364328),
+      list("chr14", 1, 107043718),
+      list("chr15", 1, 101991189),
+      list("chr16", 1, 90338345),
+      list("chr17", 1, 83257441),
+      list("chr18", 1, 80373285),
+      list("chr19", 1, 58617616),
+      list("chr20", 1, 64444167),
+      list("chr21", 1, 46709983),
+      list("chr22", 1, 50818468),
+      list("chrX", 1, 156040895),
+      list("chrY", 1, 57227415)
+    )))
   })
   
   srv$register_action("setChartSettings", function(request_data) {
@@ -127,20 +153,22 @@ rand_id <- function(prefix="") {
   invisible()
 }
 
-#' Construct URL for Websocket connection between R and UI
+#' Get Available Chart Types
 #' @return url
 get_available_chart_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", 
+           "TranscriptTrack", "GuideTrack"))
 }
 
-#' Construct URL for Websocket connection between R and UI
+#' Get Registered Chart Types
 #' @return url
 get_registered_data_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", 
+           "TranscriptTrack", "GuideTrack"))
 }

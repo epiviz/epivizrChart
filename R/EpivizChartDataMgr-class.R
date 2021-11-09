@@ -95,6 +95,7 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
       }"
       data <- list(format="epiviz")
       ms_list <- NULL
+      ms_id <- c()
       datasources <- lapply(measurements, function(ms) ms@datasourceId)
 
       for (datasource in unique(datasources)) {
@@ -102,11 +103,11 @@ EpivizChartDataMgr <- setRefClass("EpivizChartDataMgr",
 
         ms_data <- ms_obj$get_data(chr, start, end)
         ms_list <- c(ms_list, ms_obj$get_measurements())
-
+        ms_id <- c(ms_id, ms_obj$get_id())
         data[[ms_obj$get_id()]] <- ms_data$data
       }
 
-      list(measurements=ms_list, data=data)
+      list(measurements=ms_list, data=data, id=ms_id)
     },
     get_measurements=function() {
       out <- epivizrData:::.emptyEpivizMeasurement()
