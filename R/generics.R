@@ -189,6 +189,22 @@ setMethod("TranscriptTrack", signature = c("EpivizEnvironment", "ANY"), function
   x
 })
 
+#' Method to add Guide Track
+#' 
+#' @param x an object of type \code{\link{EpivizEnvironment}} or \code{\link{EpivizNavigation}}
+#' @param y a genomic data object
+#' @param ... other parameters for the plot method
+#' @rdname GuideTrack-methods
+#' @export
+setGeneric("GuideTrack", signature = c("x", "x"), 
+           function(x, y, ...) { standardGeneric("GuideTrack") })
+
+#' @rdname GuideTrack-methods
+setMethod("GuideTrack", signature = c("EpivizEnvironment", "ANY"), function(x, y, ...) {
+  x$plot(y, chart="GuideTrack", ...)
+  x
+})
+
 
 #' Generic method to add navigation regions
 #' 

@@ -166,6 +166,7 @@ epivizChart <- function(data_obj=NULL, measurements=NULL,
     IGVTrack=EpivizIGVTrack,
     MultiStackedLineTrack=EpivizMultiStackedLineTrack,
     TranscriptTrack=EpivizTranscriptTrack,
+    GuideTrack=EpivizGuideTrack,
     stop(chart_type,  " is not a valid chart type.",
       " See documentation for supported chart types")
   )

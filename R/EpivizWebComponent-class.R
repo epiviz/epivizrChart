@@ -129,6 +129,12 @@ EpivizWebComponent <- setRefClass("EpivizWebComponent",
           src=system.file(package="epivizrChart", "www", "lib", "renderingQueues"),
           # head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
           script="renderingQueue.js"),
+        itrees=htmlDependency(
+          name="IntervalTree",
+          version="1.12.1",
+          src=system.file(package="epivizrChart", "www", "lib", "renderingQueues"),
+          # head=paste0('<link rel="import" href="https://raw.githubusercontent.com/epiviz/epiviz-chart/master/cdn/epiviz-components-devel.html">'),
+          script="intervalTree.umd.js"),
         polymer=htmlDependency(
           name="epiviz-charts",
           version="1",

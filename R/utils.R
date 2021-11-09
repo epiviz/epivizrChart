@@ -159,7 +159,8 @@ get_available_chart_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", "TranscriptTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", 
+           "TranscriptTrack", "GuideTrack"))
 }
 
 #' Get Registered Chart Types
@@ -168,5 +169,6 @@ get_registered_data_types <- function() {
   return(c("BlocksTrack", "HeatmapPlot", 
            "LinePlot", "LineTrack", 
            "ScatterPlot", "StackedLinePlot", 
-           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", "TranscriptTrack"))
+           "StackedLineTrack", "StackedBlocksTrack", "MultiStackedLineTrack", 
+           "TranscriptTrack", "GuideTrack"))
 }
